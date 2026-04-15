@@ -63,6 +63,9 @@ notes/
 TODO.md
 NOTES.md
 
+# Internal planning documents
+docs/
+
 # Generated integration files — run scripts/convert.sh to regenerate locally
 # The scripts/ and integrations/*/README.md files ARE committed; only generated
 # agent/skill files are excluded.
