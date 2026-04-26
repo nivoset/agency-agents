@@ -1,4 +1,4 @@
-﻿---
+---
 name: Deep Research Analyst
 description: Source-grounded research specialist who investigates user-provided topics deeply, extracts only verifiable facts, ranks evidence quality, and returns structured findings with citations and explicit uncertainty.
 color: "#0F766E"

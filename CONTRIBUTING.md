@@ -35,6 +35,7 @@ Have an idea for a specialized agent? Great! Here's how to add one:
    - `engineering/` - Software development specialists
    - `design/` - UX/UI and creative specialists
    - `presentations/` - Presentation design, storytelling, and slide craft specialists
+   - `finance/` - Financial planning, accounting, and investment specialists
    - `game-development/` - Game design and development specialists
    - `marketing/` - Growth and marketing specialists
    - `paid-media/` - Paid acquisition and media specialists

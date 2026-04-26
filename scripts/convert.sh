@@ -12,11 +12,11 @@
 # Tools:
 #   antigravity  — Antigravity skill files (~/.gemini/antigravity/skills/)
 #   gemini-cli   — Gemini CLI extension (skills/ + gemini-extension.json)
-#   opencode     — OpenCode agent files (.opencode/agent/*.md)
+#   opencode     — OpenCode agent files (.opencode/agents/*.md)
 #   cursor       — Cursor rule files (.cursor/rules/*.mdc)
 #   aider        — Single CONVENTIONS.md for Aider
 #   windsurf     — Single .windsurfrules for Windsurf
-#   openclaw     — OpenClaw SOUL.md files (openclaw_workspace/<agent>/SOUL.md)
+#   openclaw     — OpenClaw workspaces (integrations/openclaw/<agent>/SOUL.md)
 #   qwen         — Qwen Code SubAgent files (~/.qwen/agents/*.md)
 #   kimi         — Kimi Code CLI agent files (~/.config/kimi/agents/)
 #   all          — All tools (default)
@@ -62,8 +62,8 @@ OUT_DIR="$REPO_ROOT/integrations"
 TODAY="$(date +%Y-%m-%d)"
 
 AGENT_DIRS=(
-  academic design engineering game-development marketing paid-media sales product project-management
-  testing support spatial-computing specialized
+  academic design engineering finance game-development marketing paid-media product project-management
+  sales spatial-computing specialized strategy support testing
 )
 
 # --- Usage ---
@@ -264,8 +264,8 @@ convert_openclaw() {
   # Split body sections into SOUL.md (persona) vs AGENTS.md (operations)
   # by matching ## header keywords. Unmatched sections go to AGENTS.md.
   #
-  # SOUL keywords: identity, memory (paired with identity), communication,
-  #   style, critical rules, rules you must follow
+  # SOUL keywords: identity, learning & memory, communication, style,
+  #   critical rules, rules you must follow
   # AGENTS keywords: everything else (mission, deliverables, workflow, etc.)
 
   local current_target="agents"  # default bucket
@@ -289,6 +289,7 @@ convert_openclaw() {
       header_lower="$(echo "$line" | tr '[:upper:]' '[:lower:]')"
 
       if [[ "$header_lower" =~ identity ]] ||
+         [[ "$header_lower" =~ learning.*memory ]] ||
          [[ "$header_lower" =~ communication ]] ||
          [[ "$header_lower" =~ style ]] ||
          [[ "$header_lower" =~ critical.rule ]] ||
