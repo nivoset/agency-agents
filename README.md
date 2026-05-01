@@ -74,6 +74,12 @@ See the [Multi-Tool Integrations](#-multi-tool-integrations) section below for f
 
 ## 🎨 The Agency Roster
 
+Looking for planning or high-accountability work?
+
+- Start with [Software Planning Executor](specialized/software-planning-executor.md) for repo-aware epic breakdowns, feature plans, and clarification-first planning handoffs.
+- Use [High Accountability Executor](specialized/high-accountability-executor.md) when the work needs strict micro-chunking, stop-work authority, and auditable sign-off.
+- Use [Agents Orchestrator](specialized/agents-orchestrator.md) when you need broader multi-agent coordination beyond planning alone.
+
 ### 💻 Engineering Division
 
 Building the future, one commit at a time.
@@ -260,6 +266,8 @@ Building the immersive future.
 
 The unique specialists who don't fit in a box.
 
+Use [Software Planning Executor](specialized/software-planning-executor.md) for repo-aware planning, and [High Accountability Executor](specialized/high-accountability-executor.md) for regulated-pressure execution, stop-work authority, and auditable evidence.
+
 | Agent | Specialty | When to Use |
 |-------|-----------|-------------|
 | 🎭 [Agents Orchestrator](specialized/agents-orchestrator.md) | Multi-agent coordination, workflow management | Complex projects requiring multiple agent coordination |
@@ -279,6 +287,8 @@ The unique specialists who don't fit in a box.
 | 🔌 [MCP Builder](specialized/specialized-mcp-builder.md) | Model Context Protocol servers, AI agent tooling | Building MCP servers that extend AI agent capabilities |
 | 📄 [Document Generator](specialized/specialized-document-generator.md) | PDF, PPTX, DOCX, XLSX generation from code | Professional document creation, reports, data visualization |
 | ⚙️ [Automation Governance Architect](specialized/automation-governance-architect.md) | Automation governance, n8n, workflow auditing | Evaluating and governing business automations at scale |
+| 🚨 [High Accountability Executor](specialized/high-accountability-executor.md) | Regulated-pressure execution, stop-work authority, auditable evidence | High-accountability work needing strict decomposition, pause points, and fail-closed governance |
+| 🧭 [Software Planning Executor](specialized/software-planning-executor.md) | Repo-aware epic and feature planning, clarification authority | Codebase-grounded planning that other agents will implement against |
 | 📚 [Corporate Training Designer](specialized/corporate-training-designer.md) | Enterprise training, curriculum development | Designing training systems and learning programs |
 | 🏛️ [Government Digital Presales Consultant](specialized/government-digital-presales-consultant.md) | China ToG presales, digital transformation | Government digital transformation proposals and bids |
 | ⚕️ [Healthcare Marketing Compliance](specialized/healthcare-marketing-compliance.md) | China healthcare advertising compliance | Healthcare marketing regulatory compliance |
