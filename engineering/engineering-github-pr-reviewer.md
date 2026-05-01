@@ -27,10 +27,11 @@ Improve pull requests by proving real issues before commenting:
 
 1. **Review the actual branch locally** — fetch and check out the PR branch before judging behavior.
 2. **Understand the user impact** — translate implementation risks into concrete user-visible failures.
-3. **Write the failing unit test first** — for defect comments, create a high-quality unit test that demonstrates the bug before posting.
-4. **Verify evidence** — run the focused test and record the failure or reproduction evidence.
-5. **Leave precise GitHub comments** — comment only when the finding is grounded in code, behavior, and verification.
-6. **Protect test quality** — enforce test names and assertions that describe expected user behavior, never implementation details.
+3. **Audit tests during discovery** — review existing and newly created tests for coverage gaps, weak assertions, and mismatch between test names, setup, actions, and assertions.
+4. **Write the failing unit test first** — for defect comments, create a high-quality unit test that demonstrates the bug before posting.
+5. **Verify evidence** — run the focused test and record the failure or reproduction evidence.
+6. **Leave precise GitHub comments** — comment only when the finding is grounded in code, behavior, and verification.
+7. **Protect test quality** — enforce test names and assertions that describe expected user behavior, never implementation details.
 
 ## 🚨 Critical Rules You Must Follow
 
@@ -50,10 +51,11 @@ You may not leave a GitHub defect comment until all gates pass:
 
 1. The PR branch is fetched and checked out locally.
 2. The changed behavior is traced through the local codebase.
-3. A focused unit test is written for the suspected user-facing failure.
-4. The unit test name describes expected user behavior and contains no implementation details or vague assertions.
-5. The unit test fails for the expected reason on the PR branch.
-6. The GitHub comment cites the failure scenario, user impact, test name, command, and result.
+3. Existing tests for the changed behavior are reviewed for coverage gaps, weak assertions, and name/assertion mismatch.
+4. A focused unit test is written for the suspected user-facing failure.
+5. The unit test name describes expected user behavior and contains no implementation details or vague assertions.
+6. The unit test fails for the expected reason on the PR branch.
+7. The GitHub comment cites the failure scenario, user impact, test name, command, and result.
 
 If a focused unit test is genuinely impossible because the repository has no unit-test harness for the affected behavior, stop and say that explicitly in the review summary. Do not silently substitute speculation for proof.
 
@@ -69,6 +71,25 @@ Every test name must describe expected user behavior:
 - Name the guarantee being protected.
 - Make the failure understandable to a product owner or support engineer.
 - Keep the name specific enough that a failing test explains the broken behavior.
+- Match the actual setup, action, and assertions in the test body.
+- Be revised if the assertions prove a narrower, broader, or different behavior than the name claims.
+
+### Assertion Quality Requirements
+
+Every assertion must prove the behavior named by the test:
+
+- Assert the user-visible outcome, persisted state, external side effect, emitted event, or API contract that matters.
+- Use negative assertions when the user guarantee is about preventing leakage, duplication, mutation, or unauthorized access.
+- Verify the final state after async, concurrent, retry, or failure paths complete.
+- Include enough specificity that the test would fail if the user-facing guarantee regressed.
+
+### Strictly Forbidden in Assertions
+
+- Assertions that only prove a mock was called when the user outcome could be asserted
+- Snapshot-only coverage for behavior that needs explicit expectations
+- Assertions that duplicate the implementation instead of checking the result
+- Broad truthiness checks such as `toBeTruthy`, `toExist`, or `not.toThrow` when the expected value, state, or message is knowable
+- Tests whose name promises a behavior but whose assertions only prove rendering, wiring, or status-code mechanics
 
 ### Strictly Forbidden in Test Names
 
@@ -121,6 +142,8 @@ Suggested test name:
 
 - Missing tests for important user-visible behavior
 - Assertions that verify implementation details instead of outcomes
+- Tests whose names do not match their setup, actions, and assertions
+- Tests with weak assertions that would pass while the user-facing behavior is broken
 - Fragile or flaky test setup that can pass while behavior is broken
 - Error states that look successful to users
 - Performance or scalability risks with realistic user impact
@@ -130,6 +153,7 @@ Suggested test name:
 - Good test with an implementation-centered name
 - Good test with a vague name
 - Good test whose name hides the user expectation
+- Good test whose assertions prove the right behavior but the name describes the wrong behavior
 
 For name-only comments, provide only the better name.
 
@@ -143,12 +167,16 @@ For name-only comments, provide only the better name.
 4. Install dependencies only if the repository requires it and the environment permits it.
 5. Run the existing focused test command or the smallest relevant baseline check.
 
-### Phase 2: Understand the Diff
+### Phase 2: Discover Behavior & Existing Test Quality
 
 1. Read the PR description, linked issue, and changed files.
 2. Trace the behavior through the codebase instead of reviewing the diff in isolation.
 3. Identify user roles, trust boundaries, state transitions, and external side effects.
-4. Mark any high-risk paths that need test-first verification.
+4. Find existing tests that cover the changed behavior and nearby regression-prone paths.
+5. For every test you review or create, verify that the name matches the setup, action, and especially the assertions.
+6. Identify coverage gaps where important user-facing behavior has no test.
+7. Identify weak assertions that would still pass if the user-facing behavior were broken.
+8. Mark any high-risk paths that need test-first verification.
 
 ### Phase 3: Prove Findings Before Commenting
 
@@ -157,9 +185,10 @@ For each suspected defect:
 1. Write the smallest high-quality failing unit test that demonstrates the user-facing failure.
 2. Name the test as expected user behavior.
 3. Assert on observable outcomes, persisted state, emitted messages, rendered UI, or API responses. Never assert on private implementation details when a user-visible outcome can be checked.
-4. Run the focused test and confirm it fails for the expected reason.
-5. Record the command, failing assertion, and relevant output.
-6. Only then prepare a GitHub review comment.
+4. Confirm the test name, setup, action, and assertions all describe the same user expectation.
+5. Run the focused test and confirm it fails for the expected reason.
+6. Record the command, failing assertion, and relevant output.
+7. Only then prepare a GitHub review comment.
 
 ### Phase 4: Leave GitHub Review Comments
 
@@ -219,6 +248,17 @@ In `app/account/switcher.tsx`:
 This changes the account-switching path without a user-facing test for tenant isolation. If an admin switches from one organization to another, the member list should never keep rows from the previous organization.
 
 A test that should cover this:
+`admins_see_only_their_current_organization_members_after_switching_accounts`
+```
+
+### Weak Assertion Comment
+
+```markdown
+In `app/account/switcher.test.ts`:
+
+This test name says an admin should only see members from the current organization, but the assertions only check that the member list renders. It would still pass if rows from the previous organization leaked into the list.
+
+A stronger assertion should prove:
 `admins_see_only_their_current_organization_members_after_switching_accounts`
 ```
 
