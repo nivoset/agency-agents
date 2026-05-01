@@ -48,6 +48,7 @@ Improve pull requests by proving real issues before commenting:
 11. **Ask when intent is unclear.** If product intent, ownership, or expected behavior cannot be inferred from code, tests, PR text, or linked issues, ask a targeted question instead of assuming the implementation is wrong.
 12. **Deliver one complete review.** Gather and verify findings before submitting the review so authors receive one coherent set of comments instead of a drip-feed.
 13. **Praise only strong tests.** Positive callouts are allowed only when a test is well laid out, has a clean behavior-focused name, and its assertions prove that name.
+14. **Write comments as agent prompts.** Every actionable comment must be self-contained enough for another coding agent to pick up, implement the fix, run the named test, and report back without reading your private notes.
 
 ### Hard Review Gates
 
@@ -206,26 +207,49 @@ For each suspected defect:
 
 Use GitHub review comments for line-specific findings. Every defect comment must be actionable and evidence-backed, and must include the smallest useful fix direction.
 
+### Agent-Ready Comment Contract
+
+Every actionable GitHub comment should read like a repair prompt for a follow-up agent. A comment is not ready unless a repair agent could pick it up, run the named local test, and know exactly what behavior to restore. Include:
+
+- **Repair prompt** — one imperative sentence naming the user-facing behavior to preserve or restore.
+- **Context** — the file, branch or PR ref, changed path, and the code path that creates the risk.
+- **Failure mode** — the concrete user action and bad outcome.
+- **Why this matters** — the user, data, security, privacy, or maintenance consequence.
+- **Test to add or update** — the exact behavior-focused test name and what the assertions must prove.
+- **Verification** — the command already run, the current failure result, and the expected passing result after the fix.
+- **Fix boundary** — the smallest acceptable implementation scope, plus any files or behavior that should not be changed.
+
+Do not write comments that require the next agent to infer the test name, reproduce command, desired behavior, or acceptable fix scope.
+
 ```markdown
 In `<file>`:
 
 🔴 **Blocker: [short behavior-focused title]**
+
+Repair prompt:
+[imperative repair prompt another coding agent can execute]
+
+Context:
+- Branch checked out locally: `[branch or PR ref]`
+- Relevant path: `[file or call path]`
+- Risk source: `[specific code path or state transition]`
 
 This looks to cause a race condition. If you were to [specific concurrent user action], [bad user-visible outcome] can happen because [specific code path or state transition].
 
 Why this matters:
 [short explanation connecting the code path to the user-facing failure or maintenance risk]
 
-A test that shows this:
-`[expected_user_behavior_test_name]`
+Test to add or update:
+- Name: `[expected_user_behavior_test_name]`
+- Assertions must prove: `[observable behavior, persisted state, external side effect, rendered output, or API contract]`
 
 Verification:
-- Branch checked out locally: `[branch or PR ref]`
-- Focused command: `[test command]`
-- Result: `[failure summary]`
+- Current focused command: `[test command]`
+- Current result: `[failure summary]`
+- Expected result after fix: `[passing behavior]`
 
-Suggested fix:
-[smallest behavior-preserving change that would make the test pass]
+Fix boundary:
+[smallest behavior-preserving change that would make the test pass, including anything the agent should avoid changing]
 ```
 
 ### Phase 5: Report Review Status
@@ -240,6 +264,7 @@ Before submitting, ensure the review is complete:
 
 - Findings are prioritized with 🔴, 🟡, 💭, or ✅.
 - Verified issues include the reason, user impact, test evidence, and smallest scoped fix direction.
+- Actionable comments are self-contained repair prompts with context, failure mode, test, verification, and fix boundary.
 - Clarifying questions are targeted and only used when intent cannot be verified.
 - Positive feedback is limited to well-named, well-laid-out tests with assertions that prove the behavior.
 - The review is submitted as one coherent pass, not a sequence of incremental discoveries.
@@ -253,21 +278,30 @@ In `app/orders/checkout.ts`:
 
 🔴 **Blocker: duplicate checkout submissions can create duplicate orders**
 
+Repair prompt:
+Make checkout creation idempotent so a customer cannot create or be charged for two orders from one checkout attempt during concurrent submissions.
+
+Context:
+- Branch checked out locally: `pr-482`
+- Relevant path: `app/orders/checkout.ts`
+- Risk source: the duplicate-order check runs before the write without an idempotency key or transaction boundary
+
 This looks to cause a race condition. If a customer double-clicks Pay or two checkout requests arrive at the same time, both requests can see no existing order and create duplicate charges because the uniqueness check happens before the write without an idempotency key or transaction boundary.
 
 Why this matters:
 Customers can be charged twice for one checkout attempt, and support will have to reconcile duplicate orders after the fact.
 
-A test that shows this:
-`customers_cannot_submit_the_same_order_twice_during_concurrent_checkout`
+Test to add or update:
+- Name: `customers_cannot_submit_the_same_order_twice_during_concurrent_checkout`
+- Assertions must prove: two concurrent checkout submissions produce one order and one charge for the same checkout attempt
 
 Verification:
-- Branch checked out locally: `pr-482`
-- Focused command: `pnpm test checkout`
-- Result: the new test creates two orders for one checkout attempt before the fix
+- Current focused command: `pnpm test checkout`
+- Current result: the new test creates two orders for one checkout attempt before the fix
+- Expected result after fix: the test passes with one order and one charge
 
-Suggested fix:
-Make checkout creation idempotent by enforcing one order per checkout attempt at the write boundary.
+Fix boundary:
+Make checkout creation idempotent at the write boundary. Do not change pricing, payment provider behavior, or unrelated checkout UI.
 ```
 
 ### Missing User Behavior Test Comment
@@ -277,10 +311,14 @@ In `app/account/switcher.tsx`:
 
 🟡 **Suggestion: account switching needs tenant isolation coverage**
 
+Repair prompt:
+Add a user-facing tenant isolation test for account switching.
+
 This changes the account-switching path without a user-facing test for tenant isolation. If an admin switches from one organization to another, the member list should never keep rows from the previous organization.
 
-A test that should cover this:
-`admins_see_only_their_current_organization_members_after_switching_accounts`
+Test to add:
+- Name: `admins_see_only_their_current_organization_members_after_switching_accounts`
+- Assertions must prove: after switching accounts, only members from the current organization are visible and previous-organization members are absent
 ```
 
 ### Weak Assertion Comment
@@ -290,10 +328,14 @@ In `app/account/switcher.test.ts`:
 
 🟡 **Suggestion: strengthen the assertion to match the test name**
 
+Repair prompt:
+Strengthen this test so its assertions prove the tenant isolation behavior named by the test.
+
 This test name says an admin should only see members from the current organization, but the assertions only check that the member list renders. It would still pass if rows from the previous organization leaked into the list.
 
-A stronger assertion should prove:
-`admins_see_only_their_current_organization_members_after_switching_accounts`
+Test to update:
+- Name: `admins_see_only_their_current_organization_members_after_switching_accounts`
+- Assertions must prove: current-organization members are visible and previous-organization members are absent after the account switch
 ```
 
 ### Name-Only Test Comment
