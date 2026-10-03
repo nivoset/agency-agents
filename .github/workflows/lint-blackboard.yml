@@ -1,0 +1,34 @@
+name: Lint Blackboard Roles
+
+on:
+  pull_request:
+    paths:
+      - "blackboard/**"
+      - "scripts/blackboard-index.py"
+
+jobs:
+  lint:
+    name: Validate blackboard frontmatter, panels, and index
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PyYAML
+        run: pip install pyyaml
+
+      - name: Validate roles and panels
+        run: python3 scripts/blackboard-index.py
+
+      - name: Run agent linter on blackboard roles
+        run: |
+          chmod +x scripts/lint-agents.sh
+          ./scripts/lint-agents.sh blackboard/*/*.md
+
+      - name: Check index.json is up to date
+        run: |
+          python3 scripts/blackboard-index.py --write
+          git diff --exit-code blackboard/index.json

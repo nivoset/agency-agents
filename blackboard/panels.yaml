@@ -1,0 +1,146 @@
+# Ready-made blackboard panels.
+#
+# The facilitator starts from the panel that best matches the topic, then adds or
+# swaps roles using each role's summon_when / skip_when. Keep the board at 2–5 roles
+# (RolesProposalSchema). `optional` roles are the bench, so add one only when its
+# summon_when signal is present. `first_question` seeds round 1.
+
+facilitator: board_facilitator
+
+panels:
+  software:
+    - id: feature_design
+      for: "Designing a new user-facing feature end to end"
+      core: [product_manager, software_architect, qa_test_strategist, end_user_advocate]
+      optional: [frontend_engineer, backend_engineer, data_architect, security_reviewer, ux_researcher]
+      first_question: "What is the smallest slice that solves the user problem, and how will we verify it?"
+    - id: integration_change
+      for: "Dropping a prototype, design, or external code into an existing app"
+      core: [integration_architect, end_user_advocate]
+      optional: [qa_test_strategist, frontend_engineer, accessibility_inclusion_reviewer]
+      first_question: "What are the safest integration points and material compatibility risks?"
+    - id: architecture_review
+      for: "Choosing or reviewing system shape, storage, or major dependencies"
+      core: [software_architect, reliability_engineer, security_reviewer, red_team_skeptic]
+      optional: [data_architect, integration_architect, developer_experience_advocate, prior_art_scout]
+      first_question: "Which decisions are one-way doors, and what evidence supports each?"
+    - id: api_and_data
+      for: "New endpoints, schemas, migrations, or third-party integrations"
+      core: [backend_engineer, data_architect, security_reviewer, qa_test_strategist]
+      optional: [developer_experience_advocate, reliability_engineer]
+      first_question: "What is the contract, the invariant, and the failure behavior?"
+    - id: release_readiness
+      for: "Go/no-go before shipping"
+      core: [qa_test_strategist, exploratory_tester, reliability_engineer, product_manager]
+      optional: [security_reviewer, end_user_advocate, test_automation_engineer]
+      first_question: "What evidence shows it works, and what is the rollback if it doesn't?"
+
+  game:
+    - id: core_loop
+      for: "Designing or fixing a game's core loop, mechanics, or progression"
+      core: [game_systems_designer, gameplay_engineer, playtest_analyst, end_user_advocate]
+      optional: [narrative_designer, product_manager, prior_art_scout, game_audio_designer]
+      first_question: "What decision is the player making every 30 seconds, and is it interesting?"
+    - id: level_and_content
+      for: "Levels, missions, encounters, and story content"
+      core: [level_designer, narrative_designer, playtest_analyst, art_director]
+      optional: [game_systems_designer, game_audio_designer, accessibility_inclusion_reviewer]
+      first_question: "What does this space teach, and where is it tested?"
+    - id: game_feel
+      for: "Combat, movement, and feedback juice"
+      core: [gameplay_engineer, animator_3d, vfx_artist, game_audio_designer, playtest_analyst]
+      optional: [animator_2d, game_systems_designer]
+      first_question: "What is the input-to-feedback chain for the core action, frame by frame?"
+    - id: game_qa
+      for: "Testing a playable build before milestone or release"
+      core: [playtest_analyst, qa_test_strategist, exploratory_tester, accessibility_inclusion_reviewer]
+      optional: [gameplay_engineer, test_automation_engineer]
+      first_question: "What are the release-blocking bugs and feel issues on the core loop?"
+
+  visual:
+    - id: art_2d
+      for: "2D game art, sprites, illustration, and 2D animation"
+      core: [art_director, illustrator_2d, animator_2d, technical_artist]
+      optional: [vfx_artist, ui_visual_designer, accessibility_inclusion_reviewer]
+      first_question: "What's the style guide, and what does each asset look like at display size?"
+    - id: art_3d
+      for: "3D characters, environments, rigs, and 3D animation"
+      core: [art_director, modeler_3d, animator_3d, technical_artist]
+      optional: [vfx_artist, gameplay_engineer]
+      first_question: "What are the budgets per asset class, and what is the pipeline from DCC to engine?"
+    - id: brand_graphics
+      for: "Brand visuals, UI graphics, icons, and campaign imagery"
+      core: [art_director, ui_visual_designer, illustrator_2d, accessibility_inclusion_reviewer]
+      optional: [brand_voice_guardian, motion_designer]
+      first_question: "Does every asset read at size, follow the identity, and meet contrast?"
+    - id: motion_piece
+      for: "Explainer videos, animated slides, and motion graphics"
+      core: [motion_designer, art_director, animator_2d, accessibility_inclusion_reviewer]
+      optional: [animator_3d, game_audio_designer, presentation_story_architect]
+      first_question: "What is each motion telling the viewer, and does it work muted?"
+
+  presentation:
+    - id: talk
+      for: "Conference talks, keynotes, and internal presentations"
+      core: [presentation_story_architect, slide_designer, audience_proxy, delivery_coach]
+      optional: [motion_designer, data_storyteller, accessibility_inclusion_reviewer]
+      first_question: "What is the one takeaway, and what is the hook in the first minute?"
+    - id: data_deck
+      for: "Metric reviews, results readouts, and board decks"
+      core: [presentation_story_architect, data_storyteller, slide_designer, audience_proxy]
+      optional: [red_team_skeptic, fact_disentangler]
+      first_question: "What question does each chart answer, and is the takeaway honest?"
+    - id: pitch
+      for: "Investor, sales, or internal funding pitches"
+      core: [product_manager, presentation_story_architect, audience_proxy, data_storyteller, delivery_coach]
+      optional: [red_team_skeptic, brand_voice_guardian]
+      first_question: "What is the ask, and can this audience say yes to it?"
+    - id: live_demo
+      for: "Talks with live product or code demos"
+      core: [presentation_story_architect, delivery_coach, exploratory_tester, slide_designer]
+      optional: [audience_proxy]
+      first_question: "What happens if the demo fails at minute 12?"
+
+  conflict:
+    - id: defuse_reply
+      for: "Replying to a heated message, thread, or review without making it worse"
+      core: [conflict_mediator, steelman_interpreter, diplomatic_wordsmith, boundary_keeper]
+      optional: [fact_disentangler, community_response_forecaster]
+      first_question: "What does each side need, and what must the reply still say?"
+    - id: factual_dispute
+      for: "Arguments that hinge on contested facts or numbers"
+      core: [fact_disentangler, steelman_interpreter, diplomatic_wordsmith, conflict_mediator]
+      optional: [data_storyteller]
+      first_question: "Which claims are checkable, and what is the crux?"
+    - id: hard_conversation
+      for: "Preparing to say something difficult in person or on a call"
+      core: [conflict_mediator, steelman_interpreter, boundary_keeper, delivery_coach]
+      optional: [diplomatic_wordsmith]
+      first_question: "What outcome would count as success, and what is not negotiable?"
+    - id: public_pile_on
+      for: "Being criticized or piled on publicly"
+      core: [boundary_keeper, community_response_forecaster, conflict_mediator, diplomatic_wordsmith]
+      optional: [fact_disentangler, brand_voice_guardian]
+      first_question: "Should the user respond at all, and on which channel?"
+
+  social:
+    - id: single_post
+      for: "One post, thread, or caption"
+      core: [social_strategist, hook_copywriter, platform_native_editor, community_response_forecaster]
+      optional: [brand_voice_guardian, illustrator_2d, data_storyteller]
+      first_question: "What is this post's one job, and what line stops the scroll?"
+    - id: campaign
+      for: "Multi-post, multi-platform launches or campaigns"
+      core: [social_strategist, brand_voice_guardian, hook_copywriter, platform_native_editor, motion_designer]
+      optional: [art_director, community_response_forecaster, product_manager]
+      first_question: "What are the pillars, cadence, and per-platform formats?"
+    - id: sensitive_announcement
+      for: "Pricing changes, outages, layoffs, deprecations, or apologies"
+      core: [community_response_forecaster, brand_voice_guardian, diplomatic_wordsmith, fact_disentangler]
+      optional: [boundary_keeper, social_strategist]
+      first_question: "What is the worst-faith reading, and what does the median affected user need to know first?"
+    - id: talk_to_social
+      for: "Repurposing a talk or deck into posts and clips"
+      core: [social_strategist, platform_native_editor, hook_copywriter, motion_designer]
+      optional: [presentation_story_architect, data_storyteller]
+      first_question: "Which three moments from the talk stand alone, and on which platform?"
