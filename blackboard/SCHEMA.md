@@ -93,8 +93,8 @@ board at five roles or fewer.
 ## Validation
 
 ```bash
-python3 scripts/blackboard-index.py          # validate only
-python3 scripts/blackboard-index.py --write  # validate + regenerate blackboard/index.json
+uv run scripts/blackboard-index.py          # validate only
+uv run scripts/blackboard-index.py --write  # validate + regenerate blackboard/index.json
 ```
 
 The validator checks that required keys are present, that ids are unique and match

@@ -58,23 +58,75 @@ fence or not):
 
 ## Validating agent output
 
-```bash
-python3 scripts/validate_report.py output.md                          # check every tagged block
-python3 scripts/validate_report.py --role red_team_skeptic output.md  # + require all of the role's reports
-python3 scripts/validate_report.py --require test_plan,risk_register output.md
-python3 scripts/validate_report.py --json output.md                   # for orchestrators / CI
-cat output.md | python3 scripts/validate_report.py -                  # stdin
+### Per skill (for a skill handler)
+
+Every skill folder ships its own runnable validator, and its frontmatter says how to call it:
+
+```yaml
+validation:
+  script: scripts/validate.py                    # relative to <dir>
+  command: uv run --script <dir>/scripts/validate.py --format json <file>
+  command_for_role: uv run --script <dir>/scripts/validate.py --format json --role <role> --board <board> <file>
+  fallback_command: python3 <dir>/scripts/validate.py --format json <file>
+  placeholders:
+    <dir>: Absolute path of this skill's folder (the one containing SKILL.md)
+    <file>: Path to the agent output to validate; '-' reads stdin
+    <role>: Role id that produced the output (blackboard.id of the role)
+    <board>: Board id the output belongs to (board= attribute on the report tag)
+  requires: [uv]
+  fallback_requires: [python3>=3.9, pyyaml>=6.0]
+  dependencies: PEP 723 inline metadata in scripts/validate.py (uv installs them on first run)
+  output: json
+  exit_codes: {0: valid, 1: invalid, 2: usage_error}
 ```
 
-It reports unknown report types and roles, a role tagging a report it doesn't produce,
-missing columns, labels, headings, keys, or steps, values outside `enums`, too few rows,
-ragged table rows, and unclosed or mismatched tags. The exit code is 1 on any error.
-A facilitator can run it on each dispatch return before merging into the
-[decision record](decision-record/SKILL.md), and retry the role with the errors when it fails.
+**Handler contract:**
+1. Pick `command`, or `command_for_role` when you know the role and board. Use
+   `fallback_command` when uv isn't available but PyYAML is.
+2. Split the template into argv *first* (shell-style), then replace each `<placeholder>`
+   inside each token. Never re-split substituted values, so paths with spaces are safe.
+   Every placeholder used is listed under `placeholders`.
+3. Run it, then read the exit code and the JSON on stdout:
+
+```json
+{"skill": "risk-register", "report_id": "risk_register", "version": 1, "file": "out.md",
+ "valid": false, "blocks": [{"line": 3, "role": "red_team_skeptic", "board": "BB-1"}],
+ "errors": [{"line": 3, "message": "row 1: Status='kinda' not in ['open', ...]"}]}
+```
+
+A usage error (exit 2) prints `{"valid": false, "usage_error": "..."}` instead.
+
+The script checks only blocks tagged with its own `report:<report_id>`, and ignores other
+report tags. Extra flags: `--allow-missing` (exit 0 when no block is present),
+`--roles-dir <dir>` (also check that role ids exist), and `--skill <dir>` (validate against
+another skill's SKILL.md). The reference substitution is `render_command()` in
+`scripts/blackboard-index.py`, which CI uses to run every skill's commands from a copied
+skill folder whose path contains a space.
+
+**Dependencies (uv):** `scripts/validate.py` carries PEP 723 metadata
+(`dependencies = ["pyyaml>=6.0"]`), so `uv run --script` builds an isolated environment
+on first use. There's no per-skill `pyproject.toml` to install. The repo's own tooling uses
+the root `pyproject.toml` / `uv.lock` (`uv sync`, then `uv run scripts/...`).
+
+All 32 copies are byte-identical to `scripts/skill_validate.py`. Edit that file, then run
+`uv run scripts/blackboard-index.py --write`.
+
+### Whole files, every report type
+
+```bash
+uv run scripts/validate_report.py output.md                          # check every tagged block
+uv run scripts/validate_report.py --role red_team_skeptic output.md  # + require all of the role's reports
+uv run scripts/validate_report.py --require test_plan,risk_register output.md
+uv run scripts/validate_report.py --json output.md
+```
+
+Both validators report the same problems: unknown report types and roles, a role tagging a
+report it doesn't produce, missing columns, labels, headings, keys, or steps, values outside
+`enums`, too few rows, ragged table rows, and unclosed or mismatched tags.
 
 ## How the pieces are kept in sync
 
-`python3 scripts/blackboard-index.py` (run in CI) enforces:
+`uv run scripts/blackboard-index.py` (run in CI) enforces:
 
 | Rule | Between |
 |---|---|
@@ -84,10 +136,13 @@ A facilitator can run it on each dispatch return before merging into the
 | `output.tag` is `report:<report_id>`, and folder and name match the id | skill internal |
 | The **Template** is wrapped in the output tag and contains every core field | skill ↔ its spec |
 | The **Example** is one tagged block that passes `validate_report.py` | skill ↔ its spec |
+| `scripts/validate.py` exists, is executable, and is byte-identical to `scripts/skill_validate.py` | skill ↔ canonical script |
+| `validation` placeholders are all declared and all used, and every command runs `<dir>/scripts/validate.py` | skill internal |
+| Each command, run from a copied skill folder, exits 0 on the Example and 1 on output with no report | skill ↔ runtime |
 | Each role's **Deliverable** links its report skills and contains their core fields | role ↔ skills |
 | The tables below match the current skills and roles | README ↔ index |
 
-`python3 scripts/test_validate_report.py` tests the output validator itself.
+`uv run scripts/test_validate_report.py` tests both validators.
 
 ## Using these skills
 
@@ -95,7 +150,9 @@ A facilitator can run it on each dispatch return before merging into the
 1. Seat roles from [`blackboard/panels.yaml`](../blackboard/panels.yaml).
 2. Give each role its own body plus the skills for its `reports`, along with the universal
    [`board_note`](board-note/SKILL.md) and [`dispatch_return`](dispatch-return/SKILL.md).
-3. Collect the tagged output and run `validate_report.py --role <id>` on it. If it fails, send the errors back.
+3. Collect the tagged output and validate it. Use each report skill's `validation.command_for_role`
+   through your skill handler, or `uv run scripts/validate_report.py --role <id>` for the whole file.
+   If it fails, send the errors back to the role.
 4. Merge the valid reports into the [decision record](decision-record/SKILL.md).
 
 **Lookup:** `blackboard/index.json` exposes `reports.<id>` (with `output` specs and
@@ -212,4 +269,5 @@ Strict Agent Skills linters that allow only `name`, `description`, `license`,
    On the board, Example (one tagged block that validates), and Quality checks.
 2. Add the id to the `blackboard.reports` of each producing role. Link the skill from the role's
    Deliverable section and include the core fields in its template.
-3. Run `python3 scripts/blackboard-index.py --write` and `python3 scripts/test_validate_report.py`.
+3. Copy the `validation:` block from an existing skill. Run `uv run scripts/blackboard-index.py --write`
+   to install `scripts/validate.py`, then run `uv run scripts/test_validate_report.py`.

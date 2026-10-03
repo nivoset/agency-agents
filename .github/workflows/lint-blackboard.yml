@@ -6,28 +6,29 @@ on:
       - "blackboard/**"
       - "reporting/**"
       - "scripts/blackboard-index.py"
+      - "scripts/skill_validate.py"
       - "scripts/validate_report.py"
       - "scripts/test_validate_report.py"
+      - "pyproject.toml"
+      - "uv.lock"
 
 jobs:
   lint:
-    name: Validate blackboard frontmatter, panels, and index
+    name: Validate blackboard frontmatter, panels, reporting skills, and index
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
-        with:
-          python-version: "3.12"
+      - uses: astral-sh/setup-uv@v6
 
-      - name: Install PyYAML
-        run: pip install pyyaml
+      - name: Sync tooling environment from uv.lock
+        run: uv sync --locked
 
-      - name: Validate roles, panels, tags, and reporting skills
-        run: python3 scripts/blackboard-index.py
+      - name: Validate roles, panels, tags, and reporting skills (runs each skill's validation commands)
+        run: uv run scripts/blackboard-index.py
 
-      - name: Test the report output validator
-        run: python3 scripts/test_validate_report.py
+      - name: Test the report validators
+        run: uv run scripts/test_validate_report.py
 
       - name: Run agent linter on blackboard roles
         run: |
@@ -36,5 +37,5 @@ jobs:
 
       - name: Check generated files are up to date
         run: |
-          python3 scripts/blackboard-index.py --write
-          git diff --exit-code blackboard/index.json reporting/README.md
+          uv run scripts/blackboard-index.py --write
+          git diff --exit-code blackboard/index.json reporting/README.md reporting/*/scripts/validate.py

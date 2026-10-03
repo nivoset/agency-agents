@@ -1,0 +1,12 @@
+[project]
+name = "agency-agents-tools"
+version = "0.1.0"
+description = "Validators and index tooling for the blackboard roles and reporting skills"
+requires-python = ">=3.9"
+dependencies = [
+    "pyyaml>=6.0",
+]
+
+[tool.uv]
+# Scripts only; nothing to build or install as a package.
+package = false

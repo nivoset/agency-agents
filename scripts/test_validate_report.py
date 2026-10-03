@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Tests for scripts/validate_report.py. Run: python3 scripts/test_validate_report.py"""
+import json
+import subprocess
 import sys
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -97,6 +100,60 @@ Scenario: works
         blocks, probs = validate_text(fenced, SPECS, ROLES)
         self.assertEqual([b["id"] for b in blocks], ["risk_register"])
         self.assertEqual(probs, [])
+
+
+SKILL = Path(__file__).resolve().parent.parent / "reporting" / "risk-register"
+
+
+def run_skill(text, *flags, skill=SKILL):
+    with tempfile.NamedTemporaryFile("w", suffix=".md", delete=False) as f:
+        f.write(text)
+    proc = subprocess.run([sys.executable, str(skill / "scripts" / "validate.py"), "--format", "json", *flags, f.name],
+                          capture_output=True, text=True)
+    return proc.returncode, json.loads(proc.stdout)
+
+
+class SkillScriptTests(unittest.TestCase):
+    def test_valid_output_exits_0(self):
+        code, result = run_skill(RISKS.format(status="open"))
+        self.assertEqual((code, result["valid"], result["report_id"]), (0, True, "risk_register"))
+
+    def test_invalid_output_exits_1(self):
+        code, result = run_skill(RISKS.format(status="whatever"))
+        self.assertEqual(code, 1)
+        self.assertTrue(any("not in" in e["message"] for e in result["errors"]))
+
+    def test_missing_block_exits_1_unless_allowed(self):
+        self.assertEqual(run_skill("nothing here")[0], 1)
+        self.assertEqual(run_skill("nothing here", "--allow-missing")[0], 0)
+
+    def test_other_report_types_are_ignored(self):
+        other = "<!-- report:findings_table role=hook_copywriter -->\nbroken\n<!-- /report:findings_table -->\n"
+        self.assertEqual(run_skill(other + RISKS.format(status="open"))[0], 0)
+
+    def test_role_and_board_flags(self):
+        text = RISKS.format(status="open")
+        self.assertEqual(run_skill(text, "--role", "red_team_skeptic", "--board", "BB-1")[0], 0)
+        code, result = run_skill(text, "--role", "qa_test_strategist")
+        self.assertEqual(code, 1)
+        self.assertTrue(any("expected 'qa_test_strategist'" in e["message"] for e in result["errors"]))
+        code, result = run_skill(text, "--board", "BB-2")
+        self.assertTrue(code == 1 and any("expected 'BB-2'" in e["message"] for e in result["errors"]))
+        code, result = run_skill(text, "--role", "hook_copywriter")
+        self.assertTrue(any("does not produce" in e["message"] for e in result["errors"]))
+
+    def test_roles_dir_checks_role_exists(self):
+        roles_dir = str(Path(__file__).resolve().parent.parent / "blackboard")
+        text = RISKS.format(status="open")
+        self.assertEqual(run_skill(text, "--roles-dir", roles_dir)[0], 0)
+
+    def test_usage_errors_exit_2(self):
+        proc = subprocess.run([sys.executable, str(SKILL / "scripts" / "validate.py"), "--format", "json",
+                               "/no/such/file.md"], capture_output=True, text=True)
+        self.assertEqual(proc.returncode, 2)
+        self.assertIn("usage_error", json.loads(proc.stdout))
+        code, result = run_skill("x", "--skill", "/no/such/skill")
+        self.assertEqual(code, 2)
 
 
 if __name__ == "__main__":

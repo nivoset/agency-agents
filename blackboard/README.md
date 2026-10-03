@@ -19,7 +19,7 @@ frontmatter alone.
 - Tag vocabulary: [`tags.yaml`](tags.yaml)
 - Report types and their skills: [`../reporting/`](../reporting/README.md)
 - Output validator: `python3 scripts/validate_report.py --role <id> output.md`
-- Validator: `python3 scripts/blackboard-index.py [--write]`
+- Validator: `uv run scripts/blackboard-index.py [--write]`
 
 ## Domains covered
 
@@ -156,4 +156,4 @@ frontmatter alone.
 2. Fill every required key in [`SCHEMA.md`](SCHEMA.md). Point `based_on` at the existing
    Agency agents the role draws from.
 3. Seat the role in at least one panel (`core` or `optional`).
-4. Run `python3 scripts/blackboard-index.py --write` and commit the regenerated `index.json`.
+4. Run `uv run scripts/blackboard-index.py --write` and commit the regenerated `index.json`.

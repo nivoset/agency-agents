@@ -12,6 +12,24 @@ output:
   format: table
   columns: [Ref, Example, Source, Borrow, Avoid]
   min_rows: 1
+validation:
+  script: scripts/validate.py
+  command: uv run --script <dir>/scripts/validate.py --format json <file>
+  command_for_role: uv run --script <dir>/scripts/validate.py --format json --role <role> --board <board> <file>
+  fallback_command: python3 <dir>/scripts/validate.py --format json <file>
+  placeholders:
+    <dir>: Absolute path of this skill's folder (the one containing SKILL.md)
+    <file>: Path to the agent output to validate; '-' reads stdin
+    <role>: Role id that produced the output (blackboard.id of the role)
+    <board>: Board id the output belongs to (board= attribute on the report tag)
+  requires: [uv]
+  fallback_requires: [python3>=3.9, pyyaml>=6.0]
+  dependencies: PEP 723 inline metadata in scripts/validate.py (uv installs them on first run)
+  output: json
+  exit_codes:
+    0: valid
+    1: invalid
+    2: usage_error
 ---
 
 # Reference List
@@ -25,7 +43,7 @@ When a role asks "how do others do this?", or before a design or approach is cho
 - `prior_art_scout`: the repository first, then the outside world.
 
 ## Template
-Wrap the report in its output tag so tools can find and check it (`scripts/validate_report.py`). Put your own role id in `role=` and the board id in `board=`.
+Wrap the report in its output tag so tools can find and check it (`scripts/validate.py` in this skill; see `validation` in the frontmatter). Put your own role id in `role=` and the board id in `board=`.
 ```markdown
 <!-- report:reference_list role=ROLE_ID board=BOARD_ID -->
 | Ref | Example | Source | Borrow | Avoid |

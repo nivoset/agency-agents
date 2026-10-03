@@ -11,7 +11,9 @@ Agents wrap every report they return in an output tag:
 This tool finds those blocks and checks each one against the `output:` spec in the
 matching skill's frontmatter: required columns, labels, headings, YAML keys, or
 Given/When/Then steps; allowed (enum) values; minimum rows; and that the tagged role
-actually produces that report.
+actually produces that report. It checks every report type at once. To check a single
+report type, run that skill's own `<dir>/scripts/validate.py` (see `validation:` in its
+SKILL.md). Both use the same checks from scripts/skill_validate.py.
 
 Usage:
   python3 scripts/validate_report.py output.md [more.md ...]       # '-' reads stdin
@@ -23,22 +25,14 @@ Exit code 0 when every block is valid (and required reports are present), 1 othe
 """
 import argparse
 import json
-import re
 import sys
 from pathlib import Path
 
-import yaml
-
 ROOT = Path(__file__).resolve().parent.parent
-OPEN_RE = re.compile(r"<!--\s*report:([a-z0-9_]+)((?:\s+[a-z_]+=[^\s>]+)*)\s*-->")
-CLOSE_RE = re.compile(r"<!--\s*/report:([a-z0-9_]+)\s*-->")
-SEPARATOR_RE = re.compile(r"^:?-+:?$")
-
-
-def load_frontmatter(path):
-    text = path.read_text(encoding="utf-8")
-    m = re.match(r"^---\n(.*?)\n---\n", text, re.S)
-    return yaml.safe_load(m.group(1)) if m else None
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from skill_validate import check_block as _check_block  # noqa: E402
+from skill_validate import find_blocks as _find_blocks  # noqa: E402
+from skill_validate import load_frontmatter, load_roles_dir  # noqa: E402,F401
 
 
 def load_specs(root=ROOT):
@@ -51,166 +45,19 @@ def load_specs(root=ROOT):
 
 
 def load_roles(root=ROOT):
-    roles = {}
-    for path in sorted((root / "blackboard").glob("*/*.md")):
-        fm = load_frontmatter(path) or {}
-        bb = fm.get("blackboard")
-        if isinstance(bb, dict) and bb.get("id"):
-            roles[bb["id"]] = bb
-    return roles
+    return load_roles_dir(root / "blackboard")
 
 
 def find_blocks(text):
-    """Return (blocks, errors). Each block: id, attrs, line, body (list of lines)."""
-    blocks, errors, current = [], [], None
-    for lineno, line in enumerate(text.splitlines(), 1):
-        opened, closed = OPEN_RE.search(line), CLOSE_RE.search(line)
-        if opened:
-            if current:
-                errors.append((current["line"], f"report:{current['id']} is not closed before line {lineno}"))
-            attrs = dict(a.split("=", 1) for a in opened.group(2).split())
-            current = {"id": opened.group(1), "attrs": attrs, "line": lineno, "body": []}
-        elif closed:
-            if not current or current["id"] != closed.group(1):
-                errors.append((lineno, f"closing tag /report:{closed.group(1)} has no matching open tag"))
-            else:
-                blocks.append(current)
-                current = None
-        elif current is not None and not line.strip().startswith("```"):
-            current["body"].append(line)
-    if current:
-        errors.append((current["line"], f"report:{current['id']} is never closed"))
-    return blocks, errors
-
-
-def split_row(line):
-    cells = re.split(r"(?<!\\)\|", line.strip())
-    if cells and cells[0].strip() == "":
-        cells = cells[1:]
-    if cells and cells[-1].strip() == "":
-        cells = cells[:-1]
-    return [c.strip() for c in cells]
-
-
-def tables(lines):
-    """Yield (header, rows) for each run of consecutive markdown table lines."""
-    run = []
-    for line in lines + [""]:
-        if line.strip().startswith("|"):
-            run.append(split_row(line))
-            continue
-        if run:
-            header, rows = run[0], [r for r in run[1:] if not all(SEPARATOR_RE.match(c) for c in r if c)]
-            yield header, rows
-            run = []
-
-
-def column_index(header, name):
-    name = name.lower()
-    return next((i for i, h in enumerate(header) if h.lower().startswith(name)), None)
-
-
-def enum_ok(value, allowed):
-    v = value.strip().strip("`*\"'").lower()
-    return any(v == a or (v.startswith(a) and not v[len(a)].isalnum()) for a in allowed)
-
-
-def label_value(text, label):
-    m = re.search(
-        rf"(?:^|\|)\s*(?:[-*]\s+)?(?:\*\*)?{re.escape(label)}[^:|\n]{{0,40}}?(?:\*\*)?\s*:\s*([^|\n]*)",
-        text, re.I | re.M)
-    return None if m is None else m.group(1).strip()
+    blocks, errors = _find_blocks(text)
+    return blocks, [(line, msg) for line, _, msg in errors]
 
 
 def check_block(block, specs, roles):
-    rid, errs = block["id"], []
-    spec = specs.get(rid)
+    spec = specs.get(block["id"])
     if spec is None:
-        return [f"unknown report type '{rid}'"]
-    role = block["attrs"].get("role")
-    if not role:
-        errs.append("missing role= attribute on the report tag")
-    elif roles is not None and role not in roles:
-        errs.append(f"unknown role '{role}'")
-    elif not spec.get("universal") and role not in (spec.get("produced_by") or []):
-        errs.append(f"role '{role}' does not produce {rid} (produced_by: {spec.get('produced_by')})")
-
-    out = spec.get("output") or {}
-    lines = block["body"]
-    text = "\n".join(lines)
-    min_rows = out.get("min_rows", 1)
-    enums = {str(k): [str(v).lower() for v in vals] for k, vals in (out.get("enums") or {}).items()}
-
-    if out.get("keys"):
-        try:
-            data = yaml.safe_load(text)
-        except yaml.YAMLError as e:
-            return errs + [f"body is not valid YAML: {str(e).splitlines()[0]}"]
-        items = data if isinstance(data, list) else [data]
-        if len(items) < min_rows:
-            errs.append(f"expected at least {min_rows} item(s), got {len(items)}")
-        for n, item in enumerate(items, 1):
-            if not isinstance(item, dict):
-                errs.append(f"item {n} is not a mapping")
-                continue
-            for key in out["keys"]:
-                if key not in item:
-                    errs.append(f"item {n}: missing key '{key}'")
-            for key, allowed in enums.items():
-                val = next((v for k, v in item.items() if k.lower() == key.lower()), None)
-                if val is not None:
-                    if not enum_ok(str(val), allowed):
-                        errs.append(f"item {n}: {key}={val!r} not in {allowed}")
-        return errs
-
-    if out.get("steps"):
-        scenarios = re.split(r"^\s*Scenario[^:\n]*:", text, flags=re.M)[1:]
-        if len(scenarios) < min_rows:
-            errs.append(f"expected at least {min_rows} scenario(s), got {len(scenarios)}")
-        for n, sc in enumerate(scenarios, 1):
-            starts = {l.strip().split(" ", 1)[0].lower() for l in sc.splitlines() if l.strip()}
-            for step in out["steps"]:
-                if step.lower() not in starts:
-                    errs.append(f"scenario {n}: missing '{step}' step")
-        return errs
-
-    if out.get("columns"):
-        match = None
-        for header, rows in tables(lines):
-            if all(column_index(header, c) is not None for c in out["columns"]):
-                match = (header, rows)
-                break
-        if match is None:
-            errs.append(f"no table with columns {out['columns']}")
-        else:
-            header, rows = match
-            if len(rows) < min_rows:
-                errs.append(f"table needs at least {min_rows} row(s), got {len(rows)}")
-            for n, row in enumerate(rows, 1):
-                if len(row) != len(header):
-                    errs.append(f"row {n}: {len(row)} cells but header has {len(header)}")
-            for key, allowed in enums.items():
-                j = column_index(header, key)
-                if j is None:
-                    continue
-                for n, row in enumerate(rows, 1):
-                    if j < len(row) and not enum_ok(row[j], allowed):
-                        errs.append(f"row {n}: {header[j]}={row[j]!r} not in {allowed}")
-
-    for label in out.get("labels") or []:
-        if label_value(text, label) is None:
-            errs.append(f"missing '{label}:' line")
-    for key, allowed in enums.items():
-        if out.get("columns") and any(column_index(h, key) is not None for h, _ in tables(lines)):
-            continue
-        value = label_value(text, key)
-        if value and not enum_ok(value, allowed):
-            errs.append(f"{key}: {value!r} not in {allowed}")
-
-    for heading in out.get("headings") or []:
-        if not re.search(rf"^#{{1,6}}\s.*{re.escape(heading)}", text, re.I | re.M):
-            errs.append(f"missing heading containing '{heading}'")
-    return errs
+        return [f"unknown report type '{block['id']}'"]
+    return _check_block(block, spec, roles)
 
 
 def validate_text(text, specs=None, roles=None, require=(), role=None):

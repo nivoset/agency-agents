@@ -3,14 +3,19 @@
 regenerate blackboard/index.json.
 
 Usage:
-  python3 scripts/blackboard-index.py           # validate only
-  python3 scripts/blackboard-index.py --write   # validate and write blackboard/index.json
+  uv run scripts/blackboard-index.py           # validate only
+  uv run scripts/blackboard-index.py --write   # validate and write blackboard/index.json
 
 See blackboard/SCHEMA.md for the role contract and reporting/README.md for reports.
 """
 import json
+import os
 import re
+import shlex
+import shutil
+import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 import yaml
@@ -25,7 +30,25 @@ from validate_report import load_specs, validate_text  # noqa: E402
 SPECS = load_specs(ROOT)
 REPORTS = {k: v for k, v in SPECS.items() if not v.get("universal")}
 UNIVERSAL = {k: v for k, v in SPECS.items() if v.get("universal")}
-SKILL_REQUIRED = ["name", "description", "report_id", "title", "version", "universal", "tags", "output"]
+SKILL_REQUIRED = ["name", "description", "report_id", "title", "version", "universal", "tags", "output",
+                  "validation"]
+CANONICAL_VALIDATOR = ROOT / "scripts" / "skill_validate.py"
+VALIDATION_KEYS = ["script", "command", "command_for_role", "fallback_command", "placeholders", "requires",
+                   "fallback_requires", "dependencies", "output", "exit_codes"]
+COMMAND_KEYS = ["command", "command_for_role", "fallback_command"]
+PLACEHOLDER_RE = re.compile(r"<[a-z_]+>")
+
+
+def render_command(template, values):
+    """Reference skill-handler substitution: split the template into argv, then replace
+    each <placeholder> inside each token. Values never get re-split, so paths with spaces
+    are safe."""
+    argv = []
+    for token in shlex.split(template):
+        for key, value in values.items():
+            token = token.replace(key, value)
+        argv.append(token)
+    return argv
 OUTPUT_FORMATS = {"table", "fields", "sections", "yaml", "gherkin"}
 OUTPUT_FIELD_KEYS = ["columns", "labels", "headings", "keys", "steps"]
 DOMAINS = {"software", "game", "presentation", "conflict", "social", "visual"}
@@ -41,6 +64,14 @@ STR_KEYS = ["speciality", "why_template", "deliverable", "done_when"]
 REQUIRED_SECTIONS = ["Identity", "Core Mission", "Critical Rules", "Board", "Deliverable", "Completeness"]
 
 errors = []
+
+
+warnings = []
+
+
+def warn(path, msg):
+    if msg not in [w.split(": ", 1)[1] for w in warnings]:
+        warnings.append(f"WARN  {path.relative_to(ROOT)}: {msg}")
 
 
 def err(path, msg):
@@ -155,6 +186,78 @@ def check_role(path, fm, body):
     return bb
 
 
+def check_validation(path, fm, example, attrs):
+    """Check the skill's `validation` block, its bundled script, and run its commands."""
+    v = fm.get("validation") or {}
+    for key in VALIDATION_KEYS:
+        if key not in v:
+            err(path, f"validation.{key} is required")
+    if any(k not in v for k in ["script", "placeholders"] + COMMAND_KEYS):
+        return
+    script = path.parent / v["script"]
+    if not script.is_file():
+        err(path, f"validation.script {v['script']} does not exist (run --write)")
+        return
+    if script.read_bytes() != CANONICAL_VALIDATOR.read_bytes():
+        err(script, "differs from scripts/skill_validate.py (run --write)")
+    if not os.access(script, os.X_OK):
+        err(script, "is not executable (run --write)")
+    declared = set(v["placeholders"])
+    used = set(PLACEHOLDER_RE.findall(" ".join(v[k] for k in COMMAND_KEYS)))
+    if used - declared:
+        err(path, f"validation commands use undeclared placeholders {sorted(used - declared)}")
+    if declared - used:
+        err(path, f"validation.placeholders declares unused {sorted(declared - used)}")
+    for key in COMMAND_KEYS:
+        if f"<dir>/{v['script']}" not in v[key]:
+            err(path, f"validation.{key} must run <dir>/{v['script']}")
+    if sorted(map(str, v.get("exit_codes") or {})) != ["0", "1", "2"]:
+        err(path, "validation.exit_codes must define 0, 1, and 2")
+
+    # Simulate the skill handler: copy the skill folder somewhere else (with a space in the
+    # path), substitute placeholders, and run. Example must pass; empty output must fail.
+    with tempfile.TemporaryDirectory() as tmp:
+        skill_copy = Path(tmp) / "installed skills" / path.parent.name
+        shutil.copytree(path.parent, skill_copy)
+        good, empty = Path(tmp) / "example output.md", Path(tmp) / "empty.md"
+        good.write_text(example, encoding="utf-8")
+        empty.write_text("No report here.\n", encoding="utf-8")
+        base = {"<dir>": str(skill_copy), "<role>": attrs.get("role", ""), "<board>": attrs.get("board", "")}
+        cases = [("command", good, 0), ("command_for_role", good, 0), ("command", empty, 1),
+                 ("fallback_command", good, 0)]
+        if shutil.which("uv") is None:
+            warn(path, "uv not found; skipping uv commands and checking only fallback_command")
+            cases = [c for c in cases if c[0] == "fallback_command"]
+        for key, target, expected in cases:
+            argv = render_command(v[key], {**base, "<file>": str(target)})
+            proc = subprocess.run(argv, capture_output=True, text=True, cwd=tmp)
+            if proc.returncode != expected:
+                err(path, f"validation.{key} on {target.name} exited {proc.returncode}, expected {expected}: "
+                          f"{(proc.stdout + proc.stderr).strip()[:300]}")
+                continue
+            try:
+                result = json.loads(proc.stdout)
+            except json.JSONDecodeError:
+                err(path, f"validation.{key} did not print JSON")
+                continue
+            if result.get("valid") is not (expected == 0) or result.get("report_id") != fm.get("report_id"):
+                err(path, f"validation.{key} JSON result is inconsistent: {result}")
+
+
+def sync_validators():
+    """Copy the canonical validator into every skill folder as its validation.script."""
+    for path in sorted(REPORTING_DIR.glob("*/SKILL.md")):
+        fm, _ = parse(path)
+        script = (fm or {}).get("validation", {}).get("script")
+        if not script:
+            continue
+        target = path.parent / script
+        target.parent.mkdir(parents=True, exist_ok=True)
+        if not target.exists() or target.read_bytes() != CANONICAL_VALIDATOR.read_bytes():
+            shutil.copyfile(CANONICAL_VALIDATOR, target)
+        target.chmod(0o755)
+
+
 def check_reporting(producers, roles):
     seen = set()
     for path in sorted(REPORTING_DIR.glob("*/SKILL.md")):
@@ -214,6 +317,8 @@ def check_reporting(producers, roles):
             err(path, f"Example must contain exactly one tagged report:{rid} block")
         for line, _, msg in problems:
             err(path, f"Example fails output validation: {msg}")
+        if blocks:
+            check_validation(path, fm, example, blocks[0]["attrs"])
 
         listed = set(re.findall(r"^- `([a-z0-9_]+)`", section(body, "Produced by") or "", re.M))
         if fm.get("universal"):
@@ -230,6 +335,10 @@ def check_reporting(producers, roles):
     for d in sorted(p.name for p in REPORTING_DIR.iterdir() if p.is_dir()):
         if not (REPORTING_DIR / d / "SKILL.md").exists():
             err(REPORTING_DIR / d, "folder has no SKILL.md")
+        extras = {p.relative_to(REPORTING_DIR / d).as_posix() for p in (REPORTING_DIR / d).rglob("*")
+                  if p.is_file() and "__pycache__" not in p.parts} - {"SKILL.md", "scripts/validate.py"}
+        if extras:
+            err(REPORTING_DIR / d, f"unexpected files {sorted(extras)}")
 
 
 BEGIN_MARK = "<!-- BEGIN GENERATED: python3 scripts/blackboard-index.py --write -->"
@@ -264,6 +373,8 @@ def render_readme(text, index):
 
 def main():
     write = "--write" in sys.argv
+    if write:
+        sync_validators()
     roles = {}
     files = sorted(p for p in BOARD_DIR.glob("*/*.md"))
     for path in files:
@@ -328,6 +439,8 @@ def main():
     for tag in sorted(set(TAGS) - used_tags):
         err(BOARD_DIR / "tags.yaml", f"tag '{tag}' is not used by any role or report")
 
+    if warnings:
+        print(warnings[0] if len(warnings) == 1 else f"{warnings[0]} (and {len(warnings) - 1} more)")
     if errors:
         print("\n".join(errors))
         print(f"\nFAILED: {len(errors)} error(s) across {len(files)} role files.")
