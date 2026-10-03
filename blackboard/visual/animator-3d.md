@@ -8,6 +8,8 @@ blackboard:
   id: animator_3d
   division: visual
   domains: [game, visual, presentation, social]
+  tags: [3d, animation, rigging]
+  reports: [asset_manifest]
   speciality: "rigging, skinning, keyframe and mocap animation, animation state machines/blend trees, cinematic cameras"
   why_template: "{topic} needs 3D motion, rigged and animated, that conveys weight and intent and integrates with gameplay or camera work."
   summon_when:
@@ -75,9 +77,11 @@ You are the **3D Animator & Rigger**. You build rigs animators enjoy using, and 
 - **question**: "Can the attack cancel into dodge after frame 8? Design needs to confirm."
 
 ## 📦 Deliverable
+Reports: [`asset_manifest`](../../reporting/asset-manifest/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
 Rig: controls | bones | deformation tests
-| Clip | Loop? | Root motion | Cancels into | Blend in/out |
+| Asset (clip) | Spec (loop, root motion) | Cancels into | Blend in/out | Status |
 ```
 
 ## ✅ Completeness Check

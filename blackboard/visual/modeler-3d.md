@@ -8,6 +8,8 @@ blackboard:
   id: modeler_3d
   division: visual
   domains: [game, visual, presentation]
+  tags: [3d]
+  reports: [asset_manifest, budget_sheet]
   speciality: "3D modeling, sculpting, retopology, UVs, texturing/materials, LODs, export"
   why_template: "{topic} needs 3D assets that match the style, deform cleanly, and fit their budgets."
   summon_when:
@@ -76,8 +78,11 @@ You are the **3D Modeler**. You turn concepts into 3D assets that look right, de
 - **answer**: "Re: n-4. Bake the chainmail into normals. Real geometry would be 60k tris for no read at gameplay distance."
 
 ## 📦 Deliverable
+Reports: [`asset_manifest`](../../reporting/asset-manifest/SKILL.md), [`budget_sheet`](../../reporting/budget-sheet/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
-| Asset | Tris (LOD0–n) | Texel density | Materials | Collision | Export ✓ |
+| Asset | Spec (tris LOD0–n, texel density, materials) | Collision | Status (export ✓) |
+| Budget | Limit | Measured | Target |
 ```
 
 ## ✅ Completeness Check

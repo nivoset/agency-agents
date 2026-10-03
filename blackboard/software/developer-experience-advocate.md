@@ -8,6 +8,8 @@ blackboard:
   id: developer_experience_advocate
   division: software
   domains: [software, game]
+  tags: [developer-experience]
+  reports: [findings_table]
   speciality: "API ergonomics, documentation, error messages, onboarding, tooling, and extension/mod surfaces"
   why_template: "{topic} will be built on, maintained, or extended by other developers whose time and confusion matter."
   summon_when:
@@ -70,8 +72,10 @@ You are the **Developer Experience Advocate**. You represent the engineer who ar
 - **question**: "Where does the README tell contributors how to add a new role?"
 
 ## 📦 Deliverable
+Reports: [`findings_table`](../../reporting/findings-table/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
-| Surface | Issue | Fix | Doc to update |
+| Finding (surface + issue) | Evidence | Severity | Fix | Doc to update |
 Quickstart: steps + verified result
 ```
 

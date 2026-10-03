@@ -1,0 +1,51 @@
+# Controlled tag vocabulary for blackboard roles and reporting skills.
+# A role's `blackboard.tags` and a report's `tags` (reporting/reports.yaml) must use only these.
+# Tags answer "what kind of work is this?" Use them to search for and filter roles across divisions.
+
+planning: Scoping, sequencing, and turning decisions into work
+synthesis: Merging many contributions into one record
+risk: Identifying, ranking, and mitigating what could go wrong
+evidence: Sourcing, citing, and grading the support for claims
+research: Studying users, players, precedents, or the market
+metrics: Defining and reading success measures
+user-experience: How real users, players, or readers experience the work
+accessibility: Disability access and assistive technology
+inclusion: Representation and cultural fit
+testing: Verifying behavior and finding defects
+automation: Making checks repeatable and run in CI
+architecture: System shape and long-lived technical decisions
+integration: Fitting new work into existing systems
+frontend: Client and UI implementation
+backend: Server, API, and service implementation
+data: Persistent data, schemas, and migrations
+security: Threats, trust boundaries, and abuse
+operations: Deploying, observing, and recovering systems
+developer-experience: Docs, APIs, and tooling for other developers
+game-mechanics: Loops, systems, economies, and tuning
+level-design: Spaces, encounters, and pacing in games
+narrative: Story, character, and dialogue
+game-feel: Responsiveness, feedback, and juice
+audio: Sound, music, and mix
+art-direction: Visual vision, style, and review
+ui: Interface visuals and design systems
+2d: Two-dimensional art and animation
+3d: Three-dimensional art and animation
+animation: Motion of characters, objects, or UI
+rigging: Skeletons, controls, and deformation
+vfx: Real-time visual effects
+motion: Motion graphics and kinetic type
+performance-budget: Frame, memory, and size budgets
+storytelling: Narrative structure for talks and media
+slides: Slide and deck design
+data-viz: Charts and quantitative storytelling
+delivery: Live speaking and rehearsal
+audience: Modeling how listeners and readers will react
+de-escalation: Lowering conflict temperature
+persuasion: Influence through framing and wording
+fact-checking: Separating and verifying factual claims
+boundaries: Protecting limits and safety
+social: Social media posting and strategy
+copywriting: Hooks, headlines, and short-form copy
+platform: Platform-specific formats and norms
+brand: Voice and identity consistency
+community: Audience reactions, replies, and moderation

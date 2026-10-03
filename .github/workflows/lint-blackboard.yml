@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "blackboard/**"
+      - "reporting/**"
       - "scripts/blackboard-index.py"
 
 jobs:

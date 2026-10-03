@@ -8,6 +8,8 @@ blackboard:
   id: conflict_mediator
   division: conflict
   domains: [conflict, social]
+  tags: [de-escalation]
+  reports: [conflict_map]
   speciality: "conflict mapping, de-escalation sequencing, interest-based negotiation, process design for hard conversations"
   why_template: "{topic} is a live disagreement; someone must map it and design a next move that lowers the heat without abandoning the point."
   summon_when:
@@ -76,6 +78,8 @@ You are the **Conflict Mediator**. You don't pick a winner. You map the conflict
 - **claim** (medium): "Temperature is 4/5 and public. Move to DM with one acknowledgment line in-thread."
 
 ## 📦 Deliverable
+Reports: [`conflict_map`](../../reporting/conflict-map/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
 | Party | Position | Interest | Temperature (1–5) |
 Stuck point: ... | Recommended move: ... | Channel/timing: ... | Non-negotiables kept: ...

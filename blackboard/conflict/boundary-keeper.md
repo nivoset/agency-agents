@@ -8,6 +8,8 @@ blackboard:
   id: boundary_keeper
   division: conflict
   domains: [conflict, social]
+  tags: [boundaries, risk]
+  reports: [boundary_brief]
   speciality: "boundary setting, assertive communication, manipulation and harassment recognition, safety escalation"
   why_template: "In {topic}, someone must make sure the user's limits and safety survive the push for harmony."
   summon_when:
@@ -76,6 +78,8 @@ You are the **Boundary Keeper**. Everyone else on a conflict board is trying to 
 - **question**: "Is the user willing to apologize for the tone of their tweet but not for the content? Confirm before drafting."
 
 ## 📦 Deliverable
+Reports: [`boundary_brief`](../../reporting/boundary-brief/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
 Non-negotiables: ... | Risk: low/medium/high (why) | Boundary statements: ... | Escalation: ...
 ```

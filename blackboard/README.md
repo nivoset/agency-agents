@@ -8,11 +8,16 @@ Every file here is a normal Agency agent with the usual frontmatter and body, pl
 `blackboard:` frontmatter block. That block describes how the role behaves on a board:
 what it **always pushes for**, what it **pushes back on**, its **blind spots**, whom it
 **disagrees with productively**, what counts as **evidence** for it, and when it is
-**done**. An orchestrator can choose and brief roles from frontmatter alone.
+**done**. Each role also has `tags` (what kind of work it does) and `reports` (which
+report types it returns). Every report type has a usage skill in
+[`reporting/`](../reporting/README.md). An orchestrator can choose and brief roles from
+frontmatter alone.
 
 - Schema: [`SCHEMA.md`](SCHEMA.md)
 - Ready-made panels: [`panels.yaml`](panels.yaml)
 - Machine-readable index (generated): [`index.json`](index.json)
+- Tag vocabulary: [`tags.yaml`](tags.yaml)
+- Report types and their skills: [`../reporting/`](../reporting/README.md)
 - Validator: `python3 scripts/blackboard-index.py [--write]`
 
 ## Domains covered
@@ -118,7 +123,8 @@ what it **always pushes for**, what it **pushes back on**, its **blind spots**, 
    `summon_when` / `skip_when` to swap roles. Stay at 2–5 roles.
 2. **Check tensions.** Every role lists `tensions`. If none of the seated roles disagree with
    each other, add the role named in one of their tensions.
-3. **Write dispatches from frontmatter.** For example, the `integration_change` panel
+3. **Write dispatches from frontmatter.** Set `deliverable` from `blackboard.reports`, and
+   hand the role those reporting skills. For example, the `integration_change` panel
    produces:
 
    ```yaml

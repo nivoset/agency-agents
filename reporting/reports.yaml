@@ -1,0 +1,143 @@
+# Registry of report types. Each entry has a skill at reporting/<id with - for _>/SKILL.md.
+#
+#   title        human name of the report
+#   tags         from blackboard/tags.yaml
+#   core_fields  columns/headings every producer MUST include (roles may add more).
+#                The validator checks they appear in the skill's Template section AND
+#                in the Deliverable section of every role that lists this report.
+#   universal    true = every role uses it; roles don't list it in `reports`.
+#
+# Producers are not listed here. They come from each role's `blackboard.reports`,
+# and the validator checks that each skill's "Produced by" section matches them exactly.
+
+universal:
+  board_note:
+    title: Board Note
+    tags: [evidence, synthesis]
+    core_fields: [kind, body, confidence, refersTo]
+  dispatch_return:
+    title: Dispatch Return
+    tags: [evidence, synthesis]
+    core_fields: [status, claims/results, evidence, uncertainty, implication/next action, changed paths]
+
+reports:
+  decision_record:
+    title: Decision Record
+    tags: [synthesis, planning, evidence]
+    core_fields: [Resolved scope, Non-goals, "Claims, evidence, and decisions", Blocking questions, completeness pass, Verification evidence]
+  ticket_drafts:
+    title: Ticket Drafts
+    tags: [planning]
+    core_fields: [Ticket, Acceptance evidence, Depends on, Status]
+  product_brief:
+    title: Product Brief
+    tags: [planning, metrics]
+    core_fields: [Problem, User, Outcome metric, Kill criteria, Non-goals]
+  acceptance_cases:
+    title: Acceptance Cases
+    tags: [testing, user-experience, planning]
+    core_fields: [Given, When, Then]
+  findings_table:
+    title: Findings Table
+    tags: [evidence, risk]
+    core_fields: [Finding, Evidence, Severity, Fix]
+  risk_register:
+    title: Risk Register
+    tags: [risk]
+    core_fields: [Risk, Likelihood, Impact, Mitigation, Status]
+  reference_list:
+    title: Reference List
+    tags: [research, evidence]
+    core_fields: [Ref, Example, Source, Borrow, Avoid]
+  research_findings:
+    title: Research Findings
+    tags: [research, evidence, user-experience]
+    core_fields: [Question, Method, Sample, Findings, Confidence, Implication]
+  test_plan:
+    title: Test Plan
+    tags: [testing]
+    core_fields: [Acceptance criterion, Test, Level, Evidence]
+  bug_report:
+    title: Bug Report
+    tags: [testing]
+    core_fields: [Steps, Expected, Actual, Environment, Severity]
+  adr:
+    title: Architecture Decision Record
+    tags: [architecture]
+    core_fields: [Context, Options, Decision, Consequences]
+  impact_map:
+    title: Change Impact Map
+    tags: [integration, risk]
+    core_fields: [Path, Change, Risk, Mitigation, Preservation check]
+  interface_contract:
+    title: Interface Contract
+    tags: [frontend, backend, integration]
+    core_fields: [Interface, Input, Output, Errors]
+  data_model:
+    title: Data Model
+    tags: [data]
+    core_fields: [Entity, Fields, Invariants, Indexes, Retention, Migration]
+  threat_model:
+    title: Threat Model
+    tags: [security, risk]
+    core_fields: [Asset, Threat, Likelihood, Impact, Fix, Verify]
+  ops_plan:
+    title: Ops Plan
+    tags: [operations]
+    core_fields: [Deploy, Rollback, SLOs, Alerts, Runbook]
+  mechanic_sheet:
+    title: Mechanic Sheet
+    tags: [game-mechanics]
+    core_fields: [Mechanic, Purpose, Player decision, Inputs, Outputs, Edge cases]
+  beat_chart:
+    title: Beat Chart
+    tags: [storytelling, level-design, narrative, motion]
+    core_fields: [Beat, Purpose, Timing, Intensity]
+  budget_sheet:
+    title: Budget Sheet
+    tags: [performance-budget]
+    core_fields: [Budget, Limit, Measured, Target]
+  asset_manifest:
+    title: Asset Manifest
+    tags: [2d, 3d, animation, audio, vfx]
+    core_fields: [Asset, Spec, Status]
+  style_guide:
+    title: Style Guide
+    tags: [art-direction, ui, brand]
+    core_fields: [Rule, Do, "Don't"]
+  slide_spec:
+    title: Slide Spec
+    tags: [slides]
+    core_fields: [Slide, Focal point, Layout, Build steps, Alt text]
+  chart_spec:
+    title: Chart Spec
+    tags: [data-viz, evidence]
+    core_fields: [Chart, Question, Takeaway title, Type, Source]
+  objection_map:
+    title: Objection Map
+    tags: [audience, community, risk]
+    core_fields: [Segment, Objection, Response, Status]
+  rehearsal_plan:
+    title: Rehearsal Plan
+    tags: [delivery]
+    core_fields: [Rehearsals, Timing marks, Demo fallback, Q&A bank]
+  conflict_map:
+    title: Conflict Map
+    tags: [de-escalation]
+    core_fields: [Party, Interest]
+  boundary_brief:
+    title: Boundary Brief
+    tags: [boundaries, risk]
+    core_fields: [Non-negotiables, Risk, Boundary statements, Escalation]
+  claim_ledger:
+    title: Claim Ledger
+    tags: [fact-checking, evidence]
+    core_fields: [Claim, Type, Status, Source, Material]
+  draft_variants:
+    title: Draft Variants
+    tags: [copywriting, persuasion]
+    core_fields: [Variant, Rationale]
+  content_brief:
+    title: Content Brief
+    tags: [social, metrics, audience]
+    core_fields: [Goal, Audience, Platform, CTA, Metric]

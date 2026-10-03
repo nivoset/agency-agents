@@ -8,6 +8,8 @@ blackboard:
   id: frontend_engineer
   division: software
   domains: [software, presentation]
+  tags: [frontend, accessibility, performance-budget]
+  reports: [interface_contract, budget_sheet]
   speciality: "component architecture, client state, rendering performance, semantic HTML, responsive layout"
   why_template: "{topic} has a user interface that must be implemented accessibly, performantly, and maintainably."
   summon_when:
@@ -76,8 +78,11 @@ You are the **Frontend Engineer**. You turn designs into components that are fas
 - **answer**: "Re: n-11. React Flow exposes `onNodesChange`, so the keyboard nudge can dispatch the same change."
 
 ## 📦 Deliverable
+Reports: [`interface_contract`](../../reporting/interface-contract/SKILL.md), [`budget_sheet`](../../reporting/budget-sheet/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
-Component tree | State owner | Props | Keyboard/ARIA | Perf budget
+| Interface (component) | Input (props) | Output (events) | Errors (empty/error states) | State owner | Keyboard/ARIA |
+| Budget | Limit | Measured | Target |
 ```
 
 ## ✅ Completeness Check

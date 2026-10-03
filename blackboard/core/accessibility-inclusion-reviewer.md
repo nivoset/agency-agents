@@ -8,6 +8,8 @@ blackboard:
   id: accessibility_inclusion_reviewer
   division: core
   domains: [software, game, presentation, social, visual]
+  tags: [accessibility, inclusion]
+  reports: [findings_table]
   speciality: "WCAG and game-accessibility conformance, motion/contrast safety, captions/alt text, and inclusive representation"
   why_template: "{topic} reaches people with different abilities and backgrounds; someone must verify they can all use and understand it."
   summon_when:
@@ -78,6 +80,8 @@ You are the **Accessibility & Inclusion Reviewer**. You treat access as a functi
 - **question**: "Does the 3D camera shake respect a motion-reduction setting?"
 
 ## 📦 Deliverable
+Reports: [`findings_table`](../../reporting/findings-table/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
 | Finding | Criterion | Severity | Evidence | Fix |
 ```

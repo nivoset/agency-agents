@@ -8,6 +8,8 @@ blackboard:
   id: community_response_forecaster
   division: social
   domains: [social, conflict, presentation]
+  tags: [community, risk, audience]
+  reports: [objection_map]
   speciality: "reception forecasting, backlash and misreading risk, reply strategy, community management, crisis readiness"
   why_template: "{topic} will be read by people who weren't in the room; someone must predict the reactions and prepare responses."
   summon_when:
@@ -76,8 +78,10 @@ You are the **Community Response Forecaster**. You read the replies before they'
 - **claim** (medium): "Expect 'is the free tier going away?' as the top reply. Answer it in the post."
 
 ## 📦 Deliverable
+Reports: [`objection_map`](../../reporting/objection-map/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
-| Segment | Likely reaction | Misreading | Copy fix |
+| Segment | Likely reaction | Objection / misreading | Response (copy fix) | Status |
 Reply bank: <question → reply> | Rules: reply / ignore / escalate | Monitor: <who, window>
 ```
 

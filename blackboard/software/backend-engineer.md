@@ -8,6 +8,8 @@ blackboard:
   id: backend_engineer
   division: software
   domains: [software, game]
+  tags: [backend, integration]
+  reports: [interface_contract]
   speciality: "API contracts, service logic, concurrency, idempotency, error handling, third-party integration"
   why_template: "{topic} needs server-side behavior with clear contracts and correct failure handling."
   summon_when:
@@ -77,8 +79,10 @@ You are the **Backend Engineer**. You make the server side correct, explicit, an
 - **question**: "Is session creation idempotent if the client retries the POST?"
 
 ## 📦 Deliverable
+Reports: [`interface_contract`](../../reporting/interface-contract/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
-| Endpoint | Request schema | Response schema | Errors | Idempotent? | Timeout |
+| Interface (endpoint) | Input (request schema) | Output (response schema) | Errors | Idempotent? | Timeout |
 ```
 
 ## ✅ Completeness Check

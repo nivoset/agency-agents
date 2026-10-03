@@ -8,6 +8,8 @@ blackboard:
   id: slide_designer
   division: presentation
   domains: [presentation, visual]
+  tags: [slides, art-direction, accessibility]
+  reports: [slide_spec]
   speciality: "slide layout, typography, visual hierarchy, diagrams, imagery, builds and templates"
   why_template: "{topic} needs slides that make each point visually obvious and readable from the back of the room."
   summon_when:
@@ -74,6 +76,8 @@ You are the **Slide Designer**. You give every slide one focal point, legible ty
 - **answer**: "Re: n-3. Split the comparison table into two slides, before and after."
 
 ## 📦 Deliverable
+Reports: [`slide_spec`](../../reporting/slide-spec/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
 Template: grid | type scale | palette
 | Slide | Focal point | Layout | Build steps | Alt text |

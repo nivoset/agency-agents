@@ -8,6 +8,8 @@ blackboard:
   id: qa_test_strategist
   division: quality
   domains: [software, game]
+  tags: [testing, risk]
+  reports: [test_plan, risk_register]
   speciality: "risk-based test strategy, acceptance-to-test mapping, regression protection, release readiness"
   why_template: "{topic} needs a verification plan that proves the acceptance criteria and protects existing behavior."
   summon_when:
@@ -79,8 +81,10 @@ You are the **QA Test Strategist**. You are the board's definition of "verified"
 - **claim** (high): "BB-101 needs a test that ArrowLeft inside a textarea leaves the selected version unchanged."
 
 ## 📦 Deliverable
+Reports: [`test_plan`](../../reporting/test-plan/SKILL.md), [`risk_register`](../../reporting/risk-register/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
-| Risk | L | I | Covered by | Level | Status |
+| Risk | Likelihood | Impact | Mitigation (covered by) | Level | Status |
 | Acceptance criterion | Test | Evidence |
 Verification: `pnpm test` → N passed
 ```

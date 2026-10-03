@@ -17,6 +17,13 @@
         "social",
         "visual"
       ],
+      "tags": [
+        "accessibility",
+        "inclusion"
+      ],
+      "reports": [
+        "findings_table"
+      ],
       "speciality": "WCAG and game-accessibility conformance, motion/contrast safety, captions/alt text, and inclusive representation",
       "why_template": "{topic} reaches people with different abilities and backgrounds; someone must verify they can all use and understand it.",
       "summon_when": [
@@ -93,6 +100,13 @@
         "social",
         "visual"
       ],
+      "tags": [
+        "2d",
+        "animation"
+      ],
+      "reports": [
+        "asset_manifest"
+      ],
       "speciality": "2D frame-by-frame and skeletal animation, sprite sheets, UI micro-animation, timing and spacing",
       "why_template": "{topic} needs 2D motion that communicates action, weight, and personality within frame and file budgets.",
       "summon_when": [
@@ -166,6 +180,14 @@
         "visual",
         "presentation",
         "social"
+      ],
+      "tags": [
+        "3d",
+        "animation",
+        "rigging"
+      ],
+      "reports": [
+        "asset_manifest"
       ],
       "speciality": "rigging, skinning, keyframe and mocap animation, animation state machines/blend trees, cinematic cameras",
       "why_template": "{topic} needs 3D motion, rigged and animated, that conveys weight and intent and integrates with gameplay or camera work.",
@@ -241,6 +263,15 @@
         "presentation",
         "social",
         "visual"
+      ],
+      "tags": [
+        "art-direction",
+        "2d",
+        "3d"
+      ],
+      "reports": [
+        "style_guide",
+        "findings_table"
       ],
       "speciality": "visual direction, style guides, shape language, color and lighting, composition, art review",
       "why_template": "{topic} needs one coherent visual language that every artist and asset follows.",
@@ -321,6 +352,13 @@
         "presentation",
         "social"
       ],
+      "tags": [
+        "audience",
+        "risk"
+      ],
+      "reports": [
+        "objection_map"
+      ],
       "speciality": "audience modeling, objection prediction, comprehension and tone checks, ask strategy",
       "why_template": "The audience for {topic} has its own priors, doubts, and incentives; someone must speak for them before the talk does.",
       "summon_when": [
@@ -391,6 +429,13 @@
       "domains": [
         "software",
         "game"
+      ],
+      "tags": [
+        "backend",
+        "integration"
+      ],
+      "reports": [
+        "interface_contract"
       ],
       "speciality": "API contracts, service logic, concurrency, idempotency, error handling, third-party integration",
       "why_template": "{topic} needs server-side behavior with clear contracts and correct failure handling.",
@@ -476,6 +521,14 @@
         "social",
         "visual"
       ],
+      "tags": [
+        "planning",
+        "synthesis"
+      ],
+      "reports": [
+        "decision_record",
+        "ticket_drafts"
+      ],
       "speciality": "scope resolution, panel selection, dispatch writing, round control, and evidence-bound synthesis",
       "why_template": "Someone must own scope, keep the board at five roles or fewer, and turn notes on {topic} into one decision record.",
       "summon_when": [
@@ -548,6 +601,13 @@
       "domains": [
         "conflict",
         "social"
+      ],
+      "tags": [
+        "boundaries",
+        "risk"
+      ],
+      "reports": [
+        "boundary_brief"
       ],
       "speciality": "boundary setting, assertive communication, manipulation and harassment recognition, safety escalation",
       "why_template": "In {topic}, someone must make sure the user's limits and safety survive the push for harmony.",
@@ -626,6 +686,14 @@
         "presentation",
         "visual"
       ],
+      "tags": [
+        "brand",
+        "copywriting"
+      ],
+      "reports": [
+        "style_guide",
+        "findings_table"
+      ],
       "speciality": "voice and tone guidelines, brand consistency, messaging hierarchy, visual identity alignment",
       "why_template": "{topic} speaks for a brand or person; it must sound and look like them across every platform and moment.",
       "summon_when": [
@@ -698,6 +766,14 @@
         "social",
         "conflict",
         "presentation"
+      ],
+      "tags": [
+        "community",
+        "risk",
+        "audience"
+      ],
+      "reports": [
+        "objection_map"
       ],
       "speciality": "reception forecasting, backlash and misreading risk, reply strategy, community management, crisis readiness",
       "why_template": "{topic} will be read by people who weren't in the room; someone must predict the reactions and prepare responses.",
@@ -773,6 +849,12 @@
         "conflict",
         "social"
       ],
+      "tags": [
+        "de-escalation"
+      ],
+      "reports": [
+        "conflict_map"
+      ],
       "speciality": "conflict mapping, de-escalation sequencing, interest-based negotiation, process design for hard conversations",
       "why_template": "{topic} is a live disagreement; someone must map it and design a next move that lowers the heat without abandoning the point.",
       "summon_when": [
@@ -845,6 +927,13 @@
       "domains": [
         "software",
         "game"
+      ],
+      "tags": [
+        "data",
+        "architecture"
+      ],
+      "reports": [
+        "data_model"
       ],
       "speciality": "data modeling, schema evolution, migrations, indexing, consistency, retention",
       "why_template": "{topic} stores or changes persistent data whose shape will outlive the code that writes it.",
@@ -927,6 +1016,13 @@
         "social",
         "software"
       ],
+      "tags": [
+        "data-viz",
+        "evidence"
+      ],
+      "reports": [
+        "chart_spec"
+      ],
       "speciality": "chart selection, data-to-insight framing, honest visualization, annotated takeaways",
       "why_template": "{topic} rests on numbers; someone must turn them into honest charts with one clear takeaway each.",
       "summon_when": [
@@ -998,6 +1094,12 @@
       "domains": [
         "presentation",
         "conflict"
+      ],
+      "tags": [
+        "delivery"
+      ],
+      "reports": [
+        "rehearsal_plan"
       ],
       "speciality": "pacing, rehearsal, vocal and stage delivery, live-demo risk, Q&A preparation, nerves",
       "why_template": "{topic} will be delivered live by a person; someone must make it speakable, rehearsable, and resilient to failure.",
@@ -1071,6 +1173,12 @@
         "software",
         "game"
       ],
+      "tags": [
+        "developer-experience"
+      ],
+      "reports": [
+        "findings_table"
+      ],
       "speciality": "API ergonomics, documentation, error messages, onboarding, tooling, and extension/mod surfaces",
       "why_template": "{topic} will be built on, maintained, or extended by other developers whose time and confusion matter.",
       "summon_when": [
@@ -1136,6 +1244,14 @@
         "conflict",
         "social",
         "presentation"
+      ],
+      "tags": [
+        "persuasion",
+        "copywriting",
+        "de-escalation"
+      ],
+      "reports": [
+        "draft_variants"
       ],
       "speciality": "tactful message drafting, tone calibration, persuasive framing, two-length replies with rationale",
       "why_template": "{topic} needs words that carry the user's point while making the other person more, not less, willing to listen.",
@@ -1211,6 +1327,15 @@
         "presentation",
         "social",
         "visual"
+      ],
+      "tags": [
+        "user-experience",
+        "accessibility",
+        "risk"
+      ],
+      "reports": [
+        "findings_table",
+        "acceptance_cases"
       ],
       "speciality": "user impact, accessibility, and recovery",
       "why_template": "{topic} will be judged by the people using it; someone must check it for confusing, inaccessible, or unrecoverable moments.",
@@ -1298,6 +1423,13 @@
         "game",
         "presentation"
       ],
+      "tags": [
+        "testing",
+        "user-experience"
+      ],
+      "reports": [
+        "bug_report"
+      ],
       "speciality": "charter-based exploratory testing, bug bashes, edge/abuse cases, reproduction quality",
       "why_template": "Scripted checks on {topic} won't find everything; someone must explore it like an unpredictable user.",
       "summon_when": [
@@ -1364,6 +1496,13 @@
         "conflict",
         "social",
         "presentation"
+      ],
+      "tags": [
+        "fact-checking",
+        "evidence"
+      ],
+      "reports": [
+        "claim_ledger"
       ],
       "speciality": "claim extraction, fact-checking, source evaluation, separating empirical from value disagreements",
       "why_template": "The disagreement in {topic} mixes checkable facts with values; someone must untangle them so each is handled the right way.",
@@ -1435,6 +1574,15 @@
       "domains": [
         "software",
         "presentation"
+      ],
+      "tags": [
+        "frontend",
+        "accessibility",
+        "performance-budget"
+      ],
+      "reports": [
+        "interface_contract",
+        "budget_sheet"
       ],
       "speciality": "component architecture, client state, rendering performance, semantic HTML, responsive layout",
       "why_template": "{topic} has a user interface that must be implemented accessibly, performantly, and maintainably.",
@@ -1516,6 +1664,14 @@
         "presentation",
         "social"
       ],
+      "tags": [
+        "audio",
+        "game-feel",
+        "accessibility"
+      ],
+      "reports": [
+        "asset_manifest"
+      ],
       "speciality": "SFX, adaptive music, mixing, audio feedback, spatial audio, middleware integration",
       "why_template": "{topic} relies on sound for feedback, emotion, and readability, so it needs an intentional audio plan.",
       "summon_when": [
@@ -1583,6 +1739,13 @@
       "division": "game",
       "domains": [
         "game"
+      ],
+      "tags": [
+        "game-mechanics",
+        "metrics"
+      ],
+      "reports": [
+        "mechanic_sheet"
       ],
       "speciality": "core loops, mechanics, progression, economy balance, and player motivation",
       "why_template": "{topic} needs gameplay systems whose loops, levers, and numbers create meaningful player decisions.",
@@ -1660,6 +1823,13 @@
       "domains": [
         "game"
       ],
+      "tags": [
+        "game-feel",
+        "performance-budget"
+      ],
+      "reports": [
+        "budget_sheet"
+      ],
       "speciality": "engine-level mechanic implementation, game feel, physics/input, networking, data-driven tuning, performance",
       "why_template": "{topic} must be implemented in-engine with responsive feel, tunable values, and a stable frame budget.",
       "summon_when": [
@@ -1736,6 +1906,13 @@
       "domains": [
         "social",
         "presentation"
+      ],
+      "tags": [
+        "copywriting",
+        "social"
+      ],
+      "reports": [
+        "draft_variants"
       ],
       "speciality": "hooks, headlines, short-form copy, threads, captions, CTAs, A/B variants",
       "why_template": "{topic} competes with an infinite feed; it needs a first line that earns attention honestly and copy that carries readers to the CTA.",
@@ -1815,6 +1992,13 @@
         "social",
         "visual"
       ],
+      "tags": [
+        "2d",
+        "art-direction"
+      ],
+      "reports": [
+        "asset_manifest"
+      ],
       "speciality": "2D concept art, illustration, sprites/pixel art, icons, vector graphics, export specs",
       "why_template": "{topic} needs 2D artwork that is on-style, readable at its display size, and exported to spec.",
       "summon_when": [
@@ -1888,6 +2072,14 @@
       "domains": [
         "software",
         "game"
+      ],
+      "tags": [
+        "integration",
+        "architecture",
+        "risk"
+      ],
+      "reports": [
+        "impact_map"
       ],
       "speciality": "route, component, style, and dependency integration",
       "why_template": "{topic} lands inside an existing system; someone must find framework and existing-workflow conflicts before implementation.",
@@ -1970,6 +2162,13 @@
       "domains": [
         "game"
       ],
+      "tags": [
+        "level-design",
+        "game-mechanics"
+      ],
+      "reports": [
+        "beat_chart"
+      ],
       "speciality": "spatial layout, pacing and intensity curves, encounter design, wayfinding, environmental teaching",
       "why_template": "{topic} needs spaces and encounters that pace the experience and teach mechanics without text.",
       "summon_when": [
@@ -2041,6 +2240,13 @@
         "game",
         "visual",
         "presentation"
+      ],
+      "tags": [
+        "3d"
+      ],
+      "reports": [
+        "asset_manifest",
+        "budget_sheet"
       ],
       "speciality": "3D modeling, sculpting, retopology, UVs, texturing/materials, LODs, export",
       "why_template": "{topic} needs 3D assets that match the style, deform cleanly, and fit their budgets.",
@@ -2118,6 +2324,14 @@
         "software",
         "visual"
       ],
+      "tags": [
+        "motion",
+        "animation",
+        "social"
+      ],
+      "reports": [
+        "beat_chart"
+      ],
       "speciality": "motion graphics, kinetic typography, transitions, animated data viz, brand motion systems, short-form video edits",
       "why_template": "{topic} uses motion to direct attention and explain change; it needs a motion system with purpose, rhythm, and restraint.",
       "summon_when": [
@@ -2190,6 +2404,13 @@
         "game",
         "presentation"
       ],
+      "tags": [
+        "narrative",
+        "storytelling"
+      ],
+      "reports": [
+        "beat_chart"
+      ],
       "speciality": "story structure, characters, dialogue systems, branching, environmental storytelling, ludonarrative harmony",
       "why_template": "{topic} needs narrative that reinforces play and stays consistent across systems, levels, and characters.",
       "summon_when": [
@@ -2260,6 +2481,14 @@
       "domains": [
         "social",
         "visual"
+      ],
+      "tags": [
+        "platform",
+        "social",
+        "accessibility"
+      ],
+      "reports": [
+        "draft_variants"
       ],
       "speciality": "platform formats and specs, length/aspect limits, community norms, algorithm-friendly structure, scheduling",
       "why_template": "{topic} will appear on specific platforms whose formats and norms decide whether it gets seen.",
@@ -2332,6 +2561,15 @@
       "domains": [
         "game"
       ],
+      "tags": [
+        "research",
+        "testing",
+        "game-feel"
+      ],
+      "reports": [
+        "research_findings",
+        "bug_report"
+      ],
       "speciality": "playtest design, telemetry, difficulty and funnel analysis, game QA, feel-vs-bug triage",
       "why_template": "Design claims about {topic} must be tested against real player behavior and verified for bugs.",
       "summon_when": [
@@ -2402,6 +2640,13 @@
       "division": "presentation",
       "domains": [
         "presentation"
+      ],
+      "tags": [
+        "storytelling",
+        "slides"
+      ],
+      "reports": [
+        "beat_chart"
       ],
       "speciality": "talk structure, hooks, narrative arc, slide sequencing, speaker notes",
       "why_template": "{topic} must hold a live audience and land one clear takeaway; someone must own the story.",
@@ -2479,6 +2724,13 @@
         "social",
         "visual"
       ],
+      "tags": [
+        "research",
+        "evidence"
+      ],
+      "reports": [
+        "reference_list"
+      ],
       "speciality": "precedent research, reference gathering, competitive and pattern analysis",
       "why_template": "Before inventing an approach for {topic}, the board should see how others solved, or failed to solve, the same problem.",
       "summon_when": [
@@ -2551,6 +2803,15 @@
         "game",
         "presentation",
         "social"
+      ],
+      "tags": [
+        "planning",
+        "metrics"
+      ],
+      "reports": [
+        "product_brief",
+        "ticket_drafts",
+        "acceptance_cases"
       ],
       "speciality": "problem framing, outcome metrics, scope and prioritization, acceptance criteria",
       "why_template": "{topic} needs a clear outcome, a scope line, and a definition of success before the specialists optimize the wrong thing.",
@@ -2631,6 +2892,14 @@
       "domains": [
         "software",
         "game"
+      ],
+      "tags": [
+        "testing",
+        "risk"
+      ],
+      "reports": [
+        "test_plan",
+        "risk_register"
       ],
       "speciality": "risk-based test strategy, acceptance-to-test mapping, regression protection, release readiness",
       "why_template": "{topic} needs a verification plan that proves the acceptance criteria and protects existing behavior.",
@@ -2718,6 +2987,13 @@
         "social",
         "visual"
       ],
+      "tags": [
+        "risk",
+        "evidence"
+      ],
+      "reports": [
+        "risk_register"
+      ],
       "speciality": "assumption hunting, failure-mode analysis, and pre-mortems",
       "why_template": "The board on {topic} is converging; someone must try to break the leading proposal before reality does.",
       "summon_when": [
@@ -2790,6 +3066,13 @@
         "software",
         "game"
       ],
+      "tags": [
+        "operations",
+        "risk"
+      ],
+      "reports": [
+        "ops_plan"
+      ],
       "speciality": "CI/CD, deployment strategy, observability, SLOs, capacity, rollback, incident readiness",
       "why_template": "{topic} has to be deployed, observed, and recovered in production without heroics.",
       "summon_when": [
@@ -2861,6 +3144,13 @@
       "domains": [
         "software",
         "game"
+      ],
+      "tags": [
+        "security",
+        "risk"
+      ],
+      "reports": [
+        "threat_model"
       ],
       "speciality": "threat modeling, authn/authz, input validation, secrets, supply chain, LLM prompt-injection risk",
       "why_template": "{topic} exposes inputs, data, or privileges that an attacker could abuse.",
@@ -2936,6 +3226,14 @@
         "presentation",
         "visual"
       ],
+      "tags": [
+        "slides",
+        "art-direction",
+        "accessibility"
+      ],
+      "reports": [
+        "slide_spec"
+      ],
       "speciality": "slide layout, typography, visual hierarchy, diagrams, imagery, builds and templates",
       "why_template": "{topic} needs slides that make each point visually obvious and readable from the back of the room.",
       "summon_when": [
@@ -3006,6 +3304,14 @@
       "division": "social",
       "domains": [
         "social"
+      ],
+      "tags": [
+        "social",
+        "metrics",
+        "audience"
+      ],
+      "reports": [
+        "content_brief"
       ],
       "speciality": "social goals, audience targeting, platform selection, content pillars, cadence, measurement",
       "why_template": "{topic} needs a clear goal, audience, platform, and success metric before anyone writes copy.",
@@ -3078,6 +3384,14 @@
       "domains": [
         "software",
         "game"
+      ],
+      "tags": [
+        "architecture",
+        "risk"
+      ],
+      "reports": [
+        "adr",
+        "risk_register"
       ],
       "speciality": "system boundaries, component responsibilities, data flow, and architectural trade-offs",
       "why_template": "{topic} involves structural decisions that are costly to reverse; someone must own the system shape and its trade-offs.",
@@ -3163,6 +3477,13 @@
         "social",
         "presentation"
       ],
+      "tags": [
+        "de-escalation",
+        "audience"
+      ],
+      "reports": [
+        "conflict_map"
+      ],
       "speciality": "charitable interpretation, steelmanning, perspective-taking, identifying underlying needs and fears",
       "why_template": "Replies in {topic} will only land if they address what the other side actually means at its strongest.",
       "summon_when": [
@@ -3231,6 +3552,15 @@
       "domains": [
         "game",
         "visual"
+      ],
+      "tags": [
+        "performance-budget",
+        "art-direction",
+        "2d",
+        "3d"
+      ],
+      "reports": [
+        "budget_sheet"
       ],
       "speciality": "shaders, rendering budgets, asset pipelines, LOD/atlasing, rigging/animation tech, DCC-to-engine tooling",
       "why_template": "{topic} must deliver its art direction within rendering, memory, and pipeline constraints.",
@@ -3312,6 +3642,13 @@
         "software",
         "game"
       ],
+      "tags": [
+        "testing",
+        "automation"
+      ],
+      "reports": [
+        "test_plan"
+      ],
       "speciality": "test harness design, deterministic fixtures, browser/API automation, CI integration",
       "why_template": "The verification plan for {topic} must become automated, deterministic checks that run on every change.",
       "summon_when": [
@@ -3384,6 +3721,13 @@
         "game",
         "presentation",
         "visual"
+      ],
+      "tags": [
+        "ui",
+        "accessibility"
+      ],
+      "reports": [
+        "style_guide"
       ],
       "speciality": "design systems, tokens, component states, visual hierarchy, HUD and menu design",
       "why_template": "{topic} has an interface whose visual hierarchy, components, and states must be designed systematically.",
@@ -3458,6 +3802,14 @@
         "presentation",
         "social"
       ],
+      "tags": [
+        "research",
+        "user-experience",
+        "evidence"
+      ],
+      "reports": [
+        "research_findings"
+      ],
       "speciality": "user research design, usability evidence, personas grounded in data, and insight synthesis",
       "why_template": "Claims about what users of {topic} need should rest on observed behavior; someone must supply or plan that evidence.",
       "summon_when": [
@@ -3528,6 +3880,16 @@
         "game",
         "visual",
         "social"
+      ],
+      "tags": [
+        "vfx",
+        "2d",
+        "3d",
+        "game-feel"
+      ],
+      "reports": [
+        "asset_manifest",
+        "budget_sheet"
       ],
       "speciality": "real-time particle and shader effects (2D and 3D), impact feedback, telegraphs, effect readability and budgets",
       "why_template": "{topic} needs visual effects that telegraph and confirm gameplay events without blowing readability or performance.",
@@ -3992,5 +4354,971 @@
         "first_question": "Which three moments from the talk stand alone, and on which platform?"
       }
     ]
+  },
+  "tags": {
+    "2d": {
+      "description": "Two-dimensional art and animation",
+      "roles": [
+        "animator_2d",
+        "art_director",
+        "illustrator_2d",
+        "technical_artist",
+        "vfx_artist"
+      ]
+    },
+    "3d": {
+      "description": "Three-dimensional art and animation",
+      "roles": [
+        "animator_3d",
+        "art_director",
+        "modeler_3d",
+        "technical_artist",
+        "vfx_artist"
+      ]
+    },
+    "accessibility": {
+      "description": "Disability access and assistive technology",
+      "roles": [
+        "accessibility_inclusion_reviewer",
+        "end_user_advocate",
+        "frontend_engineer",
+        "game_audio_designer",
+        "platform_native_editor",
+        "slide_designer",
+        "ui_visual_designer"
+      ]
+    },
+    "animation": {
+      "description": "Motion of characters, objects, or UI",
+      "roles": [
+        "animator_2d",
+        "animator_3d",
+        "motion_designer"
+      ]
+    },
+    "architecture": {
+      "description": "System shape and long-lived technical decisions",
+      "roles": [
+        "data_architect",
+        "integration_architect",
+        "software_architect"
+      ]
+    },
+    "art-direction": {
+      "description": "Visual vision, style, and review",
+      "roles": [
+        "art_director",
+        "illustrator_2d",
+        "slide_designer",
+        "technical_artist"
+      ]
+    },
+    "audience": {
+      "description": "Modeling how listeners and readers will react",
+      "roles": [
+        "audience_proxy",
+        "community_response_forecaster",
+        "social_strategist",
+        "steelman_interpreter"
+      ]
+    },
+    "audio": {
+      "description": "Sound, music, and mix",
+      "roles": [
+        "game_audio_designer"
+      ]
+    },
+    "automation": {
+      "description": "Making checks repeatable and run in CI",
+      "roles": [
+        "test_automation_engineer"
+      ]
+    },
+    "backend": {
+      "description": "Server, API, and service implementation",
+      "roles": [
+        "backend_engineer"
+      ]
+    },
+    "boundaries": {
+      "description": "Protecting limits and safety",
+      "roles": [
+        "boundary_keeper"
+      ]
+    },
+    "brand": {
+      "description": "Voice and identity consistency",
+      "roles": [
+        "brand_voice_guardian"
+      ]
+    },
+    "community": {
+      "description": "Audience reactions, replies, and moderation",
+      "roles": [
+        "community_response_forecaster"
+      ]
+    },
+    "copywriting": {
+      "description": "Hooks, headlines, and short-form copy",
+      "roles": [
+        "brand_voice_guardian",
+        "diplomatic_wordsmith",
+        "hook_copywriter"
+      ]
+    },
+    "data": {
+      "description": "Persistent data, schemas, and migrations",
+      "roles": [
+        "data_architect"
+      ]
+    },
+    "data-viz": {
+      "description": "Charts and quantitative storytelling",
+      "roles": [
+        "data_storyteller"
+      ]
+    },
+    "de-escalation": {
+      "description": "Lowering conflict temperature",
+      "roles": [
+        "conflict_mediator",
+        "diplomatic_wordsmith",
+        "steelman_interpreter"
+      ]
+    },
+    "delivery": {
+      "description": "Live speaking and rehearsal",
+      "roles": [
+        "delivery_coach"
+      ]
+    },
+    "developer-experience": {
+      "description": "Docs, APIs, and tooling for other developers",
+      "roles": [
+        "developer_experience_advocate"
+      ]
+    },
+    "evidence": {
+      "description": "Sourcing, citing, and grading the support for claims",
+      "roles": [
+        "data_storyteller",
+        "fact_disentangler",
+        "prior_art_scout",
+        "red_team_skeptic",
+        "ux_researcher"
+      ]
+    },
+    "fact-checking": {
+      "description": "Separating and verifying factual claims",
+      "roles": [
+        "fact_disentangler"
+      ]
+    },
+    "frontend": {
+      "description": "Client and UI implementation",
+      "roles": [
+        "frontend_engineer"
+      ]
+    },
+    "game-feel": {
+      "description": "Responsiveness, feedback, and juice",
+      "roles": [
+        "game_audio_designer",
+        "gameplay_engineer",
+        "playtest_analyst",
+        "vfx_artist"
+      ]
+    },
+    "game-mechanics": {
+      "description": "Loops, systems, economies, and tuning",
+      "roles": [
+        "game_systems_designer",
+        "level_designer"
+      ]
+    },
+    "inclusion": {
+      "description": "Representation and cultural fit",
+      "roles": [
+        "accessibility_inclusion_reviewer"
+      ]
+    },
+    "integration": {
+      "description": "Fitting new work into existing systems",
+      "roles": [
+        "backend_engineer",
+        "integration_architect"
+      ]
+    },
+    "level-design": {
+      "description": "Spaces, encounters, and pacing in games",
+      "roles": [
+        "level_designer"
+      ]
+    },
+    "metrics": {
+      "description": "Defining and reading success measures",
+      "roles": [
+        "game_systems_designer",
+        "product_manager",
+        "social_strategist"
+      ]
+    },
+    "motion": {
+      "description": "Motion graphics and kinetic type",
+      "roles": [
+        "motion_designer"
+      ]
+    },
+    "narrative": {
+      "description": "Story, character, and dialogue",
+      "roles": [
+        "narrative_designer"
+      ]
+    },
+    "operations": {
+      "description": "Deploying, observing, and recovering systems",
+      "roles": [
+        "reliability_engineer"
+      ]
+    },
+    "performance-budget": {
+      "description": "Frame, memory, and size budgets",
+      "roles": [
+        "frontend_engineer",
+        "gameplay_engineer",
+        "technical_artist"
+      ]
+    },
+    "persuasion": {
+      "description": "Influence through framing and wording",
+      "roles": [
+        "diplomatic_wordsmith"
+      ]
+    },
+    "planning": {
+      "description": "Scoping, sequencing, and turning decisions into work",
+      "roles": [
+        "board_facilitator",
+        "product_manager"
+      ]
+    },
+    "platform": {
+      "description": "Platform-specific formats and norms",
+      "roles": [
+        "platform_native_editor"
+      ]
+    },
+    "research": {
+      "description": "Studying users, players, precedents, or the market",
+      "roles": [
+        "playtest_analyst",
+        "prior_art_scout",
+        "ux_researcher"
+      ]
+    },
+    "rigging": {
+      "description": "Skeletons, controls, and deformation",
+      "roles": [
+        "animator_3d"
+      ]
+    },
+    "risk": {
+      "description": "Identifying, ranking, and mitigating what could go wrong",
+      "roles": [
+        "audience_proxy",
+        "boundary_keeper",
+        "community_response_forecaster",
+        "end_user_advocate",
+        "integration_architect",
+        "qa_test_strategist",
+        "red_team_skeptic",
+        "reliability_engineer",
+        "security_reviewer",
+        "software_architect"
+      ]
+    },
+    "security": {
+      "description": "Threats, trust boundaries, and abuse",
+      "roles": [
+        "security_reviewer"
+      ]
+    },
+    "slides": {
+      "description": "Slide and deck design",
+      "roles": [
+        "presentation_story_architect",
+        "slide_designer"
+      ]
+    },
+    "social": {
+      "description": "Social media posting and strategy",
+      "roles": [
+        "hook_copywriter",
+        "motion_designer",
+        "platform_native_editor",
+        "social_strategist"
+      ]
+    },
+    "storytelling": {
+      "description": "Narrative structure for talks and media",
+      "roles": [
+        "narrative_designer",
+        "presentation_story_architect"
+      ]
+    },
+    "synthesis": {
+      "description": "Merging many contributions into one record",
+      "roles": [
+        "board_facilitator"
+      ]
+    },
+    "testing": {
+      "description": "Verifying behavior and finding defects",
+      "roles": [
+        "exploratory_tester",
+        "playtest_analyst",
+        "qa_test_strategist",
+        "test_automation_engineer"
+      ]
+    },
+    "ui": {
+      "description": "Interface visuals and design systems",
+      "roles": [
+        "ui_visual_designer"
+      ]
+    },
+    "user-experience": {
+      "description": "How real users, players, or readers experience the work",
+      "roles": [
+        "end_user_advocate",
+        "exploratory_tester",
+        "ux_researcher"
+      ]
+    },
+    "vfx": {
+      "description": "Real-time visual effects",
+      "roles": [
+        "vfx_artist"
+      ]
+    }
+  },
+  "reports": {
+    "acceptance_cases": {
+      "title": "Acceptance Cases",
+      "tags": [
+        "testing",
+        "user-experience",
+        "planning"
+      ],
+      "core_fields": [
+        "Given",
+        "When",
+        "Then"
+      ],
+      "skill": "reporting/acceptance-cases/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "end_user_advocate",
+        "product_manager"
+      ]
+    },
+    "adr": {
+      "title": "Architecture Decision Record",
+      "tags": [
+        "architecture"
+      ],
+      "core_fields": [
+        "Context",
+        "Options",
+        "Decision",
+        "Consequences"
+      ],
+      "skill": "reporting/adr/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "software_architect"
+      ]
+    },
+    "asset_manifest": {
+      "title": "Asset Manifest",
+      "tags": [
+        "2d",
+        "3d",
+        "animation",
+        "audio",
+        "vfx"
+      ],
+      "core_fields": [
+        "Asset",
+        "Spec",
+        "Status"
+      ],
+      "skill": "reporting/asset-manifest/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "animator_2d",
+        "animator_3d",
+        "game_audio_designer",
+        "illustrator_2d",
+        "modeler_3d",
+        "vfx_artist"
+      ]
+    },
+    "beat_chart": {
+      "title": "Beat Chart",
+      "tags": [
+        "storytelling",
+        "level-design",
+        "narrative",
+        "motion"
+      ],
+      "core_fields": [
+        "Beat",
+        "Purpose",
+        "Timing",
+        "Intensity"
+      ],
+      "skill": "reporting/beat-chart/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "level_designer",
+        "motion_designer",
+        "narrative_designer",
+        "presentation_story_architect"
+      ]
+    },
+    "board_note": {
+      "title": "Board Note",
+      "tags": [
+        "evidence",
+        "synthesis"
+      ],
+      "core_fields": [
+        "kind",
+        "body",
+        "confidence",
+        "refersTo"
+      ],
+      "skill": "reporting/board-note/SKILL.md",
+      "universal": true,
+      "produced_by": "all"
+    },
+    "boundary_brief": {
+      "title": "Boundary Brief",
+      "tags": [
+        "boundaries",
+        "risk"
+      ],
+      "core_fields": [
+        "Non-negotiables",
+        "Risk",
+        "Boundary statements",
+        "Escalation"
+      ],
+      "skill": "reporting/boundary-brief/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "boundary_keeper"
+      ]
+    },
+    "budget_sheet": {
+      "title": "Budget Sheet",
+      "tags": [
+        "performance-budget"
+      ],
+      "core_fields": [
+        "Budget",
+        "Limit",
+        "Measured",
+        "Target"
+      ],
+      "skill": "reporting/budget-sheet/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "frontend_engineer",
+        "gameplay_engineer",
+        "modeler_3d",
+        "technical_artist",
+        "vfx_artist"
+      ]
+    },
+    "bug_report": {
+      "title": "Bug Report",
+      "tags": [
+        "testing"
+      ],
+      "core_fields": [
+        "Steps",
+        "Expected",
+        "Actual",
+        "Environment",
+        "Severity"
+      ],
+      "skill": "reporting/bug-report/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "exploratory_tester",
+        "playtest_analyst"
+      ]
+    },
+    "chart_spec": {
+      "title": "Chart Spec",
+      "tags": [
+        "data-viz",
+        "evidence"
+      ],
+      "core_fields": [
+        "Chart",
+        "Question",
+        "Takeaway title",
+        "Type",
+        "Source"
+      ],
+      "skill": "reporting/chart-spec/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "data_storyteller"
+      ]
+    },
+    "claim_ledger": {
+      "title": "Claim Ledger",
+      "tags": [
+        "fact-checking",
+        "evidence"
+      ],
+      "core_fields": [
+        "Claim",
+        "Type",
+        "Status",
+        "Source",
+        "Material"
+      ],
+      "skill": "reporting/claim-ledger/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "fact_disentangler"
+      ]
+    },
+    "conflict_map": {
+      "title": "Conflict Map",
+      "tags": [
+        "de-escalation"
+      ],
+      "core_fields": [
+        "Party",
+        "Interest"
+      ],
+      "skill": "reporting/conflict-map/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "conflict_mediator",
+        "steelman_interpreter"
+      ]
+    },
+    "content_brief": {
+      "title": "Content Brief",
+      "tags": [
+        "social",
+        "metrics",
+        "audience"
+      ],
+      "core_fields": [
+        "Goal",
+        "Audience",
+        "Platform",
+        "CTA",
+        "Metric"
+      ],
+      "skill": "reporting/content-brief/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "social_strategist"
+      ]
+    },
+    "data_model": {
+      "title": "Data Model",
+      "tags": [
+        "data"
+      ],
+      "core_fields": [
+        "Entity",
+        "Fields",
+        "Invariants",
+        "Indexes",
+        "Retention",
+        "Migration"
+      ],
+      "skill": "reporting/data-model/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "data_architect"
+      ]
+    },
+    "decision_record": {
+      "title": "Decision Record",
+      "tags": [
+        "synthesis",
+        "planning",
+        "evidence"
+      ],
+      "core_fields": [
+        "Resolved scope",
+        "Non-goals",
+        "Claims, evidence, and decisions",
+        "Blocking questions",
+        "completeness pass",
+        "Verification evidence"
+      ],
+      "skill": "reporting/decision-record/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "board_facilitator"
+      ]
+    },
+    "dispatch_return": {
+      "title": "Dispatch Return",
+      "tags": [
+        "evidence",
+        "synthesis"
+      ],
+      "core_fields": [
+        "status",
+        "claims/results",
+        "evidence",
+        "uncertainty",
+        "implication/next action",
+        "changed paths"
+      ],
+      "skill": "reporting/dispatch-return/SKILL.md",
+      "universal": true,
+      "produced_by": "all"
+    },
+    "draft_variants": {
+      "title": "Draft Variants",
+      "tags": [
+        "copywriting",
+        "persuasion"
+      ],
+      "core_fields": [
+        "Variant",
+        "Rationale"
+      ],
+      "skill": "reporting/draft-variants/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "diplomatic_wordsmith",
+        "hook_copywriter",
+        "platform_native_editor"
+      ]
+    },
+    "findings_table": {
+      "title": "Findings Table",
+      "tags": [
+        "evidence",
+        "risk"
+      ],
+      "core_fields": [
+        "Finding",
+        "Evidence",
+        "Severity",
+        "Fix"
+      ],
+      "skill": "reporting/findings-table/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "accessibility_inclusion_reviewer",
+        "art_director",
+        "brand_voice_guardian",
+        "developer_experience_advocate",
+        "end_user_advocate"
+      ]
+    },
+    "impact_map": {
+      "title": "Change Impact Map",
+      "tags": [
+        "integration",
+        "risk"
+      ],
+      "core_fields": [
+        "Path",
+        "Change",
+        "Risk",
+        "Mitigation",
+        "Preservation check"
+      ],
+      "skill": "reporting/impact-map/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "integration_architect"
+      ]
+    },
+    "interface_contract": {
+      "title": "Interface Contract",
+      "tags": [
+        "frontend",
+        "backend",
+        "integration"
+      ],
+      "core_fields": [
+        "Interface",
+        "Input",
+        "Output",
+        "Errors"
+      ],
+      "skill": "reporting/interface-contract/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "backend_engineer",
+        "frontend_engineer"
+      ]
+    },
+    "mechanic_sheet": {
+      "title": "Mechanic Sheet",
+      "tags": [
+        "game-mechanics"
+      ],
+      "core_fields": [
+        "Mechanic",
+        "Purpose",
+        "Player decision",
+        "Inputs",
+        "Outputs",
+        "Edge cases"
+      ],
+      "skill": "reporting/mechanic-sheet/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "game_systems_designer"
+      ]
+    },
+    "objection_map": {
+      "title": "Objection Map",
+      "tags": [
+        "audience",
+        "community",
+        "risk"
+      ],
+      "core_fields": [
+        "Segment",
+        "Objection",
+        "Response",
+        "Status"
+      ],
+      "skill": "reporting/objection-map/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "audience_proxy",
+        "community_response_forecaster"
+      ]
+    },
+    "ops_plan": {
+      "title": "Ops Plan",
+      "tags": [
+        "operations"
+      ],
+      "core_fields": [
+        "Deploy",
+        "Rollback",
+        "SLOs",
+        "Alerts",
+        "Runbook"
+      ],
+      "skill": "reporting/ops-plan/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "reliability_engineer"
+      ]
+    },
+    "product_brief": {
+      "title": "Product Brief",
+      "tags": [
+        "planning",
+        "metrics"
+      ],
+      "core_fields": [
+        "Problem",
+        "User",
+        "Outcome metric",
+        "Kill criteria",
+        "Non-goals"
+      ],
+      "skill": "reporting/product-brief/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "product_manager"
+      ]
+    },
+    "reference_list": {
+      "title": "Reference List",
+      "tags": [
+        "research",
+        "evidence"
+      ],
+      "core_fields": [
+        "Ref",
+        "Example",
+        "Source",
+        "Borrow",
+        "Avoid"
+      ],
+      "skill": "reporting/reference-list/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "prior_art_scout"
+      ]
+    },
+    "rehearsal_plan": {
+      "title": "Rehearsal Plan",
+      "tags": [
+        "delivery"
+      ],
+      "core_fields": [
+        "Rehearsals",
+        "Timing marks",
+        "Demo fallback",
+        "Q&A bank"
+      ],
+      "skill": "reporting/rehearsal-plan/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "delivery_coach"
+      ]
+    },
+    "research_findings": {
+      "title": "Research Findings",
+      "tags": [
+        "research",
+        "evidence",
+        "user-experience"
+      ],
+      "core_fields": [
+        "Question",
+        "Method",
+        "Sample",
+        "Findings",
+        "Confidence",
+        "Implication"
+      ],
+      "skill": "reporting/research-findings/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "playtest_analyst",
+        "ux_researcher"
+      ]
+    },
+    "risk_register": {
+      "title": "Risk Register",
+      "tags": [
+        "risk"
+      ],
+      "core_fields": [
+        "Risk",
+        "Likelihood",
+        "Impact",
+        "Mitigation",
+        "Status"
+      ],
+      "skill": "reporting/risk-register/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "qa_test_strategist",
+        "red_team_skeptic",
+        "software_architect"
+      ]
+    },
+    "slide_spec": {
+      "title": "Slide Spec",
+      "tags": [
+        "slides"
+      ],
+      "core_fields": [
+        "Slide",
+        "Focal point",
+        "Layout",
+        "Build steps",
+        "Alt text"
+      ],
+      "skill": "reporting/slide-spec/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "slide_designer"
+      ]
+    },
+    "style_guide": {
+      "title": "Style Guide",
+      "tags": [
+        "art-direction",
+        "ui",
+        "brand"
+      ],
+      "core_fields": [
+        "Rule",
+        "Do",
+        "Don't"
+      ],
+      "skill": "reporting/style-guide/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "art_director",
+        "brand_voice_guardian",
+        "ui_visual_designer"
+      ]
+    },
+    "test_plan": {
+      "title": "Test Plan",
+      "tags": [
+        "testing"
+      ],
+      "core_fields": [
+        "Acceptance criterion",
+        "Test",
+        "Level",
+        "Evidence"
+      ],
+      "skill": "reporting/test-plan/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "qa_test_strategist",
+        "test_automation_engineer"
+      ]
+    },
+    "threat_model": {
+      "title": "Threat Model",
+      "tags": [
+        "security",
+        "risk"
+      ],
+      "core_fields": [
+        "Asset",
+        "Threat",
+        "Likelihood",
+        "Impact",
+        "Fix",
+        "Verify"
+      ],
+      "skill": "reporting/threat-model/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "security_reviewer"
+      ]
+    },
+    "ticket_drafts": {
+      "title": "Ticket Drafts",
+      "tags": [
+        "planning"
+      ],
+      "core_fields": [
+        "Ticket",
+        "Acceptance evidence",
+        "Depends on",
+        "Status"
+      ],
+      "skill": "reporting/ticket-drafts/SKILL.md",
+      "universal": false,
+      "produced_by": [
+        "board_facilitator",
+        "product_manager"
+      ]
+    }
   }
 }

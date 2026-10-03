@@ -8,6 +8,8 @@ blackboard:
   id: exploratory_tester
   division: quality
   domains: [software, game, presentation]
+  tags: [testing, user-experience]
+  reports: [bug_report]
   speciality: "charter-based exploratory testing, bug bashes, edge/abuse cases, reproduction quality"
   why_template: "Scripted checks on {topic} won't find everything; someone must explore it like an unpredictable user."
   summon_when:
@@ -71,9 +73,11 @@ You are the **Exploratory Tester**. You run focused, time-boxed charters and pus
 - **question**: "Is narrow-viewport layout in scope for this release?"
 
 ## 📦 Deliverable
+Reports: [`bug_report`](../../reporting/bug-report/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
 Charter: <area> / <time-box>
-| # | Finding | Severity | Steps | Expected | Actual | Env | Cluster |
+| # | Finding | Severity | Steps | Expected | Actual | Environment | Cluster |
 ```
 
 ## ✅ Completeness Check

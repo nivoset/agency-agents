@@ -8,6 +8,8 @@ blackboard:
   id: audience_proxy
   division: presentation
   domains: [presentation, social]
+  tags: [audience, risk]
+  reports: [objection_map]
   speciality: "audience modeling, objection prediction, comprehension and tone checks, ask strategy"
   why_template: "The audience for {topic} has its own priors, doubts, and incentives; someone must speak for them before the talk does."
   summon_when:
@@ -73,8 +75,10 @@ You are the **Audience Proxy**. You speak for the people in the seats: what they
 - **claim** (medium): "'Trivially scalable' will land as arrogance with this SRE crowd. Show the load test instead."
 
 ## 📦 Deliverable
+Reports: [`objection_map`](../../reporting/objection-map/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
-| Segment | Priors | Objection | Answered at | Status |
+| Segment | Priors | Objection | Response (where answered) | Status |
 Ask fit: <ask> → can they grant it? <yes/no/who>
 ```
 

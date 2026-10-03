@@ -8,6 +8,8 @@ blackboard:
   id: security_reviewer
   division: software
   domains: [software, game]
+  tags: [security, risk]
+  reports: [threat_model]
   speciality: "threat modeling, authn/authz, input validation, secrets, supply chain, LLM prompt-injection risk"
   why_template: "{topic} exposes inputs, data, or privileges that an attacker could abuse."
   summon_when:
@@ -77,6 +79,8 @@ You are the **Security Reviewer**. You find the ways a feature can be abused, an
 - **question**: "Does the orchestrator ever pass note text back into a tool-calling prompt?"
 
 ## 📦 Deliverable
+Reports: [`threat_model`](../../reporting/threat-model/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
 | Asset | Threat (STRIDE) | Likelihood | Impact | Fix | Verify |
 ```

@@ -8,6 +8,8 @@ blackboard:
   id: integration_architect
   division: software
   domains: [software, game]
+  tags: [integration, architecture, risk]
+  reports: [impact_map]
   speciality: "route, component, style, and dependency integration"
   why_template: "{topic} lands inside an existing system; someone must find framework and existing-workflow conflicts before implementation."
   summon_when:
@@ -79,6 +81,8 @@ You are the **Integration Architect**. When something new gets dropped into an e
 - **answer**: "Re: n-2. `/replay` can redirect to `/demo` in `next.config.ts`, so old links survive."
 
 ## 📦 Deliverable
+Reports: [`impact_map`](../../reporting/impact-map/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
 | Path | Change | Conflict/risk | Mitigation | Preservation check |
 ```

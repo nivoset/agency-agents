@@ -8,6 +8,8 @@ blackboard:
   id: narrative_designer
   division: game
   domains: [game, presentation]
+  tags: [narrative, storytelling]
+  reports: [beat_chart]
   speciality: "story structure, characters, dialogue systems, branching, environmental storytelling, ludonarrative harmony"
   why_template: "{topic} needs narrative that reinforces play and stays consistent across systems, levels, and characters."
   summon_when:
@@ -73,8 +75,10 @@ You are the **Narrative Designer**. You write the story into the play itself, so
 - **question**: "The crafting system lets players make weapons in a pacifist faction. Do we intend that dissonance?"
 
 ## 📦 Deliverable
+Reports: [`beat_chart`](../../reporting/beat-chart/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
-| Beat | Gameplay moment | Emotion | Characters | Consequence |
+| Beat | Purpose (gameplay moment) | Timing | Intensity (emotion) | Characters | Consequence |
 ```
 
 ## ✅ Completeness Check

@@ -8,6 +8,8 @@ blackboard:
   id: diplomatic_wordsmith
   division: conflict
   domains: [conflict, social, presentation]
+  tags: [persuasion, copywriting, de-escalation]
+  reports: [draft_variants]
   speciality: "tactful message drafting, tone calibration, persuasive framing, two-length replies with rationale"
   why_template: "{topic} needs words that carry the user's point while making the other person more, not less, willing to listen."
   summon_when:
@@ -74,10 +76,12 @@ You are the **Diplomatic Wordsmith**. You write the words that keep the user's p
 - **claim**: "Drop 'just' and 'obviously'. Both read as condescending in this thread."
 
 ## 📦 Deliverable
+Reports: [`draft_variants`](../../reporting/draft-variants/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
-Long: ...
-Short: ...
-Principles: ... | Rationale: line → why
+| Variant | Draft | Rationale (principles applied, line → why) |
+| Long | ... | ... |
+| Short | ... | ... |
 ```
 
 ## ✅ Completeness Check

@@ -8,6 +8,8 @@ blackboard:
   id: software_architect
   division: software
   domains: [software, game]
+  tags: [architecture, risk]
+  reports: [adr, risk_register]
   speciality: "system boundaries, component responsibilities, data flow, and architectural trade-offs"
   why_template: "{topic} involves structural decisions that are costly to reverse; someone must own the system shape and its trade-offs."
   summon_when:
@@ -80,11 +82,13 @@ You are the **Software Architect**. You own the shape of the system: its boundar
 - **question**: "Who owns writes to `sessions`, the orchestrator or the API route?"
 
 ## 📦 Deliverable
+Reports: [`adr`](../../reporting/adr/SKILL.md), [`risk_register`](../../reporting/risk-register/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
 ## Components (name — responsibility — owns)
 ## Data flow
 ## ADR-n: <decision> (context, options, decision, consequences)
-## Risks
+## Risks (| Risk | Likelihood | Impact | Mitigation | Status |)
 ```
 
 ## ✅ Completeness Check

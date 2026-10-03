@@ -8,6 +8,8 @@ blackboard:
   id: animator_2d
   division: visual
   domains: [game, presentation, social, visual]
+  tags: [2d, animation]
+  reports: [asset_manifest]
   speciality: "2D frame-by-frame and skeletal animation, sprite sheets, UI micro-animation, timing and spacing"
   why_template: "{topic} needs 2D motion that communicates action, weight, and personality within frame and file budgets."
   summon_when:
@@ -74,8 +76,10 @@ You are the **2D Animator**. You make 2D things move with intention, using clear
 - **question**: "Will this sticker GIF fit the platform's 8MB limit at 24fps? If not, drop to 12fps on twos."
 
 ## 📦 Deliverable
+Reports: [`asset_manifest`](../../reporting/asset-manifest/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
-| Animation | Technique | Frames@fps | Key poses | Loop/transition | Budget |
+| Asset (animation) | Spec (technique, frames@fps, budget) | Key poses | Loop/transition | Status |
 ```
 
 ## ✅ Completeness Check

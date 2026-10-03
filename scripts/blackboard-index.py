@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
-"""Validate blackboard role files and (optionally) regenerate blackboard/index.json.
+"""Validate blackboard roles, panels, tags, and reporting skills, and (optionally)
+regenerate blackboard/index.json.
 
 Usage:
   python3 scripts/blackboard-index.py           # validate only
   python3 scripts/blackboard-index.py --write   # validate and write blackboard/index.json
 
-See blackboard/SCHEMA.md for the frontmatter contract.
+See blackboard/SCHEMA.md for the role contract and reporting/README.md for reports.
 """
 import json
 import re
@@ -16,6 +17,12 @@ import yaml
 
 ROOT = Path(__file__).resolve().parent.parent
 BOARD_DIR = ROOT / "blackboard"
+REPORTING_DIR = ROOT / "reporting"
+TAGS = yaml.safe_load((BOARD_DIR / "tags.yaml").read_text(encoding="utf-8")) or {}
+REGISTRY = yaml.safe_load((REPORTING_DIR / "reports.yaml").read_text(encoding="utf-8")) or {}
+REPORTS = REGISTRY.get("reports") or {}
+UNIVERSAL = REGISTRY.get("universal") or {}
+SKILL_KEYS = {"name", "description", "license", "allowed-tools", "metadata"}
 DOMAINS = {"software", "game", "presentation", "conflict", "social", "visual"}
 DIVISIONS = {"core", "product", "quality", "software", "game", "visual", "presentation", "conflict", "social"}
 AUTHORITIES = {"propose-only", "review-only", "implement"}
@@ -23,7 +30,7 @@ NOTE_KINDS = {"claim", "question", "answer"}
 TOP_REQUIRED = ["name", "description", "color", "emoji", "vibe", "blackboard"]
 LIST_KEYS = [
     "summon_when", "skip_when", "key_pushes", "pushes_back_on", "blind_spots",
-    "signature_questions", "evidence", "pairs_with", "based_on",
+    "signature_questions", "evidence", "pairs_with", "based_on", "tags", "reports",
 ]
 STR_KEYS = ["speciality", "why_template", "deliverable", "done_when"]
 REQUIRED_SECTIONS = ["Identity", "Core Mission", "Critical Rules", "Board", "Deliverable", "Completeness"]
@@ -33,6 +40,37 @@ errors = []
 
 def err(path, msg):
     errors.append(f"ERROR {path.relative_to(ROOT)}: {msg}")
+
+
+def skill_dir(report_id):
+    return report_id.replace("_", "-")
+
+
+def sections(body):
+    """Map each level-2 heading (outside code fences) to its text."""
+    out, current, in_fence = {}, None, False
+    for line in body.splitlines():
+        if line.startswith("```"):
+            in_fence = not in_fence
+        if not in_fence and line.startswith("## "):
+            current = line[3:].strip()
+            out[current] = ""
+            continue
+        if current is not None:
+            out[current] += line + "\n"
+    return out
+
+
+def section(body, name):
+    for heading, text in sections(body).items():
+        if name.lower() in heading.lower():
+            return text
+    return None
+
+
+def missing_fields(text, fields):
+    low = (text or "").lower()
+    return [f for f in fields if f.lower() not in low]
 
 
 def parse(path):
@@ -85,10 +123,77 @@ def check_role(path, fm, body):
     for ref in bb.get("based_on") or []:
         if not (ROOT / ref).exists():
             err(path, f"based_on path does not exist: {ref}")
-    for section in REQUIRED_SECTIONS:
-        if not re.search(rf"^##.*{section}", body, re.M | re.I):
-            err(path, f"missing body section containing '{section}'")
+    for name in REQUIRED_SECTIONS:
+        if not re.search(rf"^##.*{name}", body, re.M | re.I):
+            err(path, f"missing body section containing '{name}'")
+    for tag in bb.get("tags") or []:
+        if tag not in TAGS:
+            err(path, f"tag '{tag}' is not in blackboard/tags.yaml")
+    deliverable = section(body, "Deliverable")
+    for rid in bb.get("reports") or []:
+        if rid in UNIVERSAL:
+            err(path, f"report '{rid}' is universal; don't list it in reports")
+            continue
+        if rid not in REPORTS:
+            err(path, f"report '{rid}' is not in reporting/reports.yaml")
+            continue
+        if f"reporting/{skill_dir(rid)}/SKILL.md" not in (deliverable or ""):
+            err(path, f"Deliverable section must link reporting/{skill_dir(rid)}/SKILL.md")
+        missing = missing_fields(deliverable, REPORTS[rid].get("core_fields") or [])
+        if missing:
+            err(path, f"Deliverable template lacks {rid} core fields: {missing}")
     return bb
+
+
+def check_reporting(producers):
+    registry_path = REPORTING_DIR / "reports.yaml"
+    entries = {**UNIVERSAL, **REPORTS}
+    if set(UNIVERSAL) & set(REPORTS):
+        err(registry_path, "a report cannot be both universal and role-specific")
+    expected_dirs = {skill_dir(r) for r in entries}
+    for d in sorted(p.name for p in REPORTING_DIR.iterdir() if p.is_dir()):
+        if d not in expected_dirs:
+            err(REPORTING_DIR / d, "skill folder has no entry in reports.yaml")
+    for rid, entry in entries.items():
+        for key in ("title", "tags", "core_fields"):
+            if not entry.get(key):
+                err(registry_path, f"{rid}: missing '{key}'")
+        for tag in entry.get("tags") or []:
+            if tag not in TAGS:
+                err(registry_path, f"{rid}: tag '{tag}' is not in blackboard/tags.yaml")
+        path = REPORTING_DIR / skill_dir(rid) / "SKILL.md"
+        if not path.exists():
+            err(path, "missing skill file for registered report")
+            continue
+        fm, body = parse(path)
+        if fm is None:
+            continue
+        if fm.get("name") != skill_dir(rid):
+            err(path, f"name must be '{skill_dir(rid)}'")
+        if not isinstance(fm.get("description"), str) or len(fm["description"]) < 40:
+            err(path, "description must say what the report is and when to use it")
+        extra = set(fm) - SKILL_KEYS
+        if extra:
+            err(path, f"unsupported SKILL.md frontmatter keys {sorted(extra)}; put report metadata in reports.yaml")
+        if not body.lstrip().startswith(f"# {entry.get('title')}"):
+            err(path, f"first heading must be '# {entry.get('title')}'")
+        for name in ("When to use", "Produced by", "Template", "Core fields", "How to fill it in",
+                     "On the board", "Example", "Quality checks"):
+            if section(body, name) is None:
+                err(path, f"missing section '## {name}'")
+        missing = missing_fields(section(body, "Template"), entry.get("core_fields") or [])
+        if missing:
+            err(path, f"Template lacks core fields {missing}")
+        listed = set(re.findall(r"^- `([a-z0-9_]+)`", section(body, "Produced by") or "", re.M))
+        if rid in UNIVERSAL:
+            if listed:
+                err(path, "universal report should say 'All roles', not list role ids")
+            continue
+        actual = producers.get(rid, set())
+        if not actual:
+            err(path, "no role lists this report in blackboard.reports")
+        if listed != actual:
+            err(path, f"Produced by {sorted(listed)} does not match roles listing it {sorted(actual)}")
 
 
 def main():
@@ -146,18 +251,38 @@ def main():
     for rid in sorted(set(roles) - seated):
         err(ROOT / roles[rid]["path"], "role is not seated in any panel (core or optional)")
 
+    producers = {}
+    for rid, role in roles.items():
+        for rep in role.get("reports") or []:
+            producers.setdefault(rep, set()).add(rid)
+    check_reporting(producers)
+
+    used_tags = {t for r in roles.values() for t in r.get("tags") or []}
+    used_tags |= {t for e in list(REPORTS.values()) + list(UNIVERSAL.values()) for t in e.get("tags") or []}
+    for tag in sorted(set(TAGS) - used_tags):
+        err(BOARD_DIR / "tags.yaml", f"tag '{tag}' is not used by any role or report")
+
     if errors:
         print("\n".join(errors))
         print(f"\nFAILED: {len(errors)} error(s) across {len(files)} role files.")
         return 1
 
-    print(f"PASSED: {len(roles)} roles, {sum(len(v) for v in panels['panels'].values())} panels.")
+    print(f"PASSED: {len(roles)} roles, {sum(len(v) for v in panels['panels'].values())} panels, "
+          f"{len(REPORTS) + len(UNIVERSAL)} reporting skills, {len(TAGS)} tags.")
     if write:
         index = {
             "schema": "blackboard/SCHEMA.md",
             "facilitator": panels.get("facilitator"),
             "roles": dict(sorted(roles.items())),
             "panels": panels["panels"],
+            "tags": {t: {"description": TAGS[t],
+                         "roles": sorted(r for r, v in roles.items() if t in (v.get("tags") or []))}
+                     for t in sorted(TAGS)},
+            "reports": {rid: {**entry,
+                              "skill": f"reporting/{skill_dir(rid)}/SKILL.md",
+                              "universal": rid in UNIVERSAL,
+                              "produced_by": "all" if rid in UNIVERSAL else sorted(producers.get(rid, []))}
+                        for rid, entry in sorted({**UNIVERSAL, **REPORTS}.items())},
         }
         out = BOARD_DIR / "index.json"
         out.write_text(json.dumps(index, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")

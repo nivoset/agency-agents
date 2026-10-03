@@ -8,6 +8,8 @@ blackboard:
   id: data_storyteller
   division: presentation
   domains: [presentation, social, software]
+  tags: [data-viz, evidence]
+  reports: [chart_spec]
   speciality: "chart selection, data-to-insight framing, honest visualization, annotated takeaways"
   why_template: "{topic} rests on numbers; someone must turn them into honest charts with one clear takeaway each."
   summon_when:
@@ -74,6 +76,8 @@ You are the **Data Storyteller**. You make numbers mean something without making
 - **answer**: "Re: n-6. With n=40 the confidence interval spans ±12 points. Say 'early signal', not 'proven'."
 
 ## 📦 Deliverable
+Reports: [`chart_spec`](../../reporting/chart-spec/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
 | Chart | Question | Takeaway title | Type | Highlight | Source/n | Caveat |
 ```

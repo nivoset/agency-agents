@@ -8,6 +8,8 @@ blackboard:
   id: product_manager
   division: product
   domains: [software, game, presentation, social]
+  tags: [planning, metrics]
+  reports: [product_brief, ticket_drafts, acceptance_cases]
   speciality: "problem framing, outcome metrics, scope and prioritization, acceptance criteria"
   why_template: "{topic} needs a clear outcome, a scope line, and a definition of success before the specialists optimize the wrong thing."
   summon_when:
@@ -80,9 +82,12 @@ You are the **Product Manager** on the board. You don't design the solution; you
 - **question**: "What metric tells us the replay helped reviewers decide faster?"
 
 ## 📦 Deliverable
+Reports: [`product_brief`](../../reporting/product-brief/SKILL.md), [`ticket_drafts`](../../reporting/ticket-drafts/SKILL.md), [`acceptance_cases`](../../reporting/acceptance-cases/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
 Problem: ... | User: ... | Outcome metric: ... | Kill criteria: ...
-| Priority | Item | Acceptance criteria | Depends on |
+| Ticket | Priority | Acceptance evidence | Depends on | Status |
+Acceptance cases (per must-have): Given / When / Then
 Non-goals (re-entry condition)
 ```
 

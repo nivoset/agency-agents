@@ -8,6 +8,8 @@ blackboard:
   id: game_audio_designer
   division: game
   domains: [game, presentation, social]
+  tags: [audio, game-feel, accessibility]
+  reports: [asset_manifest]
   speciality: "SFX, adaptive music, mixing, audio feedback, spatial audio, middleware integration"
   why_template: "{topic} relies on sound for feedback, emotion, and readability, so it needs an intentional audio plan."
   summon_when:
@@ -72,8 +74,10 @@ You are the **Game Audio Designer**. You use sound to tell players what happened
 - **question**: "Which music state applies when combat and dialogue overlap?"
 
 ## 📦 Deliverable
+Reports: [`asset_manifest`](../../reporting/asset-manifest/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
-| Event | Sound | Priority | Variation | Visual equivalent |
+| Asset (sound) | Spec (event, priority, variations) | Visual equivalent | Status |
 Music states: <state> → <transition rule>
 ```
 

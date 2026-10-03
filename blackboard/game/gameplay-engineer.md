@@ -8,6 +8,8 @@ blackboard:
   id: gameplay_engineer
   division: game
   domains: [game]
+  tags: [game-feel, performance-budget]
+  reports: [budget_sheet]
   speciality: "engine-level mechanic implementation, game feel, physics/input, networking, data-driven tuning, performance"
   why_template: "{topic} must be implemented in-engine with responsive feel, tunable values, and a stable frame budget."
   summon_when:
@@ -78,8 +80,11 @@ You are the **Gameplay Engineer**. You make mechanics real in the engine, with r
 - **answer**: "Re: n-5. Moving tuning into ScriptableObjects lets design iterate without a recompile."
 
 ## 📦 Deliverable
+Reports: [`budget_sheet`](../../reporting/budget-sheet/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
-| Mechanic | Engine approach | Tuning data | Feel spec | Frame budget |
+| Mechanic | Engine approach | Tuning data | Feel spec |
+| Budget (frame time per system) | Limit | Measured | Target hardware |
 ```
 
 ## ✅ Completeness Check

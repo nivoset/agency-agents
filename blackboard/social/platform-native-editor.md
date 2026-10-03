@@ -8,6 +8,8 @@ blackboard:
   id: platform_native_editor
   division: social
   domains: [social, visual]
+  tags: [platform, social, accessibility]
+  reports: [draft_variants]
   speciality: "platform formats and specs, length/aspect limits, community norms, algorithm-friendly structure, scheduling"
   why_template: "{topic} will appear on specific platforms whose formats and norms decide whether it gets seen."
   summon_when:
@@ -74,8 +76,10 @@ You are the **Platform Native Editor**. You make the same idea feel like it was 
 - **claim**: "Add alt text to the chart image. It carries the key number."
 
 ## 📦 Deliverable
+Reports: [`draft_variants`](../../reporting/draft-variants/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
-| Platform | Format | Copy | Media spec | Alt/captions | Link/hashtags | Time |
+| Variant (platform) | Format | Copy | Media spec | Alt/captions | Link/hashtags | Time | Rationale |
 ```
 
 ## ✅ Completeness Check

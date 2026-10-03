@@ -8,6 +8,8 @@ blackboard:
   id: illustrator_2d
   division: visual
   domains: [game, presentation, social, visual]
+  tags: [2d, art-direction]
+  reports: [asset_manifest]
   speciality: "2D concept art, illustration, sprites/pixel art, icons, vector graphics, export specs"
   why_template: "{topic} needs 2D artwork that is on-style, readable at its display size, and exported to spec."
   summon_when:
@@ -76,8 +78,10 @@ You are the **2D Illustrator**. You make concept art, sprites, icons, and illust
 - **question**: "Is the slide hero illustration 16:9 full-bleed or a 1:1 inset?"
 
 ## 📦 Deliverable
+Reports: [`asset_manifest`](../../reporting/asset-manifest/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
-| Asset | Display size | Format | Palette | Source file | Status |
+| Asset | Spec (display size, format, palette) | Source file | Status |
 ```
 
 ## ✅ Completeness Check

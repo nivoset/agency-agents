@@ -8,6 +8,8 @@ blackboard:
   id: prior_art_scout
   division: core
   domains: [software, game, presentation, conflict, social, visual]
+  tags: [research, evidence]
+  reports: [reference_list]
   speciality: "precedent research, reference gathering, competitive and pattern analysis"
   why_template: "Before inventing an approach for {topic}, the board should see how others solved, or failed to solve, the same problem."
   summon_when:
@@ -74,6 +76,8 @@ You are the **Prior Art Scout**. Before the board spends a round inventing somet
 - **claim** (medium): "Three comparable roguelites gate meta-progression behind run completion, not time. See refs R1–R3."
 
 ## 📦 Deliverable
+Reports: [`reference_list`](../../reporting/reference-list/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
 | Ref | Example | Source | Borrow | Avoid |
 ```

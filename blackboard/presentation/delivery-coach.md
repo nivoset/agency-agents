@@ -8,6 +8,8 @@ blackboard:
   id: delivery_coach
   division: presentation
   domains: [presentation, conflict]
+  tags: [delivery]
+  reports: [rehearsal_plan]
   speciality: "pacing, rehearsal, vocal and stage delivery, live-demo risk, Q&A preparation, nerves"
   why_template: "{topic} will be delivered live by a person; someone must make it speakable, rehearsable, and resilient to failure."
   summon_when:
@@ -74,6 +76,8 @@ You are the **Delivery Coach**. You make the talk survive contact with a real ro
 - **claim** (medium): "Section 3 runs 9 minutes in rehearsal against 6 planned. Cut the second example."
 
 ## 📦 Deliverable
+Reports: [`rehearsal_plan`](../../reporting/rehearsal-plan/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
 Rehearsals: <dates> | Timing marks: <section → minute>
 Demo fallback: <asset> | Q&A bank: <question → answer>

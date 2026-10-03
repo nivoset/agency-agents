@@ -12,7 +12,9 @@ The block maps directly onto the blackboard skill's structures:
 | `id` | `Role.id` / dispatch `name` / `handle` (`/root/<id>`) |
 | `speciality` | `Role.speciality` / dispatch `speciality` |
 | `why_template` | `Role.rationale` / announcement `why` (fill in `{topic}`) |
-| `deliverable` | announcement `deliverable` |
+| `deliverable` | announcement `deliverable` (prose) |
+| `reports` | dispatch `deliverable` report ids; each has a skill in `reporting/` |
+| `tags` | role search and filtering (`index.json` → `tags.<tag>.roles`) |
 | `signature_questions` | seed for the dispatch `question` |
 | `authority` | dispatch `authority` |
 | `default_paths.read` / `default_paths.write` | dispatch `read_paths` / `write_paths` |
@@ -27,6 +29,8 @@ blackboard:
   id: end_user_advocate            # REQUIRED snake_case, unique, == file name with - → _
   division: core                   # REQUIRED one of the division folders
   domains: [software, game]        # REQUIRED subset of: software, game, presentation, conflict, social, visual
+  tags: [user-experience, risk]    # REQUIRED from blackboard/tags.yaml (what kind of work)
+  reports: [findings_table]        # REQUIRED report ids from reporting/reports.yaml (what it hands back)
   speciality: "..."                # REQUIRED one line, what this role reviews/proposes
   why_template: "..."              # REQUIRED one line, why this role is on the board for {topic}
   summon_when: [...]               # REQUIRED signals that this role should be dispatched
@@ -50,6 +54,15 @@ blackboard:
     write: []
   return_schema: [...]             # OPTIONAL, overrides the shared return schema
 ```
+
+### Tags and reports
+
+- `tags` come from the fixed list in [`tags.yaml`](tags.yaml). Add a tag there before using it.
+- `reports` lists the role-specific report types. The universal `board_note` and
+  `dispatch_return` apply to every role and are not listed.
+- The role's `## 📦 Deliverable` section must link each report's skill
+  (`../../reporting/<id>/SKILL.md`), and its template must contain that report's
+  `core_fields`. See [`reporting/README.md`](../reporting/README.md).
 
 ### Shared return schema
 
@@ -84,4 +97,6 @@ python3 scripts/blackboard-index.py --write  # validate + regenerate blackboard/
 
 The validator checks that required keys are present, that ids are unique and match
 their file names, and that cross-references resolve: `tensions.with`, `pairs_with`,
-panel roles, and `based_on` paths must all point to something that exists.
+panel roles, and `based_on` paths must all point to something that exists. It also
+checks that tags, reports, reporting skills, and Deliverable templates all match (see
+[`reporting/README.md`](../reporting/README.md)).

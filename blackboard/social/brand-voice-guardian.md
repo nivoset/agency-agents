@@ -8,6 +8,8 @@ blackboard:
   id: brand_voice_guardian
   division: social
   domains: [social, presentation, visual]
+  tags: [brand, copywriting]
+  reports: [style_guide, findings_table]
   speciality: "voice and tone guidelines, brand consistency, messaging hierarchy, visual identity alignment"
   why_template: "{topic} speaks for a brand or person; it must sound and look like them across every platform and moment."
   summon_when:
@@ -74,8 +76,11 @@ You are the **Brand Voice Guardian**. You make every post sound like it came fro
 - **answer**: "Re: n-5. Playful works for the launch. For the outage post, drop the emoji and lead with the apology."
 
 ## 📦 Deliverable
+Reports: [`style_guide`](../../reporting/style-guide/SKILL.md), [`findings_table`](../../reporting/findings-table/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
-| Asset | Line | Issue | Rewrite | Principle |
+| Rule (voice trait) | Do | Don't |
+| Finding (asset + line) | Evidence | Severity | Fix (rewrite) | Principle |
 Consistency: claims across assets ✓/✗
 ```
 

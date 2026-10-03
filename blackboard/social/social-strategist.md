@@ -8,6 +8,8 @@ blackboard:
   id: social_strategist
   division: social
   domains: [social]
+  tags: [social, metrics, audience]
+  reports: [content_brief]
   speciality: "social goals, audience targeting, platform selection, content pillars, cadence, measurement"
   why_template: "{topic} needs a clear goal, audience, platform, and success metric before anyone writes copy."
   summon_when:
@@ -74,6 +76,8 @@ You are the **Social Strategist**. Before anyone writes a hook, you decide what 
 - **question**: "Is there a landing page to link to, or is this awareness only?"
 
 ## 📦 Deliverable
+Reports: [`content_brief`](../../reporting/content-brief/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
 Goal | Audience | Platform/format | CTA | Metric (check at T+48h) | Timing
 ```

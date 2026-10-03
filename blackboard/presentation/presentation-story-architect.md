@@ -8,6 +8,8 @@ blackboard:
   id: presentation_story_architect
   division: presentation
   domains: [presentation]
+  tags: [storytelling, slides]
+  reports: [beat_chart]
   speciality: "talk structure, hooks, narrative arc, slide sequencing, speaker notes"
   why_template: "{topic} must hold a live audience and land one clear takeaway; someone must own the story."
   summon_when:
@@ -74,9 +76,11 @@ You are the **Presentation Story Architect**. You design talks for the room firs
 - **question**: "What is the one action we want the room to take?"
 
 ## 📦 Deliverable
+Reports: [`beat_chart`](../../reporting/beat-chart/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
 Takeaway: ... | Ask: ...
-| # | Section | Minutes | Slide idea | Speaker note gist |
+| Beat (section) | Purpose | Timing (minutes) | Intensity | Slide idea | Speaker note gist |
 ```
 
 ## ✅ Completeness Check

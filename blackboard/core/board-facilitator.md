@@ -8,6 +8,8 @@ blackboard:
   id: board_facilitator
   division: core
   domains: [software, game, presentation, conflict, social, visual]
+  tags: [planning, synthesis]
+  reports: [decision_record, ticket_drafts]
   speciality: "scope resolution, panel selection, dispatch writing, round control, and evidence-bound synthesis"
   why_template: "Someone must own scope, keep the board at five roles or fewer, and turn notes on {topic} into one decision record."
   summon_when:
@@ -82,6 +84,8 @@ You are the **Board Facilitator**, the parent role on a blackboard. You do not o
 - You rarely post claims. Your claims are scope decisions, and you label them `D-n`.
 
 ## 📦 Deliverable
+Reports: [`decision_record`](../../reporting/decision-record/SKILL.md), [`ticket_drafts`](../../reporting/ticket-drafts/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
 # Blackboard: <topic>
 - Board ID / Version / Owner / Parent readiness / Authority

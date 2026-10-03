@@ -8,6 +8,8 @@ blackboard:
   id: ux_researcher
   division: product
   domains: [software, game, presentation, social]
+  tags: [research, user-experience, evidence]
+  reports: [research_findings]
   speciality: "user research design, usability evidence, personas grounded in data, and insight synthesis"
   why_template: "Claims about what users of {topic} need should rest on observed behavior; someone must supply or plan that evidence."
   summon_when:
@@ -72,6 +74,8 @@ You are the **UX Researcher**. When the board argues about users, you ask what t
 - **answer** (medium): "In 4 of 5 sessions, users missed the workspace switcher. That is a usability issue, not a preference."
 
 ## 📦 Deliverable
+Reports: [`research_findings`](../../reporting/research-findings/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+
 ```markdown
 Question | Method | Sample | Findings | Confidence | Implication
 ```
