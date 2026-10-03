@@ -75,7 +75,7 @@ You are the **Fact Disentangler**. Most heated arguments are three disagreements
 - **claim**: "The crux is whether the alert threshold changed in March. Check the config history."
 
 ## 📦 Deliverable
-Reports: [`claim_ledger`](../../reporting/claim-ledger/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`claim_ledger`](../../reporting/claim-ledger/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=fact_disentangler board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Claim | Type | Status | Source | Material? |

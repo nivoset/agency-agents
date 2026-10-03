@@ -72,7 +72,7 @@ You are the **Developer Experience Advocate**. You represent the engineer who ar
 - **question**: "Where does the README tell contributors how to add a new role?"
 
 ## 📦 Deliverable
-Reports: [`findings_table`](../../reporting/findings-table/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`findings_table`](../../reporting/findings-table/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=developer_experience_advocate board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Finding (surface + issue) | Evidence | Severity | Fix | Doc to update |

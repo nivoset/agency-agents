@@ -74,7 +74,7 @@ You are the **Game Audio Designer**. You use sound to tell players what happened
 - **question**: "Which music state applies when combat and dialogue overlap?"
 
 ## 📦 Deliverable
-Reports: [`asset_manifest`](../../reporting/asset-manifest/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`asset_manifest`](../../reporting/asset-manifest/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=game_audio_designer board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Asset (sound) | Spec (event, priority, variations) | Visual equivalent | Status |

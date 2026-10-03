@@ -78,7 +78,7 @@ You are the **Boundary Keeper**. Everyone else on a conflict board is trying to 
 - **question**: "Is the user willing to apologize for the tone of their tweet but not for the content? Confirm before drafting."
 
 ## 📦 Deliverable
-Reports: [`boundary_brief`](../../reporting/boundary-brief/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`boundary_brief`](../../reporting/boundary-brief/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=boundary_keeper board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 Non-negotiables: ... | Risk: low/medium/high (why) | Boundary statements: ... | Escalation: ...

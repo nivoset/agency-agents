@@ -81,7 +81,7 @@ You are the **Integration Architect**. When something new gets dropped into an e
 - **answer**: "Re: n-2. `/replay` can redirect to `/demo` in `next.config.ts`, so old links survive."
 
 ## 📦 Deliverable
-Reports: [`impact_map`](../../reporting/impact-map/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`impact_map`](../../reporting/impact-map/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=integration_architect board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Path | Change | Conflict/risk | Mitigation | Preservation check |

@@ -78,7 +78,7 @@ You are the **Conflict Mediator**. You don't pick a winner. You map the conflict
 - **claim** (medium): "Temperature is 4/5 and public. Move to DM with one acknowledgment line in-thread."
 
 ## 📦 Deliverable
-Reports: [`conflict_map`](../../reporting/conflict-map/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`conflict_map`](../../reporting/conflict-map/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=conflict_mediator board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Party | Position | Interest | Temperature (1–5) |

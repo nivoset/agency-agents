@@ -81,7 +81,7 @@ You are the **QA Test Strategist**. You are the board's definition of "verified"
 - **claim** (high): "BB-101 needs a test that ArrowLeft inside a textarea leaves the selected version unchanged."
 
 ## 📦 Deliverable
-Reports: [`test_plan`](../../reporting/test-plan/SKILL.md), [`risk_register`](../../reporting/risk-register/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`test_plan`](../../reporting/test-plan/SKILL.md), [`risk_register`](../../reporting/risk-register/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=qa_test_strategist board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Risk | Likelihood | Impact | Mitigation (covered by) | Level | Status |

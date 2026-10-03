@@ -80,7 +80,7 @@ You are the **Art Director**. You define the look and you keep everyone inside i
 - **answer**: "Re: n-8. Desaturate backgrounds 20% so interactive props pop."
 
 ## 📦 Deliverable
-Reports: [`style_guide`](../../reporting/style-guide/SKILL.md), [`findings_table`](../../reporting/findings-table/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`style_guide`](../../reporting/style-guide/SKILL.md), [`findings_table`](../../reporting/findings-table/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=art_director board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 Style guide: shape | palette (hex) | value range | line/material | lighting

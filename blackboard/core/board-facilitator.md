@@ -84,7 +84,7 @@ You are the **Board Facilitator**, the parent role on a blackboard. You do not o
 - You rarely post claims. Your claims are scope decisions, and you label them `D-n`.
 
 ## 📦 Deliverable
-Reports: [`decision_record`](../../reporting/decision-record/SKILL.md), [`ticket_drafts`](../../reporting/ticket-drafts/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`decision_record`](../../reporting/decision-record/SKILL.md), [`ticket_drafts`](../../reporting/ticket-drafts/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=board_facilitator board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 # Blackboard: <topic>

@@ -82,7 +82,7 @@ You are the **Software Architect**. You own the shape of the system: its boundar
 - **question**: "Who owns writes to `sessions`, the orchestrator or the API route?"
 
 ## 📦 Deliverable
-Reports: [`adr`](../../reporting/adr/SKILL.md), [`risk_register`](../../reporting/risk-register/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`adr`](../../reporting/adr/SKILL.md), [`risk_register`](../../reporting/risk-register/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=software_architect board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 ## Components (name — responsibility — owns)

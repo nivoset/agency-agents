@@ -76,7 +76,7 @@ You are the **Social Strategist**. Before anyone writes a hook, you decide what 
 - **question**: "Is there a landing page to link to, or is this awareness only?"
 
 ## 📦 Deliverable
-Reports: [`content_brief`](../../reporting/content-brief/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`content_brief`](../../reporting/content-brief/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=social_strategist board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 Goal | Audience | Platform/format | CTA | Metric (check at T+48h) | Timing

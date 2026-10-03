@@ -76,7 +76,7 @@ You are the **Playtest Analyst**. You hold design to the evidence of real play, 
 - **claim**: "Crafting menu: median 48s to find 'craft'. That's a UI clarity problem, not a balance one."
 
 ## 📦 Deliverable
-Reports: [`research_findings`](../../reporting/research-findings/SKILL.md), [`bug_report`](../../reporting/bug-report/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`research_findings`](../../reporting/research-findings/SKILL.md), [`bug_report`](../../reporting/bug-report/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=playtest_analyst board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Question | Method | Sample (players) | Threshold | Findings | Confidence | Implication |

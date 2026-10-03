@@ -1,6 +1,17 @@
 ---
 name: impact-map
 description: Change impact map listing each affected path, the change, its risk, the mitigation, and a preservation check. Use when integrating prototypes, upgrades, dependencies, or global styles into an existing system.
+report_id: impact_map
+title: Change Impact Map
+version: 1
+universal: false
+tags: [integration, risk]
+produced_by: [integration_architect]
+output:
+  tag: report:impact_map
+  format: table
+  columns: [Path, Change, Risk, Mitigation, Preservation check]
+  min_rows: 1
 ---
 
 # Change Impact Map
@@ -14,8 +25,11 @@ Before porting or integrating anything into an existing codebase.
 - `integration_architect`: owns it.
 
 ## Template
+Wrap the report in its output tag so tools can find and check it (`scripts/validate_report.py`). Put your own role id in `role=` and the board id in `board=`.
 ```markdown
+<!-- report:impact_map role=ROLE_ID board=BOARD_ID -->
 | Path | Change | Risk (conflict) | Mitigation | Preservation check |
+<!-- /report:impact_map -->
 ```
 
 ## Core fields (required)
@@ -34,8 +48,14 @@ Before porting or integrating anything into an existing codebase.
 High-risk rows become `claim` notes. Preservation checks feed `@preserve` [acceptance cases](../acceptance-cases/SKILL.md).
 
 ## Example
+
 ```markdown
-| app/globals.css | none (keep) | archive :root + html,body rules override theme | scope under .replay-root | visual check of / and /blackboard |
+<!-- report:impact_map role=integration_architect board=BB-DESIGN-REPLAY -->
+| Path | Change | Risk | Mitigation | Preservation check |
+|---|---|---|---|---|
+| app/globals.css | none (keep) | archive :root and html,body rules override the theme | scope under .replay-root | visual check of / and /blackboard |
+| next.config.ts | add /replay → /demo redirect | redirect loop | single permanent redirect | `curl -I /replay` returns 308 to /demo |
+<!-- /report:impact_map -->
 ```
 
 ## Quality checks

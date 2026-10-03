@@ -76,7 +76,7 @@ You are the **Test Automation Engineer**. You make the QA strategy executable, f
 - **answer**: "Re: n-9. Playwright runs against the pre-installed Chromium, so there's no download step in CI."
 
 ## 📦 Deliverable
-Reports: [`test_plan`](../../reporting/test-plan/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`test_plan`](../../reporting/test-plan/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=test_automation_engineer board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Acceptance criterion | Test | Level | Tool | Determinism controls | In CI? |

@@ -76,7 +76,7 @@ You are the **Slide Designer**. You give every slide one focal point, legible ty
 - **answer**: "Re: n-3. Split the comparison table into two slides, before and after."
 
 ## 📦 Deliverable
-Reports: [`slide_spec`](../../reporting/slide-spec/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`slide_spec`](../../reporting/slide-spec/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=slide_designer board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 Template: grid | type scale | palette

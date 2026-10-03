@@ -75,7 +75,7 @@ You are the **Audience Proxy**. You speak for the people in the seats: what they
 - **claim** (medium): "'Trivially scalable' will land as arrogance with this SRE crowd. Show the load test instead."
 
 ## 📦 Deliverable
-Reports: [`objection_map`](../../reporting/objection-map/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`objection_map`](../../reporting/objection-map/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=audience_proxy board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Segment | Priors | Objection | Response (where answered) | Status |

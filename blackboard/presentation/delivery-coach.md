@@ -76,7 +76,7 @@ You are the **Delivery Coach**. You make the talk survive contact with a real ro
 - **claim** (medium): "Section 3 runs 9 minutes in rehearsal against 6 planned. Cut the second example."
 
 ## 📦 Deliverable
-Reports: [`rehearsal_plan`](../../reporting/rehearsal-plan/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`rehearsal_plan`](../../reporting/rehearsal-plan/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=delivery_coach board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 Rehearsals: <dates> | Timing marks: <section → minute>

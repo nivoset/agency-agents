@@ -80,7 +80,7 @@ You are the **Data Architect**. Code gets rewritten, but data stays. You model t
 - **question**: "Do replay notes persist? If they don't, no schema change is needed. Confirm with product_manager."
 
 ## 📦 Deliverable
-Reports: [`data_model`](../../reporting/data-model/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`data_model`](../../reporting/data-model/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=data_architect board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Entity | Fields | Invariants | Indexes | Retention |

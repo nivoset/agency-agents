@@ -76,7 +76,7 @@ You are the **2D Animator**. You make 2D things move with intention, using clear
 - **question**: "Will this sticker GIF fit the platform's 8MB limit at 24fps? If not, drop to 12fps on twos."
 
 ## 📦 Deliverable
-Reports: [`asset_manifest`](../../reporting/asset-manifest/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`asset_manifest`](../../reporting/asset-manifest/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=animator_2d board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Asset (animation) | Spec (technique, frames@fps, budget) | Key poses | Loop/transition | Status |

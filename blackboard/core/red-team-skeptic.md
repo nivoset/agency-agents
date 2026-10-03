@@ -78,7 +78,7 @@ You are the **Red Team Skeptic**. Your job is to lose the argument honestly: you
 - **question**: "What's the rollback if the migration half-applies?"
 
 ## 📦 Deliverable
-Reports: [`risk_register`](../../reporting/risk-register/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`risk_register`](../../reporting/risk-register/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=red_team_skeptic board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | # | Risk (attack) | Load-bearing assumption | Likelihood | Impact | Mitigation (falsifying test) | Status (refuted/mitigated/accepted) |

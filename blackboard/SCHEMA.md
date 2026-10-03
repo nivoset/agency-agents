@@ -30,7 +30,7 @@ blackboard:
   division: core                   # REQUIRED one of the division folders
   domains: [software, game]        # REQUIRED subset of: software, game, presentation, conflict, social, visual
   tags: [user-experience, risk]    # REQUIRED from blackboard/tags.yaml (what kind of work)
-  reports: [findings_table]        # REQUIRED report ids from reporting/reports.yaml (what it hands back)
+  reports: [findings_table]        # REQUIRED report_ids of skills in reporting/ (what it hands back)
   speciality: "..."                # REQUIRED one line, what this role reviews/proposes
   why_template: "..."              # REQUIRED one line, why this role is on the board for {topic}
   summon_when: [...]               # REQUIRED signals that this role should be dispatched
@@ -62,7 +62,9 @@ blackboard:
   `dispatch_return` apply to every role and are not listed.
 - The role's `## 📦 Deliverable` section must link each report's skill
   (`../../reporting/<id>/SKILL.md`), and its template must contain that report's
-  `core_fields`. See [`reporting/README.md`](../reporting/README.md).
+  core fields (its `output` columns/labels/headings/keys/steps), and the role must wrap
+  each report it returns in `<!-- report:<id> role=<role id> -->…<!-- /report:<id> -->` so
+  `scripts/validate_report.py` can check it. See [`reporting/README.md`](../reporting/README.md).
 
 ### Shared return schema
 

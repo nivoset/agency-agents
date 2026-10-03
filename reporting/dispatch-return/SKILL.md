@@ -1,6 +1,18 @@
 ---
 name: dispatch-return
 description: Standard payload a blackboard role returns at the end of a dispatch (status, claims/results, evidence, uncertainty, implication/next action, changed paths). Use when finishing any dispatched role task or completeness pass. Every role uses this.
+report_id: dispatch_return
+title: Dispatch Return
+version: 1
+universal: true
+tags: [evidence, synthesis]
+output:
+  tag: report:dispatch_return
+  format: yaml
+  keys: [status, claims/results, evidence, uncertainty, implication/next action, changed paths]
+  enums:
+    status: [passed, blocked, needs_decision, no_missing_items]
+  min_rows: 1
 ---
 
 # Dispatch Return
@@ -14,7 +26,9 @@ At the end of every dispatch, and for the final completeness pass.
 - All roles (universal). The facilitator consumes it.
 
 ## Template
+Wrap the report in its output tag so tools can find and check it (`scripts/validate_report.py`). Put your own role id in `role=` and the board id in `board=`.
 ```markdown
+<!-- report:dispatch_return role=ROLE_ID board=BOARD_ID -->
 status: passed | blocked | needs_decision | no_missing_items
 claims/results:
   - <claim, or the role's report, e.g. a findings_table or risk_register>
@@ -26,6 +40,7 @@ implication/next action:
   - <what the board or user should do next>
 changed paths:
   - <files written, or "none" for propose-only>
+<!-- /report:dispatch_return -->
 ```
 
 ## Core fields (required)
@@ -45,13 +60,21 @@ changed paths:
 Matches the dispatch `return_schema` in `dispatch.yaml`. The facilitator records status and outcome under "Review roles" in the [decision record](../decision-record/SKILL.md).
 
 ## Example
-```markdown
+
+```yaml
+<!-- report:dispatch_return role=integration_architect board=BB-DESIGN-REPLAY -->
 status: passed
-claims/results: [impact_map: 5 rows, 2 high-risk]
-evidence: [archive app/globals.css:1-12, next.config.ts]
-uncertainty: [did not run the build; only read config]
-implication/next action: [scope replay CSS under .replay-root before porting]
-changed paths: none
+claims/results:
+  - "impact_map: 5 rows, 2 high-risk (returned as its own report block)"
+evidence:
+  - "archive app/globals.css:1-12"
+  - next.config.ts
+uncertainty:
+  - "Did not run the build; read config only"
+implication/next action:
+  - "Scope replay CSS under .replay-root before porting"
+changed paths: []
+<!-- /report:dispatch_return -->
 ```
 
 ## Quality checks

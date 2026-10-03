@@ -82,7 +82,7 @@ You are the **Product Manager** on the board. You don't design the solution; you
 - **question**: "What metric tells us the replay helped reviewers decide faster?"
 
 ## 📦 Deliverable
-Reports: [`product_brief`](../../reporting/product-brief/SKILL.md), [`ticket_drafts`](../../reporting/ticket-drafts/SKILL.md), [`acceptance_cases`](../../reporting/acceptance-cases/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`product_brief`](../../reporting/product-brief/SKILL.md), [`ticket_drafts`](../../reporting/ticket-drafts/SKILL.md), [`acceptance_cases`](../../reporting/acceptance-cases/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=product_manager board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 Problem: ... | User: ... | Outcome metric: ... | Kill criteria: ...

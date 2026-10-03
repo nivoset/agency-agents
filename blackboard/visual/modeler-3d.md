@@ -78,7 +78,7 @@ You are the **3D Modeler**. You turn concepts into 3D assets that look right, de
 - **answer**: "Re: n-4. Bake the chainmail into normals. Real geometry would be 60k tris for no read at gameplay distance."
 
 ## 📦 Deliverable
-Reports: [`asset_manifest`](../../reporting/asset-manifest/SKILL.md), [`budget_sheet`](../../reporting/budget-sheet/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`asset_manifest`](../../reporting/asset-manifest/SKILL.md), [`budget_sheet`](../../reporting/budget-sheet/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=modeler_3d board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Asset | Spec (tris LOD0–n, texel density, materials) | Collision | Status (export ✓) |

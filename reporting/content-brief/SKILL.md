@@ -1,6 +1,19 @@
 ---
 name: content-brief
 description: Social content brief giving goal, audience, platform and format, CTA, success metric with check-in time, and timing. Use before writing any post, thread, carousel, video, or campaign.
+report_id: content_brief
+title: Content Brief
+version: 1
+universal: false
+tags: [social, metrics, audience]
+produced_by: [social_strategist]
+output:
+  tag: report:content_brief
+  format: fields
+  labels: [Goal, Audience, Platform, CTA, Metric]
+  enums:
+    Goal: [awareness, engagement, traffic, conversion, community]
+  min_rows: 1
 ---
 
 # Content Brief
@@ -14,7 +27,9 @@ At the start of every social board.
 - `social_strategist`: owns it.
 
 ## Template
+Wrap the report in its output tag so tools can find and check it (`scripts/validate_report.py`). Put your own role id in `role=` and the board id in `board=`.
 ```markdown
+<!-- report:content_brief role=ROLE_ID board=BOARD_ID -->
 Goal: awareness | engagement | traffic | conversion | community
 Audience: <specific segment>
 Platform/format: <platform → native format>
@@ -22,6 +37,7 @@ CTA: <one action>
 Metric: <number + check at T+48h>
 Timing: <date/time + reason>
 Pillar: <content pillar>
+<!-- /report:content_brief -->
 ```
 
 ## Core fields (required)
@@ -40,9 +56,16 @@ Pillar: <content pillar>
 Post it as round-1 `claim` notes. `hook_copywriter` and `platform_native_editor` write [draft variants](../draft-variants/SKILL.md) against it, and `community_response_forecaster` builds an [objection map](../objection-map/SKILL.md).
 
 ## Example
+
 ```markdown
-Goal: conversion (waitlist) | Audience: eng managers, 20–200 person cos | Platform: LinkedIn carousel + X thread
-CTA: join waitlist | Metric: 150 signups, check T+48h | Timing: Tue 9am PT
+<!-- report:content_brief role=social_strategist board=BB-DESIGN-REPLAY -->
+Goal: conversion (waitlist signups)
+Audience: engineering managers at 20–200 person companies
+Platform/format: LinkedIn carousel (8 slides) + X thread (5 posts)
+CTA: join the waitlist
+Metric: 150 signups, checked at T+48h
+Timing: Tuesday 9am PT, outside the conference news cycle
+<!-- /report:content_brief -->
 ```
 
 ## Quality checks

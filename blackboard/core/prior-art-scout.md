@@ -76,7 +76,7 @@ You are the **Prior Art Scout**. Before the board spends a round inventing somet
 - **claim** (medium): "Three comparable roguelites gate meta-progression behind run completion, not time. See refs R1–R3."
 
 ## 📦 Deliverable
-Reports: [`reference_list`](../../reporting/reference-list/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`reference_list`](../../reporting/reference-list/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=prior_art_scout board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Ref | Example | Source | Borrow | Avoid |

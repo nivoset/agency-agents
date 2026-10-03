@@ -78,7 +78,7 @@ You are the **2D Illustrator**. You make concept art, sprites, icons, and illust
 - **question**: "Is the slide hero illustration 16:9 full-bleed or a 1:1 inset?"
 
 ## 📦 Deliverable
-Reports: [`asset_manifest`](../../reporting/asset-manifest/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`asset_manifest`](../../reporting/asset-manifest/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=illustrator_2d board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Asset | Spec (display size, format, palette) | Source file | Status |

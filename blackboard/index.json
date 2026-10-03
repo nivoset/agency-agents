@@ -4705,42 +4705,67 @@
   "reports": {
     "acceptance_cases": {
       "title": "Acceptance Cases",
+      "skill": "reporting/acceptance-cases/SKILL.md",
+      "description": "Given/When/Then scenarios that define done, including failure, recovery, and preservation cases. Use when writing acceptance criteria, listing missing scenarios, or handing behavior to QA.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "testing",
         "user-experience",
         "planning"
       ],
-      "core_fields": [
-        "Given",
-        "When",
-        "Then"
-      ],
-      "skill": "reporting/acceptance-cases/SKILL.md",
-      "universal": false,
       "produced_by": [
         "end_user_advocate",
         "product_manager"
-      ]
+      ],
+      "output": {
+        "tag": "report:acceptance_cases",
+        "format": "gherkin",
+        "steps": [
+          "Given",
+          "When",
+          "Then"
+        ],
+        "min_rows": 1
+      }
     },
     "adr": {
       "title": "Architecture Decision Record",
+      "skill": "reporting/adr/SKILL.md",
+      "description": "Architecture Decision Record covering context, options considered, decision, and consequences. Use for any one-way-door technical choice (framework, storage, protocol, boundary, major dependency).",
+      "version": 1,
+      "universal": false,
       "tags": [
         "architecture"
       ],
-      "core_fields": [
-        "Context",
-        "Options",
-        "Decision",
-        "Consequences"
-      ],
-      "skill": "reporting/adr/SKILL.md",
-      "universal": false,
       "produced_by": [
         "software_architect"
-      ]
+      ],
+      "output": {
+        "tag": "report:adr",
+        "format": "fields",
+        "labels": [
+          "Context",
+          "Options",
+          "Decision",
+          "Consequences"
+        ],
+        "enums": {
+          "Status": [
+            "proposed",
+            "accepted",
+            "superseded"
+          ]
+        },
+        "min_rows": 1
+      }
     },
     "asset_manifest": {
       "title": "Asset Manifest",
+      "skill": "reporting/asset-manifest/SKILL.md",
+      "description": "Per-asset production list giving asset, spec, and status, plus role-specific columns. Use for sprites, illustrations, 3D models, animation clips, VFX, and sound events, or anything produced and tracked as discrete assets.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "2d",
         "3d",
@@ -4748,13 +4773,6 @@
         "audio",
         "vfx"
       ],
-      "core_fields": [
-        "Asset",
-        "Spec",
-        "Status"
-      ],
-      "skill": "reporting/asset-manifest/SKILL.md",
-      "universal": false,
       "produced_by": [
         "animator_2d",
         "animator_3d",
@@ -4762,563 +4780,954 @@
         "illustrator_2d",
         "modeler_3d",
         "vfx_artist"
-      ]
+      ],
+      "output": {
+        "tag": "report:asset_manifest",
+        "format": "table",
+        "columns": [
+          "Asset",
+          "Spec",
+          "Status"
+        ],
+        "enums": {
+          "Status": [
+            "planned",
+            "thumbnail",
+            "rough",
+            "final",
+            "in-engine",
+            "approved"
+          ]
+        },
+        "min_rows": 1
+      }
     },
     "beat_chart": {
       "title": "Beat Chart",
+      "skill": "reporting/beat-chart/SKILL.md",
+      "description": "Ordered beats with purpose, timing, and intensity. One shared format for level pacing, narrative beats, talk outlines, and motion storyboards. Use whenever a sequence's pacing matters.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "storytelling",
         "level-design",
         "narrative",
         "motion"
       ],
-      "core_fields": [
-        "Beat",
-        "Purpose",
-        "Timing",
-        "Intensity"
-      ],
-      "skill": "reporting/beat-chart/SKILL.md",
-      "universal": false,
       "produced_by": [
         "level_designer",
         "motion_designer",
         "narrative_designer",
         "presentation_story_architect"
-      ]
+      ],
+      "output": {
+        "tag": "report:beat_chart",
+        "format": "table",
+        "columns": [
+          "Beat",
+          "Purpose",
+          "Timing",
+          "Intensity"
+        ],
+        "enums": {
+          "Intensity": [
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"
+          ]
+        },
+        "min_rows": 1
+      }
     },
     "board_note": {
       "title": "Board Note",
+      "skill": "reporting/board-note/SKILL.md",
+      "description": "Format for a single note posted to a blackboard (claim, question, or answer, with confidence and refersTo). Use whenever a blackboard role contributes during a round. Every role uses this.",
+      "version": 1,
+      "universal": true,
       "tags": [
         "evidence",
         "synthesis"
       ],
-      "core_fields": [
-        "kind",
-        "body",
-        "confidence",
-        "refersTo"
-      ],
-      "skill": "reporting/board-note/SKILL.md",
-      "universal": true,
-      "produced_by": "all"
+      "produced_by": "all",
+      "output": {
+        "tag": "report:board_note",
+        "format": "yaml",
+        "keys": [
+          "kind",
+          "body",
+          "confidence",
+          "refersTo"
+        ],
+        "enums": {
+          "kind": [
+            "claim",
+            "question",
+            "answer"
+          ],
+          "confidence": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "min_rows": 1
+      }
     },
     "boundary_brief": {
       "title": "Boundary Brief",
+      "skill": "reporting/boundary-brief/SKILL.md",
+      "description": "The user's non-negotiables, a risk assessment (good-faith vs. harassment or manipulation), boundary statements, and an escalation path. Use in any conflict or public response where the user could be pressured into conceding, or put at risk.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "boundaries",
         "risk"
       ],
-      "core_fields": [
-        "Non-negotiables",
-        "Risk",
-        "Boundary statements",
-        "Escalation"
-      ],
-      "skill": "reporting/boundary-brief/SKILL.md",
-      "universal": false,
       "produced_by": [
         "boundary_keeper"
-      ]
+      ],
+      "output": {
+        "tag": "report:boundary_brief",
+        "format": "fields",
+        "labels": [
+          "Non-negotiables",
+          "Risk",
+          "Boundary statements",
+          "Escalation"
+        ],
+        "enums": {
+          "Risk": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "min_rows": 1
+      }
     },
     "budget_sheet": {
       "title": "Budget Sheet",
+      "skill": "reporting/budget-sheet/SKILL.md",
+      "description": "Performance and size budgets showing what is budgeted, the limit, the measured value, and target hardware or platform. Use for frame time, triangles, texture memory, draw calls, particles, bundle size, and Web Vitals.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "performance-budget"
       ],
-      "core_fields": [
-        "Budget",
-        "Limit",
-        "Measured",
-        "Target"
-      ],
-      "skill": "reporting/budget-sheet/SKILL.md",
-      "universal": false,
       "produced_by": [
         "frontend_engineer",
         "gameplay_engineer",
         "modeler_3d",
         "technical_artist",
         "vfx_artist"
-      ]
+      ],
+      "output": {
+        "tag": "report:budget_sheet",
+        "format": "table",
+        "columns": [
+          "Budget",
+          "Limit",
+          "Measured",
+          "Target"
+        ],
+        "enums": {
+          "Status": [
+            "ok",
+            "over",
+            "not measured"
+          ]
+        },
+        "min_rows": 1
+      }
     },
     "bug_report": {
       "title": "Bug Report",
+      "skill": "reporting/bug-report/SKILL.md",
+      "description": "Reproducible defect reports with steps, expected, actual, environment, severity, and root-cause cluster. Use for exploratory testing, bug bashes, playtest bugs, and demo rehearsals.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "testing"
       ],
-      "core_fields": [
-        "Steps",
-        "Expected",
-        "Actual",
-        "Environment",
-        "Severity"
-      ],
-      "skill": "reporting/bug-report/SKILL.md",
-      "universal": false,
       "produced_by": [
         "exploratory_tester",
         "playtest_analyst"
-      ]
+      ],
+      "output": {
+        "tag": "report:bug_report",
+        "format": "table",
+        "columns": [
+          "Steps",
+          "Expected",
+          "Actual",
+          "Environment",
+          "Severity"
+        ],
+        "enums": {
+          "Severity": [
+            "blocker",
+            "major",
+            "minor"
+          ]
+        },
+        "min_rows": 1
+      }
     },
     "chart_spec": {
       "title": "Chart Spec",
+      "skill": "reporting/chart-spec/SKILL.md",
+      "description": "Chart specification giving the question answered, a takeaway title, chart type, highlight, source/n, and caveats. Use for any chart in a deck, post, report, or dashboard.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "data-viz",
         "evidence"
       ],
-      "core_fields": [
-        "Chart",
-        "Question",
-        "Takeaway title",
-        "Type",
-        "Source"
-      ],
-      "skill": "reporting/chart-spec/SKILL.md",
-      "universal": false,
       "produced_by": [
         "data_storyteller"
-      ]
+      ],
+      "output": {
+        "tag": "report:chart_spec",
+        "format": "table",
+        "columns": [
+          "Chart",
+          "Question",
+          "Takeaway title",
+          "Type",
+          "Source"
+        ],
+        "min_rows": 1
+      }
     },
     "claim_ledger": {
       "title": "Claim Ledger",
+      "skill": "reporting/claim-ledger/SKILL.md",
+      "description": "Ledger separating the claims in a dispute or draft into fact, value, or feeling, each with status, source, and materiality, plus the crux. Use for arguments citing facts, posts making assertions, and decks with contested numbers.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "fact-checking",
         "evidence"
       ],
-      "core_fields": [
-        "Claim",
-        "Type",
-        "Status",
-        "Source",
-        "Material"
-      ],
-      "skill": "reporting/claim-ledger/SKILL.md",
-      "universal": false,
       "produced_by": [
         "fact_disentangler"
-      ]
+      ],
+      "output": {
+        "tag": "report:claim_ledger",
+        "format": "table",
+        "columns": [
+          "Claim",
+          "Type",
+          "Status",
+          "Source",
+          "Material"
+        ],
+        "labels": [
+          "Crux"
+        ],
+        "enums": {
+          "Type": [
+            "fact",
+            "value",
+            "feeling"
+          ],
+          "Status": [
+            "verified",
+            "false",
+            "disputed",
+            "unverifiable",
+            "n/a"
+          ],
+          "Material": [
+            "yes",
+            "no"
+          ]
+        },
+        "min_rows": 1
+      }
     },
     "conflict_map": {
       "title": "Conflict Map",
+      "skill": "reporting/conflict-map/SKILL.md",
+      "description": "Map of a disagreement giving each party's position, interest, and strongest view, plus temperature, stuck point, and the recommended next move and channel. Use before replying to a heated message, thread, or dispute.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "de-escalation"
       ],
-      "core_fields": [
-        "Party",
-        "Interest"
-      ],
-      "skill": "reporting/conflict-map/SKILL.md",
-      "universal": false,
       "produced_by": [
         "conflict_mediator",
         "steelman_interpreter"
-      ]
+      ],
+      "output": {
+        "tag": "report:conflict_map",
+        "format": "table",
+        "columns": [
+          "Party",
+          "Interest"
+        ],
+        "min_rows": 1
+      }
     },
     "content_brief": {
       "title": "Content Brief",
+      "skill": "reporting/content-brief/SKILL.md",
+      "description": "Social content brief giving goal, audience, platform and format, CTA, success metric with check-in time, and timing. Use before writing any post, thread, carousel, video, or campaign.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "social",
         "metrics",
         "audience"
       ],
-      "core_fields": [
-        "Goal",
-        "Audience",
-        "Platform",
-        "CTA",
-        "Metric"
-      ],
-      "skill": "reporting/content-brief/SKILL.md",
-      "universal": false,
       "produced_by": [
         "social_strategist"
-      ]
+      ],
+      "output": {
+        "tag": "report:content_brief",
+        "format": "fields",
+        "labels": [
+          "Goal",
+          "Audience",
+          "Platform",
+          "CTA",
+          "Metric"
+        ],
+        "enums": {
+          "Goal": [
+            "awareness",
+            "engagement",
+            "traffic",
+            "conversion",
+            "community"
+          ]
+        },
+        "min_rows": 1
+      }
     },
     "data_model": {
       "title": "Data Model",
+      "skill": "reporting/data-model/SKILL.md",
+      "description": "Data model with entities, fields, invariants, indexes, retention, and migration (up/backfill/down). Use for new persistent state, schema changes, save formats, or analytics events.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "data"
       ],
-      "core_fields": [
-        "Entity",
-        "Fields",
-        "Invariants",
-        "Indexes",
-        "Retention",
-        "Migration"
-      ],
-      "skill": "reporting/data-model/SKILL.md",
-      "universal": false,
       "produced_by": [
         "data_architect"
-      ]
+      ],
+      "output": {
+        "tag": "report:data_model",
+        "format": "table",
+        "columns": [
+          "Entity",
+          "Fields",
+          "Invariants",
+          "Indexes",
+          "Retention"
+        ],
+        "labels": [
+          "Migration"
+        ],
+        "min_rows": 1
+      }
     },
     "decision_record": {
       "title": "Decision Record",
+      "skill": "reporting/decision-record/SKILL.md",
+      "description": "The blackboard's final board.md synthesis, covering scope, non-goals, a claims/evidence/decisions table, blocking questions, a completeness pass, and verification evidence. Use when a facilitator closes a blackboard session or updates its board version.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "synthesis",
         "planning",
         "evidence"
       ],
-      "core_fields": [
-        "Resolved scope",
-        "Non-goals",
-        "Claims, evidence, and decisions",
-        "Blocking questions",
-        "completeness pass",
-        "Verification evidence"
-      ],
-      "skill": "reporting/decision-record/SKILL.md",
-      "universal": false,
       "produced_by": [
         "board_facilitator"
-      ]
+      ],
+      "output": {
+        "tag": "report:decision_record",
+        "format": "sections",
+        "headings": [
+          "Resolved scope",
+          "Non-goals",
+          "Claims, evidence, and decisions",
+          "Blocking questions",
+          "completeness pass",
+          "Verification evidence"
+        ],
+        "columns": [
+          "ID",
+          "Claim or decision",
+          "Evidence",
+          "Interpretation / next action"
+        ],
+        "min_rows": 1
+      }
     },
     "dispatch_return": {
       "title": "Dispatch Return",
+      "skill": "reporting/dispatch-return/SKILL.md",
+      "description": "Standard payload a blackboard role returns at the end of a dispatch (status, claims/results, evidence, uncertainty, implication/next action, changed paths). Use when finishing any dispatched role task or completeness pass. Every role uses this.",
+      "version": 1,
+      "universal": true,
       "tags": [
         "evidence",
         "synthesis"
       ],
-      "core_fields": [
-        "status",
-        "claims/results",
-        "evidence",
-        "uncertainty",
-        "implication/next action",
-        "changed paths"
-      ],
-      "skill": "reporting/dispatch-return/SKILL.md",
-      "universal": true,
-      "produced_by": "all"
+      "produced_by": "all",
+      "output": {
+        "tag": "report:dispatch_return",
+        "format": "yaml",
+        "keys": [
+          "status",
+          "claims/results",
+          "evidence",
+          "uncertainty",
+          "implication/next action",
+          "changed paths"
+        ],
+        "enums": {
+          "status": [
+            "passed",
+            "blocked",
+            "needs_decision",
+            "no_missing_items"
+          ]
+        },
+        "min_rows": 1
+      }
     },
     "draft_variants": {
       "title": "Draft Variants",
+      "skill": "reporting/draft-variants/SKILL.md",
+      "description": "Alternative drafts of a message, hook, or post (long/short, angles, or per-platform versions), each with its rationale. Use when producing replies, hooks, captions, or platform-native versions for the user to choose from.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "copywriting",
         "persuasion"
       ],
-      "core_fields": [
-        "Variant",
-        "Rationale"
-      ],
-      "skill": "reporting/draft-variants/SKILL.md",
-      "universal": false,
       "produced_by": [
         "diplomatic_wordsmith",
         "hook_copywriter",
         "platform_native_editor"
-      ]
+      ],
+      "output": {
+        "tag": "report:draft_variants",
+        "format": "table",
+        "columns": [
+          "Variant",
+          "Rationale"
+        ],
+        "min_rows": 2
+      }
     },
     "findings_table": {
       "title": "Findings Table",
+      "skill": "reporting/findings-table/SKILL.md",
+      "description": "Review findings as Finding / Evidence / Severity / Fix rows. Use for any review pass (UX, accessibility, developer experience, art, brand voice) that reports problems with something that already exists or is drafted.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "evidence",
         "risk"
       ],
-      "core_fields": [
-        "Finding",
-        "Evidence",
-        "Severity",
-        "Fix"
-      ],
-      "skill": "reporting/findings-table/SKILL.md",
-      "universal": false,
       "produced_by": [
         "accessibility_inclusion_reviewer",
         "art_director",
         "brand_voice_guardian",
         "developer_experience_advocate",
         "end_user_advocate"
-      ]
+      ],
+      "output": {
+        "tag": "report:findings_table",
+        "format": "table",
+        "columns": [
+          "Finding",
+          "Evidence",
+          "Severity",
+          "Fix"
+        ],
+        "enums": {
+          "Severity": [
+            "blocker",
+            "major",
+            "minor"
+          ]
+        },
+        "min_rows": 1
+      }
     },
     "impact_map": {
       "title": "Change Impact Map",
+      "skill": "reporting/impact-map/SKILL.md",
+      "description": "Change impact map listing each affected path, the change, its risk, the mitigation, and a preservation check. Use when integrating prototypes, upgrades, dependencies, or global styles into an existing system.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "integration",
         "risk"
       ],
-      "core_fields": [
-        "Path",
-        "Change",
-        "Risk",
-        "Mitigation",
-        "Preservation check"
-      ],
-      "skill": "reporting/impact-map/SKILL.md",
-      "universal": false,
       "produced_by": [
         "integration_architect"
-      ]
+      ],
+      "output": {
+        "tag": "report:impact_map",
+        "format": "table",
+        "columns": [
+          "Path",
+          "Change",
+          "Risk",
+          "Mitigation",
+          "Preservation check"
+        ],
+        "min_rows": 1
+      }
     },
     "interface_contract": {
       "title": "Interface Contract",
+      "skill": "reporting/interface-contract/SKILL.md",
+      "description": "Contract table for components or endpoints, covering interface, inputs, outputs, errors, and role-specific columns (state owner, a11y, idempotency, timeout). Use when designing or reviewing APIs, components, events, or module boundaries.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "frontend",
         "backend",
         "integration"
       ],
-      "core_fields": [
-        "Interface",
-        "Input",
-        "Output",
-        "Errors"
-      ],
-      "skill": "reporting/interface-contract/SKILL.md",
-      "universal": false,
       "produced_by": [
         "backend_engineer",
         "frontend_engineer"
-      ]
+      ],
+      "output": {
+        "tag": "report:interface_contract",
+        "format": "table",
+        "columns": [
+          "Interface",
+          "Input",
+          "Output",
+          "Errors"
+        ],
+        "min_rows": 1
+      }
     },
     "mechanic_sheet": {
       "title": "Mechanic Sheet",
+      "skill": "reporting/mechanic-sheet/SKILL.md",
+      "description": "Game mechanic and system sheet listing purpose, player decision, inputs, outputs, edge cases, and tuning values flagged [PLACEHOLDER]. Use when designing or reviewing mechanics, progression, or economies.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "game-mechanics"
       ],
-      "core_fields": [
-        "Mechanic",
-        "Purpose",
-        "Player decision",
-        "Inputs",
-        "Outputs",
-        "Edge cases"
-      ],
-      "skill": "reporting/mechanic-sheet/SKILL.md",
-      "universal": false,
       "produced_by": [
         "game_systems_designer"
-      ]
+      ],
+      "output": {
+        "tag": "report:mechanic_sheet",
+        "format": "table",
+        "columns": [
+          "Mechanic",
+          "Purpose",
+          "Player decision",
+          "Inputs",
+          "Outputs",
+          "Edge cases"
+        ],
+        "min_rows": 1
+      }
     },
     "objection_map": {
       "title": "Objection Map",
+      "skill": "reporting/objection-map/SKILL.md",
+      "description": "Audience segments with the objections or misreadings each will have and the response that answers them. Use for pitches, talks, launch posts, and sensitive announcements.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "audience",
         "community",
         "risk"
       ],
-      "core_fields": [
-        "Segment",
-        "Objection",
-        "Response",
-        "Status"
-      ],
-      "skill": "reporting/objection-map/SKILL.md",
-      "universal": false,
       "produced_by": [
         "audience_proxy",
         "community_response_forecaster"
-      ]
+      ],
+      "output": {
+        "tag": "report:objection_map",
+        "format": "table",
+        "columns": [
+          "Segment",
+          "Objection",
+          "Response",
+          "Status"
+        ],
+        "enums": {
+          "Status": [
+            "answered",
+            "partially",
+            "open"
+          ]
+        },
+        "min_rows": 1
+      }
     },
     "ops_plan": {
       "title": "Ops Plan",
+      "skill": "reporting/ops-plan/SKILL.md",
+      "description": "Operational readiness plan covering deploy strategy, tested rollback, SLOs, alerts with owners, and a runbook. Use before shipping services, launches, live events, or pipeline changes.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "operations"
       ],
-      "core_fields": [
-        "Deploy",
-        "Rollback",
-        "SLOs",
-        "Alerts",
-        "Runbook"
-      ],
-      "skill": "reporting/ops-plan/SKILL.md",
-      "universal": false,
       "produced_by": [
         "reliability_engineer"
-      ]
+      ],
+      "output": {
+        "tag": "report:ops_plan",
+        "format": "fields",
+        "labels": [
+          "Deploy",
+          "Rollback",
+          "SLOs",
+          "Alerts",
+          "Runbook"
+        ],
+        "min_rows": 1
+      }
     },
     "product_brief": {
       "title": "Product Brief",
+      "skill": "reporting/product-brief/SKILL.md",
+      "description": "One-page brief stating the problem, user, outcome metric, kill criteria, prioritized scope, and non-goals. Use at the start of a product, feature, game mode, campaign, or pitch board, before specialists optimize.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "planning",
         "metrics"
       ],
-      "core_fields": [
-        "Problem",
-        "User",
-        "Outcome metric",
-        "Kill criteria",
-        "Non-goals"
-      ],
-      "skill": "reporting/product-brief/SKILL.md",
-      "universal": false,
       "produced_by": [
         "product_manager"
-      ]
+      ],
+      "output": {
+        "tag": "report:product_brief",
+        "format": "fields",
+        "labels": [
+          "Problem",
+          "User",
+          "Outcome metric",
+          "Kill criteria",
+          "Non-goals"
+        ],
+        "min_rows": 1
+      }
     },
     "reference_list": {
       "title": "Reference List",
+      "skill": "reporting/reference-list/SKILL.md",
+      "description": "Annotated list of precedents and examples, giving the example, its source, what to borrow, and what to avoid. Use before inventing an approach, to bring prior art, competitor examples, internal implementations, or reference art onto the board.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "research",
         "evidence"
       ],
-      "core_fields": [
-        "Ref",
-        "Example",
-        "Source",
-        "Borrow",
-        "Avoid"
-      ],
-      "skill": "reporting/reference-list/SKILL.md",
-      "universal": false,
       "produced_by": [
         "prior_art_scout"
-      ]
+      ],
+      "output": {
+        "tag": "report:reference_list",
+        "format": "table",
+        "columns": [
+          "Ref",
+          "Example",
+          "Source",
+          "Borrow",
+          "Avoid"
+        ],
+        "min_rows": 1
+      }
     },
     "rehearsal_plan": {
       "title": "Rehearsal Plan",
+      "skill": "reporting/rehearsal-plan/SKILL.md",
+      "description": "Delivery readiness plan covering rehearsal runs, timing marks, demo fallbacks, and a Q&A bank. Use before any live or recorded talk, demo, or high-stakes spoken conversation.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "delivery"
       ],
-      "core_fields": [
-        "Rehearsals",
-        "Timing marks",
-        "Demo fallback",
-        "Q&A bank"
-      ],
-      "skill": "reporting/rehearsal-plan/SKILL.md",
-      "universal": false,
       "produced_by": [
         "delivery_coach"
-      ]
+      ],
+      "output": {
+        "tag": "report:rehearsal_plan",
+        "format": "fields",
+        "labels": [
+          "Rehearsals",
+          "Timing marks",
+          "Demo fallback",
+          "Q&A bank"
+        ],
+        "min_rows": 1
+      }
     },
     "research_findings": {
       "title": "Research Findings",
+      "skill": "reporting/research-findings/SKILL.md",
+      "description": "Research plan or results, giving the question, method, sample, findings, confidence, and design implication. Use for usability studies, interviews, analytics reads, surveys, and game playtests.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "research",
         "evidence",
         "user-experience"
       ],
-      "core_fields": [
-        "Question",
-        "Method",
-        "Sample",
-        "Findings",
-        "Confidence",
-        "Implication"
-      ],
-      "skill": "reporting/research-findings/SKILL.md",
-      "universal": false,
       "produced_by": [
         "playtest_analyst",
         "ux_researcher"
-      ]
+      ],
+      "output": {
+        "tag": "report:research_findings",
+        "format": "table",
+        "columns": [
+          "Question",
+          "Method",
+          "Sample",
+          "Findings",
+          "Confidence",
+          "Implication"
+        ],
+        "enums": {
+          "Confidence": [
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "min_rows": 1
+      }
     },
     "risk_register": {
       "title": "Risk Register",
+      "skill": "reporting/risk-register/SKILL.md",
+      "description": "Ranked register of risks with likelihood, impact, mitigation, and status (refuted, mitigated, accepted). Use for pre-mortems, red-teaming, test-risk matrices, and architecture risk sections.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "risk"
       ],
-      "core_fields": [
-        "Risk",
-        "Likelihood",
-        "Impact",
-        "Mitigation",
-        "Status"
-      ],
-      "skill": "reporting/risk-register/SKILL.md",
-      "universal": false,
       "produced_by": [
         "qa_test_strategist",
         "red_team_skeptic",
         "software_architect"
-      ]
+      ],
+      "output": {
+        "tag": "report:risk_register",
+        "format": "table",
+        "columns": [
+          "Risk",
+          "Likelihood",
+          "Impact",
+          "Mitigation",
+          "Status"
+        ],
+        "enums": {
+          "Likelihood": [
+            "L",
+            "M",
+            "H",
+            "low",
+            "medium",
+            "high"
+          ],
+          "Impact": [
+            "L",
+            "M",
+            "H",
+            "low",
+            "medium",
+            "high"
+          ],
+          "Status": [
+            "open",
+            "refuted",
+            "mitigated",
+            "accepted"
+          ]
+        },
+        "min_rows": 1
+      }
     },
     "slide_spec": {
       "title": "Slide Spec",
+      "skill": "reporting/slide-spec/SKILL.md",
+      "description": "Per-slide design spec covering focal point, layout, build steps, and alt text, plus template tokens. Use when designing or auditing a deck's visuals after the story outline exists.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "slides"
       ],
-      "core_fields": [
-        "Slide",
-        "Focal point",
-        "Layout",
-        "Build steps",
-        "Alt text"
-      ],
-      "skill": "reporting/slide-spec/SKILL.md",
-      "universal": false,
       "produced_by": [
         "slide_designer"
-      ]
+      ],
+      "output": {
+        "tag": "report:slide_spec",
+        "format": "table",
+        "columns": [
+          "Slide",
+          "Focal point",
+          "Layout",
+          "Build steps",
+          "Alt text"
+        ],
+        "min_rows": 1
+      }
     },
     "style_guide": {
       "title": "Style Guide",
+      "skill": "reporting/style-guide/SKILL.md",
+      "description": "Rules with Do / Don't examples for visual style, UI tokens, or brand voice. Use when defining or enforcing a look, a design system, or a voice that many contributors must follow.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "art-direction",
         "ui",
         "brand"
       ],
-      "core_fields": [
-        "Rule",
-        "Do",
-        "Don't"
-      ],
-      "skill": "reporting/style-guide/SKILL.md",
-      "universal": false,
       "produced_by": [
         "art_director",
         "brand_voice_guardian",
         "ui_visual_designer"
-      ]
+      ],
+      "output": {
+        "tag": "report:style_guide",
+        "format": "table",
+        "columns": [
+          "Rule",
+          "Do",
+          "Don't"
+        ],
+        "min_rows": 1
+      }
     },
     "test_plan": {
       "title": "Test Plan",
+      "skill": "reporting/test-plan/SKILL.md",
+      "description": "Maps acceptance criteria to tests at the right level, with determinism controls, CI status, and recorded evidence. Use when planning verification for a change, automating checks, or proving a release is ready.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "testing"
       ],
-      "core_fields": [
-        "Acceptance criterion",
-        "Test",
-        "Level",
-        "Evidence"
-      ],
-      "skill": "reporting/test-plan/SKILL.md",
-      "universal": false,
       "produced_by": [
         "qa_test_strategist",
         "test_automation_engineer"
-      ]
+      ],
+      "output": {
+        "tag": "report:test_plan",
+        "format": "table",
+        "columns": [
+          "Acceptance criterion",
+          "Test",
+          "Level",
+          "Evidence"
+        ],
+        "enums": {
+          "Level": [
+            "unit",
+            "component",
+            "integration",
+            "e2e",
+            "manual"
+          ]
+        },
+        "min_rows": 1
+      }
     },
     "threat_model": {
       "title": "Threat Model",
+      "skill": "reporting/threat-model/SKILL.md",
+      "description": "STRIDE-style threat model listing asset, threat, likelihood, impact, fix, and verification. Use for new trust boundaries, auth changes, user input, LLM features reading untrusted content, and new dependencies.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "security",
         "risk"
       ],
-      "core_fields": [
-        "Asset",
-        "Threat",
-        "Likelihood",
-        "Impact",
-        "Fix",
-        "Verify"
-      ],
-      "skill": "reporting/threat-model/SKILL.md",
-      "universal": false,
       "produced_by": [
         "security_reviewer"
-      ]
+      ],
+      "output": {
+        "tag": "report:threat_model",
+        "format": "table",
+        "columns": [
+          "Asset",
+          "Threat",
+          "Likelihood",
+          "Impact",
+          "Fix",
+          "Verify"
+        ],
+        "enums": {
+          "Likelihood": [
+            "L",
+            "M",
+            "H",
+            "low",
+            "medium",
+            "high"
+          ],
+          "Impact": [
+            "L",
+            "M",
+            "H",
+            "low",
+            "medium",
+            "high"
+          ]
+        },
+        "min_rows": 1
+      }
     },
     "ticket_drafts": {
       "title": "Ticket Drafts",
+      "skill": "reporting/ticket-drafts/SKILL.md",
+      "description": "Table of implementation-ready ticket drafts with acceptance evidence, dependencies, and status. Use when a board's decisions turn into work items, a capability hierarchy, or a sprint plan.",
+      "version": 1,
+      "universal": false,
       "tags": [
         "planning"
       ],
-      "core_fields": [
-        "Ticket",
-        "Acceptance evidence",
-        "Depends on",
-        "Status"
-      ],
-      "skill": "reporting/ticket-drafts/SKILL.md",
-      "universal": false,
       "produced_by": [
         "board_facilitator",
         "product_manager"
-      ]
+      ],
+      "output": {
+        "tag": "report:ticket_drafts",
+        "format": "table",
+        "columns": [
+          "Ticket",
+          "Acceptance evidence",
+          "Depends on",
+          "Status"
+        ],
+        "enums": {
+          "Status": [
+            "draft",
+            "ready",
+            "in progress",
+            "done"
+          ]
+        },
+        "min_rows": 1
+      }
     }
   }
 }

@@ -1,6 +1,19 @@
 ---
 name: beat-chart
 description: Ordered beats with purpose, timing, and intensity. One shared format for level pacing, narrative beats, talk outlines, and motion storyboards. Use whenever a sequence's pacing matters.
+report_id: beat_chart
+title: Beat Chart
+version: 1
+universal: false
+tags: [storytelling, level-design, narrative, motion]
+produced_by: [level_designer, motion_designer, narrative_designer, presentation_story_architect]
+output:
+  tag: report:beat_chart
+  format: table
+  columns: [Beat, Purpose, Timing, Intensity]
+  enums:
+    Intensity: ['1', '2', '3', '4', '5']
+  min_rows: 1
 ---
 
 # Beat Chart
@@ -17,8 +30,11 @@ For levels, quests, story arcs, talks, trailers, explainers, and storyboards: an
 - `motion_designer`: shots and builds with duration, easing, and on-screen text.
 
 ## Template
+Wrap the report in its output tag so tools can find and check it (`scripts/validate_report.py`). Put your own role id in `role=` and the board id in `board=`.
 ```markdown
+<!-- report:beat_chart role=ROLE_ID board=BOARD_ID -->
 | # | Beat | Purpose | Timing | Intensity (1–5) | <role columns> |
+<!-- /report:beat_chart -->
 ```
 
 ## Core fields (required)
@@ -36,9 +52,15 @@ For levels, quests, story arcs, talks, trailers, explainers, and storyboards: an
 Pacing disagreements (story vs. pace, builds vs. speaker rhythm) appear as `question` notes between the producers. The chart is the place to resolve them.
 
 ## Example
+
 ```markdown
-| 1 | Cold open: failed launch | hook | 1.5 min | 4 | slide: outage graph |
-| 2 | Why it happened | insight | 4 min | 3 | slide: timeline |
+<!-- report:beat_chart role=presentation_story_architect board=BB-DESIGN-REPLAY -->
+| # | Beat | Purpose | Timing | Intensity | Slide idea |
+|---|---|---|---|---|---|
+| 1 | Cold open: the failed launch | hook | 1.5 min | 4 | outage graph |
+| 2 | Why it happened | insight | 4 min | 3 | timeline |
+| 3 | Audience poll | rest | 1 min | 1 | poll |
+<!-- /report:beat_chart -->
 ```
 
 ## Quality checks

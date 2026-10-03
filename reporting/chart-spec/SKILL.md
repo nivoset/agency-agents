@@ -1,6 +1,17 @@
 ---
 name: chart-spec
 description: Chart specification giving the question answered, a takeaway title, chart type, highlight, source/n, and caveats. Use for any chart in a deck, post, report, or dashboard.
+report_id: chart_spec
+title: Chart Spec
+version: 1
+universal: false
+tags: [data-viz, evidence]
+produced_by: [data_storyteller]
+output:
+  tag: report:chart_spec
+  format: table
+  columns: [Chart, Question, Takeaway title, Type, Source]
+  min_rows: 1
 ---
 
 # Chart Spec
@@ -14,8 +25,11 @@ Before building any chart, and when auditing charts in decks or posts.
 - `data_storyteller`: owns it.
 
 ## Template
+Wrap the report in its output tag so tools can find and check it (`scripts/validate_report.py`). Put your own role id in `role=` and the board id in `board=`.
 ```markdown
+<!-- report:chart_spec role=ROLE_ID board=BOARD_ID -->
 | Chart | Question | Takeaway title | Type | Highlight | Source (n) | Caveat |
+<!-- /report:chart_spec -->
 ```
 
 ## Core fields (required)
@@ -34,8 +48,13 @@ Before building any chart, and when auditing charts in decks or posts.
 Verify statistical claims with `fact_disentangler` (a [claim ledger](../claim-ledger/SKILL.md)). Hand legibility conflicts to `slide_designer`.
 
 ## Example
+
 ```markdown
-| C1 slide 9 | Did onboarding v2 reduce churn? | "Churn fell 18% after onboarding v2" | line | v2 cohort | billing DB, Jul–Sep, n=4,210 | early signal; seasonal effects possible |
+<!-- report:chart_spec role=data_storyteller board=BB-DESIGN-REPLAY -->
+| Chart | Question | Takeaway title | Type | Highlight | Source | Caveat |
+|---|---|---|---|---|---|---|
+| C1 (slide 9) | Did onboarding v2 reduce churn? | "Churn fell 18% after onboarding v2" | line | v2 cohort | billing DB, Jul–Sep, n=4,210 | early signal; seasonal effects possible |
+<!-- /report:chart_spec -->
 ```
 
 ## Quality checks

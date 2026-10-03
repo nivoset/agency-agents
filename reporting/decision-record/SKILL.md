@@ -1,6 +1,18 @@
 ---
 name: decision-record
 description: The blackboard's final board.md synthesis, covering scope, non-goals, a claims/evidence/decisions table, blocking questions, a completeness pass, and verification evidence. Use when a facilitator closes a blackboard session or updates its board version.
+report_id: decision_record
+title: Decision Record
+version: 1
+universal: false
+tags: [synthesis, planning, evidence]
+produced_by: [board_facilitator]
+output:
+  tag: report:decision_record
+  format: sections
+  headings: [Resolved scope, Non-goals, 'Claims, evidence, and decisions', Blocking questions, completeness pass, Verification evidence]
+  columns: [ID, Claim or decision, Evidence, Interpretation / next action]
+  min_rows: 1
 ---
 
 # Decision Record
@@ -14,7 +26,9 @@ At the end of every board, and whenever the board version increments.
 - `board_facilitator`: writes it and owns every line.
 
 ## Template
+Wrap the report in its output tag so tools can find and check it (`scripts/validate_report.py`). Put your own role id in `role=` and the board id in `board=`.
 ```markdown
+<!-- report:decision_record role=ROLE_ID board=BOARD_ID -->
 # Blackboard: <topic>
 - Board ID / Version / Owner / Parent readiness (draft | final-ready) / Authority
 ## Resolved scope
@@ -27,6 +41,7 @@ At the end of every board, and whenever the board version increments.
 ## Assumptions and deferred work      (each with a re-entry condition)
 ## Required completeness pass
 ## Verification evidence
+<!-- /report:decision_record -->
 ```
 
 ## Core fields (required)
@@ -47,8 +62,27 @@ At the end of every board, and whenever the board version increments.
 Built from [board notes](../board-note/SKILL.md) and [dispatch returns](../dispatch-return/SKILL.md). Saved as `.planning/blackboard/<BOARD-ID>/board.md` next to `dispatch.yaml`.
 
 ## Example
+
 ```markdown
-| D-1 | Replay stays independent of live API state | User request + C-1, C-2 | Don't wire replay to /api/* |
+<!-- report:decision_record role=board_facilitator board=BB-DESIGN-REPLAY -->
+# Blackboard: Decision Replay Integration
+- Board ID: BB-DESIGN-REPLAY | Version: 1 | Readiness: final-ready | Authority: propose-only
+## Resolved scope
+Integrate the replay at `/demo`. Keep `/`, `/blackboard`, and both API routes.
+## Non-goals
+- Persisting replay notes (not requested)
+## Claims, evidence, and decisions
+| ID | Claim or decision | Evidence | Interpretation / next action |
+|---|---|---|---|
+| D-1 | Replay stays independent of live API state | user request; C-1 | don't wire replay to /api/* |
+## Blocking questions
+None. Route choice is reversible.
+## Required completeness pass
+- integration_architect: no_missing_items
+- end_user_advocate: no_missing_items
+## Verification evidence
+- `pnpm test`: 20 passed
+<!-- /report:decision_record -->
 ```
 
 ## Quality checks

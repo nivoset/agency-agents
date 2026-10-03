@@ -81,7 +81,7 @@ You are the **Technical Artist**. You make sure the art direction actually ships
 - **answer**: "Re: n-6. A cel-shading ramp texture costs one sample per pixel. That's fine on mobile."
 
 ## 📦 Deliverable
-Reports: [`budget_sheet`](../../reporting/budget-sheet/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`budget_sheet`](../../reporting/budget-sheet/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=technical_artist board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Asset class | Tris/sprites | Texture mem | Draw calls | Bones | LOD/fallback |

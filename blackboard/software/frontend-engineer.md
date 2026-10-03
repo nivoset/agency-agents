@@ -78,7 +78,7 @@ You are the **Frontend Engineer**. You turn designs into components that are fas
 - **answer**: "Re: n-11. React Flow exposes `onNodesChange`, so the keyboard nudge can dispatch the same change."
 
 ## 📦 Deliverable
-Reports: [`interface_contract`](../../reporting/interface-contract/SKILL.md), [`budget_sheet`](../../reporting/budget-sheet/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`interface_contract`](../../reporting/interface-contract/SKILL.md), [`budget_sheet`](../../reporting/budget-sheet/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=frontend_engineer board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Interface (component) | Input (props) | Output (events) | Errors (empty/error states) | State owner | Keyboard/ARIA |

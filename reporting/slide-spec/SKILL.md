@@ -1,6 +1,17 @@
 ---
 name: slide-spec
 description: Per-slide design spec covering focal point, layout, build steps, and alt text, plus template tokens. Use when designing or auditing a deck's visuals after the story outline exists.
+report_id: slide_spec
+title: Slide Spec
+version: 1
+universal: false
+tags: [slides]
+produced_by: [slide_designer]
+output:
+  tag: report:slide_spec
+  format: table
+  columns: [Slide, Focal point, Layout, Build steps, Alt text]
+  min_rows: 1
 ---
 
 # Slide Spec
@@ -14,9 +25,12 @@ After the [beat chart](../beat-chart/SKILL.md) for a talk is set, and when audit
 - `slide_designer`: owns it.
 
 ## Template
+Wrap the report in its output tag so tools can find and check it (`scripts/validate_report.py`). Put your own role id in `role=` and the board id in `board=`.
 ```markdown
+<!-- report:slide_spec role=ROLE_ID board=BOARD_ID -->
 Template: grid <n-col> | type scale <body ≥28pt, code ≥24pt> | palette <tokens>
 | Slide | Focal point | Layout | Build steps | Alt text |
+<!-- /report:slide_spec -->
 ```
 
 ## Core fields (required)
@@ -35,8 +49,14 @@ Template: grid <n-col> | type scale <body ≥28pt, code ≥24pt> | palette <toke
 Back-row or contrast failures are `claim` notes. Builds that clash with delivery pace go to `delivery_coach` as `question` notes.
 
 ## Example
+
 ```markdown
-| 7 (beat 3) | request path arrow | full diagram | 1 request → 2 queue → 3 worker → 4 store | "Request flows through queue to worker, then store" |
+<!-- report:slide_spec role=slide_designer board=BB-DESIGN-REPLAY -->
+Template: 12-column grid | body 32pt, code 24pt | palette: ink, chalk, accent
+| Slide | Focal point | Layout | Build steps | Alt text |
+|---|---|---|---|---|
+| 7 (beat 3) | request path arrow | full diagram | 1 request → 2 queue → 3 worker → 4 store | "A request flows through the queue to a worker, then to the store" |
+<!-- /report:slide_spec -->
 ```
 
 ## Quality checks

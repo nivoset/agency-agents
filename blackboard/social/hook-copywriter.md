@@ -78,7 +78,7 @@ You are the **Hook Copywriter**. You write the line that stops the scroll, and y
 - **claim**: "Cut 'Excited to share'. The value has to be in line one."
 
 ## 📦 Deliverable
-Reports: [`draft_variants`](../../reporting/draft-variants/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`draft_variants`](../../reporting/draft-variants/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=hook_copywriter board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Variant | Angle | Hook | Rationale |

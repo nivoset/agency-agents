@@ -18,6 +18,7 @@ frontmatter alone.
 - Machine-readable index (generated): [`index.json`](index.json)
 - Tag vocabulary: [`tags.yaml`](tags.yaml)
 - Report types and their skills: [`../reporting/`](../reporting/README.md)
+- Output validator: `python3 scripts/validate_report.py --role <id> output.md`
 - Validator: `python3 scripts/blackboard-index.py [--write]`
 
 ## Domains covered

@@ -1,6 +1,17 @@
 ---
 name: conflict-map
 description: Map of a disagreement giving each party's position, interest, and strongest view, plus temperature, stuck point, and the recommended next move and channel. Use before replying to a heated message, thread, or dispute.
+report_id: conflict_map
+title: Conflict Map
+version: 1
+universal: false
+tags: [de-escalation]
+produced_by: [conflict_mediator, steelman_interpreter]
+output:
+  tag: report:conflict_map
+  format: table
+  columns: [Party, Interest]
+  min_rows: 1
 ---
 
 # Conflict Map
@@ -15,10 +26,13 @@ Before responding in any conflict: a thread, an email, a review comment, a famil
 - `steelman_interpreter`: each party's strongest view, its underlying need, and the true part to concede.
 
 ## Template
+Wrap the report in its output tag so tools can find and check it (`scripts/validate_report.py`). Put your own role id in `role=` and the board id in `board=`.
 ```markdown
+<!-- report:conflict_map role=ROLE_ID board=BOARD_ID -->
 | Party | Position | Interest (underlying need) | Strongest view | True part to concede | Temperature (1–5) |
 Stuck point: ...
 Recommended next move: ... | Channel/timing: ... | Non-negotiables kept: <from boundary_brief>
+<!-- /report:conflict_map -->
 ```
 
 ## Core fields (required)
@@ -35,9 +49,17 @@ Recommended next move: ... | Channel/timing: ... | Non-negotiables kept: <from b
 Interests and concessions are `claim` notes. Non-negotiables come from the [boundary brief](../boundary-brief/SKILL.md). The wording comes from [draft variants](../draft-variants/SKILL.md).
 
 ## Example
+
 ```markdown
-| Teammate | "you never test anything" | stop 3am pages | two pages last week were preventable | 2nd page was preventable | 4 |
-Next move: acknowledge + offer pairing on alert rules | Channel: DM, today
+<!-- report:conflict_map role=conflict_mediator board=BB-DESIGN-REPLAY -->
+| Party | Position | Interest | Strongest view | True part to concede | Temperature |
+|---|---|---|---|---|---|
+| Teammate | "you never test anything" | stop the 3am pages | two pages last week were preventable | the second page was preventable | 4 |
+| User | "I test the critical paths" | be seen as reliable | coverage is focused on risk | none needed | 3 |
+Stuck point: both are arguing about testing in general, not the alert
+Recommended next move: acknowledge the preventable page and offer to pair on alert rules
+Channel/timing: DM, today
+<!-- /report:conflict_map -->
 ```
 
 ## Quality checks

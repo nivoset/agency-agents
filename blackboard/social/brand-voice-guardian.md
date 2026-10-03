@@ -76,7 +76,7 @@ You are the **Brand Voice Guardian**. You make every post sound like it came fro
 - **answer**: "Re: n-5. Playful works for the launch. For the outage post, drop the emoji and lead with the apology."
 
 ## 📦 Deliverable
-Reports: [`style_guide`](../../reporting/style-guide/SKILL.md), [`findings_table`](../../reporting/findings-table/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`style_guide`](../../reporting/style-guide/SKILL.md), [`findings_table`](../../reporting/findings-table/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=brand_voice_guardian board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Rule (voice trait) | Do | Don't |

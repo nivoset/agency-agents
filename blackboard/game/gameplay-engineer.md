@@ -80,7 +80,7 @@ You are the **Gameplay Engineer**. You make mechanics real in the engine, with r
 - **answer**: "Re: n-5. Moving tuning into ScriptableObjects lets design iterate without a recompile."
 
 ## 📦 Deliverable
-Reports: [`budget_sheet`](../../reporting/budget-sheet/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`budget_sheet`](../../reporting/budget-sheet/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=gameplay_engineer board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Mechanic | Engine approach | Tuning data | Feel spec |

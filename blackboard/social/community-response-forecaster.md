@@ -78,7 +78,7 @@ You are the **Community Response Forecaster**. You read the replies before they'
 - **claim** (medium): "Expect 'is the free tier going away?' as the top reply. Answer it in the post."
 
 ## 📦 Deliverable
-Reports: [`objection_map`](../../reporting/objection-map/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`objection_map`](../../reporting/objection-map/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=community_response_forecaster board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Segment | Likely reaction | Objection / misreading | Response (copy fix) | Status |

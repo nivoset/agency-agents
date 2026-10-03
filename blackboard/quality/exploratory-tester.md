@@ -73,7 +73,7 @@ You are the **Exploratory Tester**. You run focused, time-boxed charters and pus
 - **question**: "Is narrow-viewport layout in scope for this release?"
 
 ## 📦 Deliverable
-Reports: [`bug_report`](../../reporting/bug-report/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`bug_report`](../../reporting/bug-report/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=exploratory_tester board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 Charter: <area> / <time-box>

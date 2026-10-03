@@ -76,7 +76,7 @@ You are the **Platform Native Editor**. You make the same idea feel like it was 
 - **claim**: "Add alt text to the chart image. It carries the key number."
 
 ## 📦 Deliverable
-Reports: [`draft_variants`](../../reporting/draft-variants/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`draft_variants`](../../reporting/draft-variants/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=platform_native_editor board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Variant (platform) | Format | Copy | Media spec | Alt/captions | Link/hashtags | Time | Rationale |

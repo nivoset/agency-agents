@@ -1,6 +1,19 @@
 ---
 name: budget-sheet
 description: Performance and size budgets showing what is budgeted, the limit, the measured value, and target hardware or platform. Use for frame time, triangles, texture memory, draw calls, particles, bundle size, and Web Vitals.
+report_id: budget_sheet
+title: Budget Sheet
+version: 1
+universal: false
+tags: [performance-budget]
+produced_by: [frontend_engineer, gameplay_engineer, modeler_3d, technical_artist, vfx_artist]
+output:
+  tag: report:budget_sheet
+  format: table
+  columns: [Budget, Limit, Measured, Target]
+  enums:
+    Status: [ok, over, not measured]
+  min_rows: 1
 ---
 
 # Budget Sheet
@@ -18,8 +31,11 @@ Whenever art, effects, mechanics, or UI must run on a target device or platform.
 - `vfx_artist`: particle and overdraw budgets at worst-case counts.
 
 ## Template
+Wrap the report in its output tag so tools can find and check it (`scripts/validate_report.py`). Put your own role id in `role=` and the board id in `board=`.
 ```markdown
+<!-- report:budget_sheet role=ROLE_ID board=BOARD_ID -->
 | Budget | Limit | Measured | Target (hardware / platform) | Status | Exception rationale |
+<!-- /report:budget_sheet -->
 ```
 
 ## Core fields (required)
@@ -37,8 +53,14 @@ Whenever art, effects, mechanics, or UI must run on a target device or platform.
 Over-budget rows are `claim` notes with evidence (a profiler capture). Budget splits between roles, such as logic vs. rendering, are settled with `answer` notes.
 
 ## Example
+
 ```markdown
-| Boss fight VFX overdraw | 3.0x | 4.2x | Switch (docked) | over | reduce smoke layers 6→3 |
+<!-- report:budget_sheet role=vfx_artist board=BB-DESIGN-REPLAY -->
+| Budget | Limit | Measured | Target | Status | Exception rationale |
+|---|---|---|---|---|---|
+| Boss fight VFX overdraw | 3.0x | 4.2x | Switch (docked) | over | reduce smoke layers from 6 to 3 |
+| Hit spark particles | 200 | 140 | Switch (docked) | ok | none |
+<!-- /report:budget_sheet -->
 ```
 
 ## Quality checks

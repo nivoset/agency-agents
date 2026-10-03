@@ -86,7 +86,7 @@ You are the **End User Advocate**. On a board full of builders, you are the pers
 - **claim** (high): "Tool rail buttons have no onClick. They must be disabled and named as unavailable, or they will mislead users."
 
 ## 📦 Deliverable
-Reports: [`findings_table`](../../reporting/findings-table/SKILL.md), [`acceptance_cases`](../../reporting/acceptance-cases/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`findings_table`](../../reporting/findings-table/SKILL.md), [`acceptance_cases`](../../reporting/acceptance-cases/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=end_user_advocate board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Finding | Who is affected | Evidence | Severity (blocking/degrading) | Fix (minimum acceptable behavior) |

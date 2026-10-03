@@ -1,6 +1,17 @@
 ---
 name: reference-list
 description: Annotated list of precedents and examples, giving the example, its source, what to borrow, and what to avoid. Use before inventing an approach, to bring prior art, competitor examples, internal implementations, or reference art onto the board.
+report_id: reference_list
+title: Reference List
+version: 1
+universal: false
+tags: [research, evidence]
+produced_by: [prior_art_scout]
+output:
+  tag: report:reference_list
+  format: table
+  columns: [Ref, Example, Source, Borrow, Avoid]
+  min_rows: 1
 ---
 
 # Reference List
@@ -14,9 +25,12 @@ When a role asks "how do others do this?", or before a design or approach is cho
 - `prior_art_scout`: the repository first, then the outside world.
 
 ## Template
+Wrap the report in its output tag so tools can find and check it (`scripts/validate_report.py`). Put your own role id in `role=` and the board id in `board=`.
 ```markdown
+<!-- report:reference_list role=ROLE_ID board=BOARD_ID -->
 | Ref | Example | Source | Borrow | Avoid |
 | R1 | <what it is> | <path / URL / title, year> | <specific element to reuse> | <specific pitfall> |
+<!-- /report:reference_list -->
 ```
 
 ## Core fields (required)
@@ -34,8 +48,14 @@ When a role asks "how do others do this?", or before a design or approach is cho
 Post an `answer` note when a reference resolves an open question, citing `R#`. Other roles cite `R#` as evidence in their notes.
 
 ## Example
+
 ```markdown
-| R1 | Existing note renderer | components/blackboard/note-card.tsx | kind/confidence badges | n/a: reuse directly |
+<!-- report:reference_list role=prior_art_scout board=BB-DESIGN-REPLAY -->
+| Ref | Example | Source | Borrow | Avoid |
+|---|---|---|---|---|
+| R1 | Existing note renderer | components/blackboard/note-card.tsx | kind and confidence badges | writing a second renderer |
+| R2 | Document version history panels | Google Docs / Figma version history | named versions with author and time | no rationale per version |
+<!-- /report:reference_list -->
 ```
 
 ## Quality checks

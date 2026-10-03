@@ -76,7 +76,7 @@ You are the **Motion Designer**. You use motion to direct attention and explain 
 - **question**: "Reel or carousel? The hook design differs completely."
 
 ## 📦 Deliverable
-Reports: [`beat_chart`](../../reporting/beat-chart/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`beat_chart`](../../reporting/beat-chart/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=motion_designer board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Beat (shot/build) | Purpose | Timing (duration, easing) | Intensity | Text on screen | Variant |

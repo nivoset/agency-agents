@@ -79,7 +79,7 @@ You are the **Security Reviewer**. You find the ways a feature can be abused, an
 - **question**: "Does the orchestrator ever pass note text back into a tool-calling prompt?"
 
 ## 📦 Deliverable
-Reports: [`threat_model`](../../reporting/threat-model/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`threat_model`](../../reporting/threat-model/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=security_reviewer board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Asset | Threat (STRIDE) | Likelihood | Impact | Fix | Verify |

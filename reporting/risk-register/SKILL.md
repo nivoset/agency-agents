@@ -1,6 +1,21 @@
 ---
 name: risk-register
 description: Ranked register of risks with likelihood, impact, mitigation, and status (refuted, mitigated, accepted). Use for pre-mortems, red-teaming, test-risk matrices, and architecture risk sections.
+report_id: risk_register
+title: Risk Register
+version: 1
+universal: false
+tags: [risk]
+produced_by: [qa_test_strategist, red_team_skeptic, software_architect]
+output:
+  tag: report:risk_register
+  format: table
+  columns: [Risk, Likelihood, Impact, Mitigation, Status]
+  enums:
+    Likelihood: [L, M, H, low, medium, high]
+    Impact: [L, M, H, low, medium, high]
+    Status: [open, refuted, mitigated, accepted]
+  min_rows: 1
 ---
 
 # Risk Register
@@ -16,8 +31,11 @@ Before expensive or irreversible decisions, when planning verification, or when 
 - `software_architect`: architectural risks for the proposal.
 
 ## Template
+Wrap the report in its output tag so tools can find and check it (`scripts/validate_report.py`). Put your own role id in `role=` and the board id in `board=`.
 ```markdown
+<!-- report:risk_register role=ROLE_ID board=BOARD_ID -->
 | # | Risk | Likelihood (L/M/H) | Impact (L/M/H) | Mitigation | Owner | Status |
+<!-- /report:risk_register -->
 ```
 
 ## Core fields (required)
@@ -35,8 +53,14 @@ Before expensive or irreversible decisions, when planning verification, or when 
 Post the top risk as a `claim` or `question` note. When evidence refutes a risk, post an `answer` linking to it and set status `refuted`. The facilitator carries accepted risks into the [decision record](../decision-record/SKILL.md).
 
 ## Example
+
 ```markdown
-| 1 | If replay code calls /api/*, demo burns tokens | M | H | test mocks fetch, asserts 0 calls | test_automation_engineer | mitigated |
+<!-- report:risk_register role=red_team_skeptic board=BB-DESIGN-REPLAY -->
+| # | Risk | Likelihood | Impact | Mitigation | Owner | Status |
+|---|---|---|---|---|---|---|
+| 1 | If replay code calls /api/*, the demo burns tokens | M | H | test mocks fetch and asserts 0 calls | test_automation_engineer | mitigated |
+| 2 | If archive CSS leaks globally, the site theme breaks | H | M | scope styles under .replay-root | integration_architect | open |
+<!-- /report:risk_register -->
 ```
 
 ## Quality checks

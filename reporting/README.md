@@ -1,143 +1,154 @@
 # Reporting Skills
 
-One skill per **report type** that blackboard roles produce. Every role in
-[`blackboard/`](../blackboard/README.md) declares:
+One skill per **report type** that blackboard roles produce. Each `SKILL.md` is the
+single source of truth for its report. The frontmatter says what the report is, who
+produces it, its topic tags, and the **output spec** that tools use to validate what an
+agent actually returns.
+
+Every role in [`blackboard/`](../blackboard/README.md) declares:
 
 - `blackboard.tags`: what kind of work it does, from [`blackboard/tags.yaml`](../blackboard/tags.yaml)
-- `blackboard.reports`: which report types it hands back, as ids from [`reports.yaml`](reports.yaml)
+- `blackboard.reports`: the `report_id`s of the skills here that it hands back
 
-Each report id has a skill here at `reporting/<id with - for _>/SKILL.md`. The skill
-says when to use the report, gives its template and required core fields, explains how
-to fill it in and how it moves through the board, and ends with an example and quality
-checks.
+## Skill frontmatter
 
-## How the pieces match
+```yaml
+---
+name: risk-register                 # skill name (== folder)
+description: ...                    # when to use it (what Claude Code reads to trigger the skill)
+report_id: risk_register            # id used in role frontmatter and output tags
+title: Risk Register
+version: 1                          # bump when the output spec changes incompatibly
+universal: false                    # true = every role uses it (board_note, dispatch_return)
+tags: [risk]                        # topic tags from blackboard/tags.yaml
+produced_by: [qa_test_strategist, red_team_skeptic, software_architect]  # must match roles' reports
+output:                             # machine-checkable spec for agent output
+  tag: report:risk_register         # output tag agents wrap the report in
+  format: table                     # table | fields | sections | yaml | gherkin
+  columns: [Risk, Likelihood, Impact, Mitigation, Status]  # required table columns (header starts with)
+  labels: []                        # required "Label:" lines
+  headings: []                      # required markdown headings
+  keys: []                          # required YAML keys (format: yaml)
+  steps: []                         # required Given/When/Then steps (format: gherkin)
+  enums:                            # allowed values, checked wherever the column/label/key appears
+    Status: [open, refuted, mitigated, accepted]
+  min_rows: 1                       # minimum table rows / YAML items / scenarios
+---
+```
 
-The validator (`python3 scripts/blackboard-index.py`) enforces all of these, and CI runs it:
+Only the keys a report needs are present. The **core fields** of a report are the union of
+`columns`, `labels`, `headings`, `keys`, and `steps`.
 
-| Rule | Checked against |
+## Output tags
+
+Agents wrap every report they return, wherever it appears in their output (inside a code
+fence or not):
+
+```markdown
+<!-- report:risk_register role=red_team_skeptic board=BB-DESIGN-REPLAY -->
+| # | Risk | Likelihood | Impact | Mitigation | Owner | Status |
+|---|---|---|---|---|---|---|
+| 1 | If replay calls /api/*, the demo burns tokens | M | H | test asserts 0 fetch calls | qa | mitigated |
+<!-- /report:risk_register -->
+```
+
+- `report:<report_id>` names the spec to validate against.
+- `role=<role id>` is required. It must be a real role, and for non-universal reports it must be in `produced_by`.
+- `board=<board id>` is optional, and other `key=value` attributes are kept and passed through.
+
+## Validating agent output
+
+```bash
+python3 scripts/validate_report.py output.md                          # check every tagged block
+python3 scripts/validate_report.py --role red_team_skeptic output.md  # + require all of the role's reports
+python3 scripts/validate_report.py --require test_plan,risk_register output.md
+python3 scripts/validate_report.py --json output.md                   # for orchestrators / CI
+cat output.md | python3 scripts/validate_report.py -                  # stdin
+```
+
+It reports unknown report types and roles, a role tagging a report it doesn't produce,
+missing columns, labels, headings, keys, or steps, values outside `enums`, too few rows,
+ragged table rows, and unclosed or mismatched tags. The exit code is 1 on any error.
+A facilitator can run it on each dispatch return before merging into the
+[decision record](decision-record/SKILL.md), and retry the role with the errors when it fails.
+
+## How the pieces are kept in sync
+
+`python3 scripts/blackboard-index.py` (run in CI) enforces:
+
+| Rule | Between |
 |---|---|
-| Every role tag exists in `tags.yaml`, and every tag in the vocabulary is used | roles + reports |
-| Every role report exists in `reports.yaml` and has a skill folder | roles → registry → `reporting/*/SKILL.md` |
-| Each skill's **Produced by** section lists exactly the roles whose `reports` include it | skill ↔ roles |
-| Each skill's **Template** contains every `core_fields` entry | skill ↔ registry |
-| Each role's **Deliverable** section links its report skills and contains their core fields | role body ↔ registry |
-| No skill folder exists without a registry entry | folder ↔ registry |
+| Role tags and skill tags exist in `tags.yaml`, and every tag is used | roles, skills ↔ vocabulary |
+| Every role report is a real `report_id` | roles → skills |
+| `produced_by` and the **Produced by** section both equal the roles that list the report | skill ↔ roles |
+| `output.tag` is `report:<report_id>`, and folder and name match the id | skill internal |
+| The **Template** is wrapped in the output tag and contains every core field | skill ↔ its spec |
+| The **Example** is one tagged block that passes `validate_report.py` | skill ↔ its spec |
+| Each role's **Deliverable** links its report skills and contains their core fields | role ↔ skills |
+| The tables below match the current skills and roles | README ↔ index |
 
-Roles may **add** columns to a report, such as a criterion column on accessibility
-findings, but never drop core fields.
+`python3 scripts/test_validate_report.py` tests the output validator itself.
 
-## How to use
+## Using these skills
 
 **Running a board (facilitator):**
 1. Seat roles from [`blackboard/panels.yaml`](../blackboard/panels.yaml).
-2. In each dispatch, set `deliverable` to the role's report ids, for example `deliverable: impact_map`.
-3. Give each role the skills for its reports along with its own body, plus the universal
+2. Give each role its own body plus the skills for its `reports`, along with the universal
    [`board_note`](board-note/SKILL.md) and [`dispatch_return`](dispatch-return/SKILL.md).
-4. Roles post [board notes](board-note/SKILL.md) during rounds, and return their reports inside a
-   [dispatch return](dispatch-return/SKILL.md) as `claims/results`.
-5. Merge the results into the [decision record](decision-record/SKILL.md). Each role's report
-   `Quality checks` together with its `done_when` decide `no_missing_items`.
+3. Collect the tagged output and run `validate_report.py --role <id>` on it. If it fails, send the errors back.
+4. Merge the valid reports into the [decision record](decision-record/SKILL.md).
 
-**Looking things up:** `blackboard/index.json` maps `reports.<id>.produced_by` (who writes a
-report) and `tags.<tag>.roles` (who does a kind of work), so an orchestrator can pick roles
-by report or by tag without parsing markdown.
+**Lookup:** `blackboard/index.json` exposes `reports.<id>` (with `output` specs and
+`produced_by`) and `tags.<tag>.roles`.
 
-**As Claude Code skills:** each folder is a standard skill, with a `SKILL.md` that has only
-`name` and `description` frontmatter. Copy the whole folder so the cross-links between
-skills still work:
+**As Claude Code skills:** copy the folders together so the cross-links still work:
 
 ```bash
 mkdir -p .claude/skills && cp -r reporting/*/ .claude/skills/   # project
 cp -r reporting/*/ ~/.claude/skills/                             # or user-wide
 ```
 
-Report metadata (tags, core fields) lives in `reports.yaml`, not in the skill
-frontmatter. That keeps the skills spec-compliant.
+The extra frontmatter keys (`report_id`, `output`, and so on) are ignored by Claude Code.
+Strict Agent Skills linters that allow only `name`, `description`, `license`,
+`allowed-tools`, and `metadata` will flag them.
 
+<!-- BEGIN GENERATED: python3 scripts/blackboard-index.py --write -->
 ## Report types
 
-### Universal (every role)
-
-| Report | id | Core fields | Produced by |
-|---|---|---|---|
-| [Board Note](board-note/SKILL.md) | `board_note` | kind, body, confidence, refersTo | all roles |
-| [Dispatch Return](dispatch-return/SKILL.md) | `dispatch_return` | status, claims/results, evidence, uncertainty, implication/next action, changed paths | all roles |
-
-### Board synthesis & planning
-
-| Report | id | Core fields | Produced by |
-|---|---|---|---|
-| [Decision Record](decision-record/SKILL.md) | `decision_record` | Resolved scope, Non-goals, Claims, evidence, and decisions, Blocking questions, completeness pass, Verification evidence | `board_facilitator` |
-| [Ticket Drafts](ticket-drafts/SKILL.md) | `ticket_drafts` | Ticket, Acceptance evidence, Depends on, Status | `board_facilitator`, `product_manager` |
-| [Product Brief](product-brief/SKILL.md) | `product_brief` | Problem, User, Outcome metric, Kill criteria, Non-goals | `product_manager` |
-| [Acceptance Cases](acceptance-cases/SKILL.md) | `acceptance_cases` | Given, When, Then | `end_user_advocate`, `product_manager` |
-
-### Review, risk & evidence
-
-| Report | id | Core fields | Produced by |
-|---|---|---|---|
-| [Findings Table](findings-table/SKILL.md) | `findings_table` | Finding, Evidence, Severity, Fix | `accessibility_inclusion_reviewer`, `art_director`, `brand_voice_guardian`, `developer_experience_advocate`, `end_user_advocate` |
-| [Risk Register](risk-register/SKILL.md) | `risk_register` | Risk, Likelihood, Impact, Mitigation, Status | `qa_test_strategist`, `red_team_skeptic`, `software_architect` |
-| [Reference List](reference-list/SKILL.md) | `reference_list` | Ref, Example, Source, Borrow, Avoid | `prior_art_scout` |
-| [Research Findings](research-findings/SKILL.md) | `research_findings` | Question, Method, Sample, Findings, Confidence, Implication | `playtest_analyst`, `ux_researcher` |
-| [Claim Ledger](claim-ledger/SKILL.md) | `claim_ledger` | Claim, Type, Status, Source, Material | `fact_disentangler` |
-
-### Testing / QA
-
-| Report | id | Core fields | Produced by |
-|---|---|---|---|
-| [Test Plan](test-plan/SKILL.md) | `test_plan` | Acceptance criterion, Test, Level, Evidence | `qa_test_strategist`, `test_automation_engineer` |
-| [Bug Report](bug-report/SKILL.md) | `bug_report` | Steps, Expected, Actual, Environment, Severity | `exploratory_tester`, `playtest_analyst` |
-
-### Software
-
-| Report | id | Core fields | Produced by |
-|---|---|---|---|
-| [Architecture Decision Record](adr/SKILL.md) | `adr` | Context, Options, Decision, Consequences | `software_architect` |
-| [Change Impact Map](impact-map/SKILL.md) | `impact_map` | Path, Change, Risk, Mitigation, Preservation check | `integration_architect` |
-| [Interface Contract](interface-contract/SKILL.md) | `interface_contract` | Interface, Input, Output, Errors | `backend_engineer`, `frontend_engineer` |
-| [Data Model](data-model/SKILL.md) | `data_model` | Entity, Fields, Invariants, Indexes, Retention, Migration | `data_architect` |
-| [Threat Model](threat-model/SKILL.md) | `threat_model` | Asset, Threat, Likelihood, Impact, Fix, Verify | `security_reviewer` |
-| [Ops Plan](ops-plan/SKILL.md) | `ops_plan` | Deploy, Rollback, SLOs, Alerts, Runbook | `reliability_engineer` |
-
-### Game design
-
-| Report | id | Core fields | Produced by |
-|---|---|---|---|
-| [Mechanic Sheet](mechanic-sheet/SKILL.md) | `mechanic_sheet` | Mechanic, Purpose, Player decision, Inputs, Outputs, Edge cases | `game_systems_designer` |
-| [Beat Chart](beat-chart/SKILL.md) | `beat_chart` | Beat, Purpose, Timing, Intensity | `level_designer`, `motion_designer`, `narrative_designer`, `presentation_story_architect` |
-
-### Graphics & animation (2D / 3D)
-
-| Report | id | Core fields | Produced by |
-|---|---|---|---|
-| [Asset Manifest](asset-manifest/SKILL.md) | `asset_manifest` | Asset, Spec, Status | `animator_2d`, `animator_3d`, `game_audio_designer`, `illustrator_2d`, `modeler_3d`, `vfx_artist` |
-| [Budget Sheet](budget-sheet/SKILL.md) | `budget_sheet` | Budget, Limit, Measured, Target | `frontend_engineer`, `gameplay_engineer`, `modeler_3d`, `technical_artist`, `vfx_artist` |
-| [Style Guide](style-guide/SKILL.md) | `style_guide` | Rule, Do, Don't | `art_director`, `brand_voice_guardian`, `ui_visual_designer` |
-
-### Presentations
-
-| Report | id | Core fields | Produced by |
-|---|---|---|---|
-| [Slide Spec](slide-spec/SKILL.md) | `slide_spec` | Slide, Focal point, Layout, Build steps, Alt text | `slide_designer` |
-| [Chart Spec](chart-spec/SKILL.md) | `chart_spec` | Chart, Question, Takeaway title, Type, Source | `data_storyteller` |
-| [Objection Map](objection-map/SKILL.md) | `objection_map` | Segment, Objection, Response, Status | `audience_proxy`, `community_response_forecaster` |
-| [Rehearsal Plan](rehearsal-plan/SKILL.md) | `rehearsal_plan` | Rehearsals, Timing marks, Demo fallback, Q&A bank | `delivery_coach` |
-
-### Defusing arguments
-
-| Report | id | Core fields | Produced by |
-|---|---|---|---|
-| [Conflict Map](conflict-map/SKILL.md) | `conflict_map` | Party, Interest | `conflict_mediator`, `steelman_interpreter` |
-| [Boundary Brief](boundary-brief/SKILL.md) | `boundary_brief` | Non-negotiables, Risk, Boundary statements, Escalation | `boundary_keeper` |
-| [Draft Variants](draft-variants/SKILL.md) | `draft_variants` | Variant, Rationale | `diplomatic_wordsmith`, `hook_copywriter`, `platform_native_editor` |
-
-### Social posts
-
-| Report | id | Core fields | Produced by |
-|---|---|---|---|
-| [Content Brief](content-brief/SKILL.md) | `content_brief` | Goal, Audience, Platform, CTA, Metric | `social_strategist` |
+| Report | Output tag | Format | Required output | Tags | Produced by |
+|---|---|---|---|---|---|
+| [Acceptance Cases](acceptance-cases/SKILL.md) | `report:acceptance_cases` | gherkin | steps: Given, When, Then | testing, user-experience, planning | `end_user_advocate`, `product_manager` |
+| [Architecture Decision Record](adr/SKILL.md) | `report:adr` | fields | labels: Context, Options, Decision, Consequences<br>enums: Status=proposed/accepted/superseded | architecture | `software_architect` |
+| [Asset Manifest](asset-manifest/SKILL.md) | `report:asset_manifest` | table | columns: Asset, Spec, Status<br>enums: Status=planned/thumbnail/rough/final/in-engine/approved | 2d, 3d, animation, audio, vfx | `animator_2d`, `animator_3d`, `game_audio_designer`, `illustrator_2d`, `modeler_3d`, `vfx_artist` |
+| [Beat Chart](beat-chart/SKILL.md) | `report:beat_chart` | table | columns: Beat, Purpose, Timing, Intensity<br>enums: Intensity=1/2/3/4/5 | storytelling, level-design, narrative, motion | `level_designer`, `motion_designer`, `narrative_designer`, `presentation_story_architect` |
+| [Board Note](board-note/SKILL.md) | `report:board_note` | yaml | keys: kind, body, confidence, refersTo<br>enums: kind=claim/question/answer; confidence=low/medium/high | evidence, synthesis | all roles |
+| [Boundary Brief](boundary-brief/SKILL.md) | `report:boundary_brief` | fields | labels: Non-negotiables, Risk, Boundary statements, Escalation<br>enums: Risk=low/medium/high | boundaries, risk | `boundary_keeper` |
+| [Budget Sheet](budget-sheet/SKILL.md) | `report:budget_sheet` | table | columns: Budget, Limit, Measured, Target<br>enums: Status=ok/over/not measured | performance-budget | `frontend_engineer`, `gameplay_engineer`, `modeler_3d`, `technical_artist`, `vfx_artist` |
+| [Bug Report](bug-report/SKILL.md) | `report:bug_report` | table | columns: Steps, Expected, Actual, Environment, Severity<br>enums: Severity=blocker/major/minor | testing | `exploratory_tester`, `playtest_analyst` |
+| [Chart Spec](chart-spec/SKILL.md) | `report:chart_spec` | table | columns: Chart, Question, Takeaway title, Type, Source | data-viz, evidence | `data_storyteller` |
+| [Claim Ledger](claim-ledger/SKILL.md) | `report:claim_ledger` | table | columns: Claim, Type, Status, Source, Material<br>labels: Crux<br>enums: Type=fact/value/feeling; Status=verified/false/disputed/unverifiable/n/a; Material=yes/no | fact-checking, evidence | `fact_disentangler` |
+| [Conflict Map](conflict-map/SKILL.md) | `report:conflict_map` | table | columns: Party, Interest | de-escalation | `conflict_mediator`, `steelman_interpreter` |
+| [Content Brief](content-brief/SKILL.md) | `report:content_brief` | fields | labels: Goal, Audience, Platform, CTA, Metric<br>enums: Goal=awareness/engagement/traffic/conversion/community | social, metrics, audience | `social_strategist` |
+| [Data Model](data-model/SKILL.md) | `report:data_model` | table | columns: Entity, Fields, Invariants, Indexes, Retention<br>labels: Migration | data | `data_architect` |
+| [Decision Record](decision-record/SKILL.md) | `report:decision_record` | sections | columns: ID, Claim or decision, Evidence, Interpretation / next action<br>headings: Resolved scope, Non-goals, Claims, evidence, and decisions, Blocking questions, completeness pass, Verification evidence | synthesis, planning, evidence | `board_facilitator` |
+| [Dispatch Return](dispatch-return/SKILL.md) | `report:dispatch_return` | yaml | keys: status, claims/results, evidence, uncertainty, implication/next action, changed paths<br>enums: status=passed/blocked/needs_decision/no_missing_items | evidence, synthesis | all roles |
+| [Draft Variants](draft-variants/SKILL.md) | `report:draft_variants` | table | columns: Variant, Rationale<br>min_rows: 2 | copywriting, persuasion | `diplomatic_wordsmith`, `hook_copywriter`, `platform_native_editor` |
+| [Findings Table](findings-table/SKILL.md) | `report:findings_table` | table | columns: Finding, Evidence, Severity, Fix<br>enums: Severity=blocker/major/minor | evidence, risk | `accessibility_inclusion_reviewer`, `art_director`, `brand_voice_guardian`, `developer_experience_advocate`, `end_user_advocate` |
+| [Change Impact Map](impact-map/SKILL.md) | `report:impact_map` | table | columns: Path, Change, Risk, Mitigation, Preservation check | integration, risk | `integration_architect` |
+| [Interface Contract](interface-contract/SKILL.md) | `report:interface_contract` | table | columns: Interface, Input, Output, Errors | frontend, backend, integration | `backend_engineer`, `frontend_engineer` |
+| [Mechanic Sheet](mechanic-sheet/SKILL.md) | `report:mechanic_sheet` | table | columns: Mechanic, Purpose, Player decision, Inputs, Outputs, Edge cases | game-mechanics | `game_systems_designer` |
+| [Objection Map](objection-map/SKILL.md) | `report:objection_map` | table | columns: Segment, Objection, Response, Status<br>enums: Status=answered/partially/open | audience, community, risk | `audience_proxy`, `community_response_forecaster` |
+| [Ops Plan](ops-plan/SKILL.md) | `report:ops_plan` | fields | labels: Deploy, Rollback, SLOs, Alerts, Runbook | operations | `reliability_engineer` |
+| [Product Brief](product-brief/SKILL.md) | `report:product_brief` | fields | labels: Problem, User, Outcome metric, Kill criteria, Non-goals | planning, metrics | `product_manager` |
+| [Reference List](reference-list/SKILL.md) | `report:reference_list` | table | columns: Ref, Example, Source, Borrow, Avoid | research, evidence | `prior_art_scout` |
+| [Rehearsal Plan](rehearsal-plan/SKILL.md) | `report:rehearsal_plan` | fields | labels: Rehearsals, Timing marks, Demo fallback, Q&A bank | delivery | `delivery_coach` |
+| [Research Findings](research-findings/SKILL.md) | `report:research_findings` | table | columns: Question, Method, Sample, Findings, Confidence, Implication<br>enums: Confidence=low/medium/high | research, evidence, user-experience | `playtest_analyst`, `ux_researcher` |
+| [Risk Register](risk-register/SKILL.md) | `report:risk_register` | table | columns: Risk, Likelihood, Impact, Mitigation, Status<br>enums: Likelihood=L/M/H/low/medium/high; Impact=L/M/H/low/medium/high; Status=open/refuted/mitigated/accepted | risk | `qa_test_strategist`, `red_team_skeptic`, `software_architect` |
+| [Slide Spec](slide-spec/SKILL.md) | `report:slide_spec` | table | columns: Slide, Focal point, Layout, Build steps, Alt text | slides | `slide_designer` |
+| [Style Guide](style-guide/SKILL.md) | `report:style_guide` | table | columns: Rule, Do, Don't | art-direction, ui, brand | `art_director`, `brand_voice_guardian`, `ui_visual_designer` |
+| [Test Plan](test-plan/SKILL.md) | `report:test_plan` | table | columns: Acceptance criterion, Test, Level, Evidence<br>enums: Level=unit/component/integration/e2e/manual | testing | `qa_test_strategist`, `test_automation_engineer` |
+| [Threat Model](threat-model/SKILL.md) | `report:threat_model` | table | columns: Asset, Threat, Likelihood, Impact, Fix, Verify<br>enums: Likelihood=L/M/H/low/medium/high; Impact=L/M/H/low/medium/high | security, risk | `security_reviewer` |
+| [Ticket Drafts](ticket-drafts/SKILL.md) | `report:ticket_drafts` | table | columns: Ticket, Acceptance evidence, Depends on, Status<br>enums: Status=draft/ready/in progress/done | planning | `board_facilitator`, `product_manager` |
 
 ## Roles → tags and reports
 
@@ -192,12 +203,13 @@ frontmatter. That keeps the skills spec-compliant.
 | [UI Visual Designer](../blackboard/visual/ui-visual-designer.md) | ui, accessibility | `style_guide` |
 | [VFX Artist](../blackboard/visual/vfx-artist.md) | vfx, 2d, 3d, game-feel | `asset_manifest`, `budget_sheet` |
 
+<!-- END GENERATED -->
+
 ## Adding a report type
 
-1. Add an entry to `reports.yaml` with `title`, `tags`, and `core_fields`.
-2. Create `reporting/<id-with-dashes>/SKILL.md` with `name` and `description` frontmatter and these
-   sections: When to use, Produced by, Template, Core fields, How to fill it in, On the board,
-   Example, and Quality checks.
-3. Add the id to the `blackboard.reports` of each producing role. Link the skill from the role's
+1. Create `reporting/<id-with-dashes>/SKILL.md` with the frontmatter above and these sections:
+   When to use, Produced by, Template (wrapped in the output tag), Core fields, How to fill it in,
+   On the board, Example (one tagged block that validates), and Quality checks.
+2. Add the id to the `blackboard.reports` of each producing role. Link the skill from the role's
    Deliverable section and include the core fields in its template.
-4. Run `python3 scripts/blackboard-index.py --write`.
+3. Run `python3 scripts/blackboard-index.py --write` and `python3 scripts/test_validate_report.py`.

@@ -74,7 +74,7 @@ You are the **Steelman Interpreter**. Before the user replies, you rebuild the o
 - **answer**: "Re: n-2. Concede the second page was preventable. That's true and it costs nothing."
 
 ## 📦 Deliverable
-Reports: [`conflict_map`](../../reporting/conflict-map/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`conflict_map`](../../reporting/conflict-map/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=steelman_interpreter board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Party | Strongest view | Interest (underlying need) | True part to concede | Misreadings to avoid |

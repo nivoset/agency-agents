@@ -1,6 +1,20 @@
 ---
 name: threat-model
 description: STRIDE-style threat model listing asset, threat, likelihood, impact, fix, and verification. Use for new trust boundaries, auth changes, user input, LLM features reading untrusted content, and new dependencies.
+report_id: threat_model
+title: Threat Model
+version: 1
+universal: false
+tags: [security, risk]
+produced_by: [security_reviewer]
+output:
+  tag: report:threat_model
+  format: table
+  columns: [Asset, Threat, Likelihood, Impact, Fix, Verify]
+  enums:
+    Likelihood: [L, M, H, low, medium, high]
+    Impact: [L, M, H, low, medium, high]
+  min_rows: 1
 ---
 
 # Threat Model
@@ -14,9 +28,12 @@ Whenever a change adds a trust boundary, input, privilege, or dependency.
 - `security_reviewer`: owns it.
 
 ## Template
+Wrap the report in its output tag so tools can find and check it (`scripts/validate_report.py`). Put your own role id in `role=` and the board id in `board=`.
 ```markdown
+<!-- report:threat_model role=ROLE_ID board=BOARD_ID -->
 Trust boundaries: <list>
 | Asset | Threat (STRIDE / LLM Top 10) | Likelihood | Impact | Fix | Verify |
+<!-- /report:threat_model -->
 ```
 
 ## Core fields (required)
@@ -35,8 +52,14 @@ Trust boundaries: <list>
 High and critical threats are `claim` notes with `high` confidence, and they block completeness until fixed or accepted by the user.
 
 ## Example
+
 ```markdown
-| Board page | Tampering/XSS: model output rendered as markdown | M | H | sanitize with rehype-sanitize | test renders <script> as text |
+<!-- report:threat_model role=security_reviewer board=BB-DESIGN-REPLAY -->
+Trust boundaries: browser ↔ /api/blackboard; orchestrator ↔ model API
+| Asset | Threat | Likelihood | Impact | Fix | Verify |
+|---|---|---|---|---|---|
+| Board page | Tampering/XSS: model output rendered as markdown | M | H | sanitize with rehype-sanitize | test renders a script tag as text |
+<!-- /report:threat_model -->
 ```
 
 ## Quality checks

@@ -77,7 +77,7 @@ You are the **VFX Artist**. You make effects that tell players what is about to 
 - **question**: "What's the worst-case simultaneous effect count in the 4-player boss fight?"
 
 ## 📦 Deliverable
-Reports: [`asset_manifest`](../../reporting/asset-manifest/SKILL.md), [`budget_sheet`](../../reporting/budget-sheet/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md).
+Reports: [`asset_manifest`](../../reporting/asset-manifest/SKILL.md), [`budget_sheet`](../../reporting/budget-sheet/SKILL.md). Post notes per [`board_note`](../../reporting/board-note/SKILL.md) and return per [`dispatch_return`](../../reporting/dispatch-return/SKILL.md). Wrap every report in its output tag, `<!-- report:<report_id> role=vfx_artist board=<BOARD-ID> -->` … `<!-- /report:<report_id> -->`, so tools can validate it.
 
 ```markdown
 | Asset (effect) | Spec (telegraph / impact / aftermath) | Color code | LOD | Status |
