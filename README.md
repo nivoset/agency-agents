@@ -74,6 +74,10 @@ See the [Multi-Tool Integrations](#-multi-tool-integrations) section below for f
 
 ## 🎨 The Agency Roster
 
+Running a multi-agent blackboard session?
+
+- Start with the [Blackboard Division](blackboard/README.md): 48 panel-ready roles for software, game design, 2D/3D graphics and animation, presentations, defusing arguments, and social posts. Each role has frontmatter describing its key pushes, tensions, evidence, and done conditions.
+
 Looking for planning or high-accountability work?
 
 - Start with [Software Planning Executor](specialized/software-planning-executor.md) for repo-aware epic breakdowns, feature plans, and clarification-first planning handoffs.

@@ -1,0 +1,41 @@
+name: Lint Blackboard Roles
+
+on:
+  pull_request:
+    paths:
+      - "blackboard/**"
+      - "reporting/**"
+      - "scripts/blackboard-index.py"
+      - "scripts/skill_validate.py"
+      - "scripts/validate_report.py"
+      - "scripts/test_validate_report.py"
+      - "pyproject.toml"
+      - "uv.lock"
+
+jobs:
+  lint:
+    name: Validate blackboard frontmatter, panels, reporting skills, and index
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v6
+
+      - name: Sync tooling environment from uv.lock
+        run: uv sync --locked
+
+      - name: Validate roles, panels, tags, and reporting skills (runs each skill's validation commands)
+        run: uv run scripts/blackboard-index.py
+
+      - name: Test the report validators
+        run: uv run scripts/test_validate_report.py
+
+      - name: Run agent linter on blackboard roles
+        run: |
+          chmod +x scripts/lint-agents.sh
+          ./scripts/lint-agents.sh blackboard/*/*.md
+
+      - name: Check generated files are up to date
+        run: |
+          uv run scripts/blackboard-index.py --write
+          git diff --exit-code blackboard/index.json reporting/README.md reporting/*/scripts/validate.py
